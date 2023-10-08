@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'startup_page.dart';
+import './UI/startup_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StartupPage(), // Start with StartupPage instead of LoginPage
+      home: StartupPage(),
+      // Start with StartupPage instead of LoginPage
     );
   }
 }

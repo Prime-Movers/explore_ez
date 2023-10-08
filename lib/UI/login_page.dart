@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Bloc/loginbloc.dart';
 
 void main() => runApp(MyApp());
 
@@ -6,11 +8,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Travel App Login',
+      title: 'Login Page with BLoC',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: BlocProvider(
+        create: (context) => LoginBloc(),
+        child: LoginPage(),
+      ),
     );
   }
 }
@@ -24,14 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _usernameController = TextEditingController();
 
   TextEditingController _passwordController = TextEditingController();
-
-  void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
-    //logic
-    print('Username: $username');
-    print('Password: $password');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Welcome to Explore EZ',
                     style: TextStyle(
                       fontSize: 32.0,
@@ -61,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -72,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextField(
                     obscureText: true,
                     controller: _passwordController,
@@ -86,49 +83,66 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
-                  SizedBox(height: 30.0),
+                  const SizedBox(height: 30.0),
+                  /*BlocBuilder<LoginBloc, LoginState>(
+                    builder: (context, state) {
+                      if (state is LoginInitialState) {
+                        return */
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       ElevatedButton(
                         onPressed: () {
-                          _login();
-                          // Handle login logic
+                          print(_usernameController.text);
+                          print(_passwordController.text);
+                          /*loginBloc.add(PerformLoginEvent(
+                                    _usernameController.text,
+                                    _passwordController.text));*/
                         },
-                        child: Text(
-                          'Login',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.blue,
-                          padding: EdgeInsets.symmetric(
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 40.0, vertical: 16.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
+                        ),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(fontSize: 18.0),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle login logic
+                          // Implement registration logic
                         },
-                        child: Text(
-                          'Register',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.green,
-                          padding: EdgeInsets.symmetric(
+                          backgroundColor:
+                              const Color.fromARGB(255, 202, 121, 234),
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 40.0, vertical: 16.0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
+                        child: const Text(
+                          'Register',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
                       ),
                     ],
-                  ),
+                  ), /*
+                      } else if (state is LoginSuccessState) {
+                        return const Text('Login Success!');
+                      } else if (state is LoginErrorState) {
+                        return Text('Error: ${state.error}');
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    },
+                  ),*/
                 ],
               ),
             ),
