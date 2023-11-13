@@ -1,3 +1,4 @@
+import 'package:explore_ez/UI/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/bloc/my_form_bloc.dart';
@@ -9,7 +10,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  WillPopScope(child:  MaterialApp(
       home: Scaffold(
         body: BlocProvider(
           create: (_) => MyFormBloc(),
@@ -42,7 +43,8 @@ class LoginPage extends StatelessWidget {
           ],)
         ),
       ),],
-    ),),),);
+    ),),),), onWillPop: () async => false);
+   
   }
 }
 
@@ -268,11 +270,12 @@ class SuccessDialog extends StatelessWidget {
             ),
             ElevatedButton(
               child: const Text('OK'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Home())),
             ),
           ],
         ),
       ),
+      
     );
   }
 }
