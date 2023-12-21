@@ -6,14 +6,14 @@ import '../UI/details.dart';
 class HorizontalPlaceItem extends StatelessWidget {
   final Map place;
 
-  HorizontalPlaceItem({required this.place});
+  const HorizontalPlaceItem({super.key, required this.place});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 20.0),
       child: InkWell(
-        child: Container(
+        child: SizedBox(
           height: 250.0,
           width: 140.0,
           child: Column(
@@ -27,12 +27,12 @@ class HorizontalPlaceItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 7.0),
+              const SizedBox(height: 7.0),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "${place["name"]}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15.0,
                   ),
@@ -40,7 +40,7 @@ class HorizontalPlaceItem extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 3.0),
+              const SizedBox(height: 3.0),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -61,7 +61,7 @@ class HorizontalPlaceItem extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return Details();
+                return const Details();
               },
             ),
           );

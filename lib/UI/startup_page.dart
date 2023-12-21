@@ -3,10 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login_page.dart';
 
 void main() => runApp(
-      MyApp(),
+      const MyApp(),
     );
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,12 +16,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: StartupPage(),
+      home: const StartupPage(),
     );
   }
 }
 
 class StartupPage extends StatefulWidget {
+  const StartupPage({super.key});
+
   @override
   _StartupPageState createState() => _StartupPageState();
 }
@@ -51,10 +55,10 @@ class _StartupPageState extends State<StartupPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: 16.0), // Add padding here
                   child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     child: Text(
                       _quotes[_currentPageIndex],
                       key: ValueKey<String>(_quotes[_currentPageIndex]),
@@ -68,7 +72,7 @@ class _StartupPageState extends State<StartupPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 40.0),
+                const SizedBox(height: 40.0),
                 ElevatedButton(
                   onPressed: () {
                     if (_currentPageIndex < 2) {
@@ -78,23 +82,23 @@ class _StartupPageState extends State<StartupPage> {
                     } else {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
                   child: Text(
                     _currentPageIndex < 2 ? 'Next' : 'Start Exploring',
                     style: GoogleFonts.poppins(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ),

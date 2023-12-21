@@ -5,14 +5,14 @@ import '../UI/details.dart';
 class VerticalPlaceItem extends StatelessWidget {
   final Map place;
 
-  VerticalPlaceItem({required this.place});
+  const VerticalPlaceItem({super.key, required this.place});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: InkWell(
-        child: Container(
+        child: SizedBox(
           height: 70.0,
           child: Row(
             children: <Widget>[
@@ -25,20 +25,20 @@ class VerticalPlaceItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 15.0),
-              Container(
+              const SizedBox(width: 15.0),
+              SizedBox(
                 height: 80.0,
                 width: MediaQuery.of(context).size.width - 130.0,
                 child: ListView(
                   primary: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "${place["name"]}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14.0,
                         ),
@@ -46,7 +46,7 @@ class VerticalPlaceItem extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    SizedBox(height: 3.0),
+                    const SizedBox(height: 3.0),
                     Row(
                       children: <Widget>[
                         Icon(
@@ -54,7 +54,7 @@ class VerticalPlaceItem extends StatelessWidget {
                           size: 13.0,
                           color: Colors.blueGrey[300],
                         ),
-                        SizedBox(width: 3.0),
+                        const SizedBox(width: 3.0),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -70,12 +70,12 @@ class VerticalPlaceItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "${place["price"]}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
                         ),
@@ -93,7 +93,7 @@ class VerticalPlaceItem extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return Details();
+                return const Details();
               },
             ),
           );

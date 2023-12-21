@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class searchbar extends StatelessWidget {
-  final TextEditingController _searchControl = new TextEditingController();
-  searchbar({super.key});
+
+class SearchBarWidget extends StatelessWidget {
+  final TextEditingController _searchControl = TextEditingController();
+  SearchBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
      return Container(
       decoration: BoxDecoration(
         color: Colors.blueGrey[50],
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(20.0),
         ),
       ),
@@ -19,15 +20,15 @@ class searchbar extends StatelessWidget {
           color: Colors.blueGrey[300],
         ),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(10.0),
+          contentPadding: const EdgeInsets.all(10.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Colors.white,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(5.0),

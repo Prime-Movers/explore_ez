@@ -136,6 +136,7 @@ class _MyFormState extends State<MyForm> {
     );
   }
 }
+// ignore: camel_case_types
 class background extends StatelessWidget {
   const background({super.key});
 
@@ -217,6 +218,7 @@ class PasswordInput extends StatelessWidget {
   }
 }
 
+// ignore: camel_case_types
 class loginButton extends StatelessWidget {
   const loginButton({super.key});
 
@@ -227,7 +229,6 @@ class loginButton extends StatelessWidget {
       onPressed: isValid
           ? () => context.read<MyFormBloc>().add(FormSubmitted())
           : null,
-      child: const Text('login'),
       
       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -236,6 +237,7 @@ class loginButton extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),),
+      child: const Text('login'),
     );
   }
 }
@@ -270,7 +272,7 @@ class SuccessDialog extends StatelessWidget {
             ),
             ElevatedButton(
               child: const Text('OK'),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Home())),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Home())),
             ),
           ],
         ),
