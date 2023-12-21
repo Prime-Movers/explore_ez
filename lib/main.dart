@@ -1,3 +1,4 @@
+import 'package:explore_ez/UI/home.dart';
 import 'package:flutter/material.dart';
 import './UI/startup_page.dart';
 
