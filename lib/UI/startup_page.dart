@@ -42,7 +42,7 @@ class _StartupPageState extends State<StartupPage> {
       body: Stack(
         children: [
           Image.asset(
-            'assets/images/startup_background.jpg',
+            'assets/images/onboarding_screen_images/onboarding_screen_background_image.jpg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -82,14 +82,15 @@ class _StartupPageState extends State<StartupPage> {
                     } else {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                       );
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

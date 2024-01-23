@@ -4,47 +4,52 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/bloc/my_form_bloc.dart';
 import 'package:formz/formz.dart';
 
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(child:  MaterialApp(
-      home: Scaffold(
-        body: BlocProvider(
-          create: (_) => MyFormBloc(),
-          child: Stack(children: [
-          Image.asset(
-            'assets/images/login_screen_background_image.jpg',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
-          Container(
-            color: Colors.black.withOpacity(0.6),
-
-          ),
-          const Center(child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Welcome to Explore EZ',
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+    return WillPopScope(
+        child: MaterialApp(
+          home: Scaffold(
+            body: BlocProvider(
+              create: (_) => MyFormBloc(),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/login_screen_images/login_screen_background_image.jpg',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  SizedBox(height: 20.0),
-                  MyForm(),
-          ],)
+                  Container(
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  const Center(
+                    child: Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Welcome to Explore EZ',
+                              style: TextStyle(
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            MyForm(),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),],
-    ),),),), onWillPop: () async => false);
-   
+        onWillPop: () async => false);
   }
 }
 
@@ -106,36 +111,39 @@ class _MyFormState extends State<MyForm> {
         child: Column(
           children: <Widget>[
             EmailInput(focusNode: _emailFocusNode),
-            const SizedBox(height:20.0),
+            const SizedBox(height: 20.0),
             PasswordInput(focusNode: _passwordFocusNode),
-            const SizedBox(height:20.0),
-             Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-            const loginButton(),ElevatedButton(
-                        onPressed: () {
-                          // Implement registration logic
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 202, 121, 234),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 15.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                      ),],),
+            const SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                const loginButton(),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement registration logic
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 202, 121, 234),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 15.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 }
+
 // ignore: camel_case_types
 class background extends StatelessWidget {
   const background({super.key});
@@ -145,6 +153,7 @@ class background extends StatelessWidget {
     return const Placeholder();
   }
 }
+
 class EmailInput extends StatelessWidget {
   const EmailInput({required this.focusNode, super.key});
 
@@ -162,8 +171,8 @@ class EmailInput extends StatelessWidget {
             fillColor: Colors.white,
             filled: true,
             border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             errorText: state.email.displayError != null
                 ? 'Please ensure the email entered is valid'
                 : null,
@@ -196,11 +205,10 @@ class PasswordInput extends StatelessWidget {
             hintText: "Enter your password",
             fillColor: Colors.white,
             filled: true,
-             border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
             helperMaxLines: 2,
-            
             errorMaxLines: 2,
             errorText: state.password.displayError != null
                 ? '''Password must be at least 8 characters and contain at least one letter and number'''
@@ -229,14 +237,13 @@ class loginButton extends StatelessWidget {
       onPressed: isValid
           ? () => context.read<MyFormBloc>().add(FormSubmitted())
           : null,
-      
       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 40.0, vertical: 16.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),),
+        backgroundColor: Colors.blue,
+        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
       child: const Text('login'),
     );
   }
@@ -272,12 +279,12 @@ class SuccessDialog extends StatelessWidget {
             ),
             ElevatedButton(
               child: const Text('OK'),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const Home())),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Home())),
             ),
           ],
         ),
       ),
-      
     );
   }
 }
