@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "931087497228",
+    "project_id": "exploreez-59c18",
+    "storage_bucket": "exploreez-59c18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931087497228:android:93ed68c3e024a49ec79629",
+        "android_client_info": {
+          "package_name": "com.example.explore_ez"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqRLHY52ZwfPrpEuQXWY7Onv-twKv73Bg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

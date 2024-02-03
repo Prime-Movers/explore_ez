@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import './UI/startup_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_repository/user_repository.dart';
 
-void main() => runApp(const MyApp());
+import 'firebase_options.dart';
+import 'app.dart';
+import 'simple_bloc_observer.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Startup',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const StartupPage(),
-      // Start with StartupPage instead of LoginPage
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Bloc.observer = SimpleBlocObserver();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(MainApp(FirebaseUserRepo()));
 }
