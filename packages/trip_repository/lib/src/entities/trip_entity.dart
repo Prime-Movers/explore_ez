@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 class TripEntity {
   String area;
   String budget;
   int days;
-  Array places;
-  Array placesImage;
+  List<String> places;
+  List<String> placesImage;
   String details;
   TripEntity(
       {required this.area,
