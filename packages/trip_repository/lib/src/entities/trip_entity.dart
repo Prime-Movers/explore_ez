@@ -2,8 +2,8 @@ class TripEntity {
   String area;
   String budget;
   int days;
-  List<String> places;
-  List<String> placesImage;
+  List<dynamic> places;
+  List<dynamic> placesImage;
   String details;
   TripEntity(
       {required this.area,
