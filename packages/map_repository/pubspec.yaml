@@ -1,5 +1,5 @@
-name: trip_repository
-description: Dart package which fetch the list of trips and its details from Firebase.
+name: map_repository
+description: Dart package which manages the routes and coordinates.
 publish_to: 'none'
 version: 0.1.0
 
@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cloud_firestore: ^4.15.1
 
 dev_dependencies:
   flutter_test:
