@@ -8,6 +8,17 @@ class TripDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String tripName = currentTrip.area;
+    String budget = currentTrip.budget;
+    String days = currentTrip.days.toString();
+    String details = currentTrip.details;
+    List<String> placeNames = [];
+    for (Place place in currentTrip.place) {
+      placeNames.add(place.placeName);
+    }
+    String places =
+        placeNames.toString().replaceAll('[', '').replaceAll(']', '');
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: ListView(
@@ -27,7 +38,7 @@ class TripDetail extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      currentTrip.area,
+                      tripName,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
@@ -36,42 +47,28 @@ class TripDetail extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.bookmark,
-                    ),
-                    onPressed: () {},
-                  ),
                 ],
               ),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    size: 14,
-                    color: Colors.blueGrey[300],
-                  ),
-                  SizedBox(width: 3),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      currentTrip.place[0].placeName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                        color: Colors.blueGrey[300],
-                      ),
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
+              SizedBox(height: 20.0),
+              SizedBox(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Places Visited :\n$places",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Colors.blueGrey[300],
                     ),
+                    maxLines: 10,
                   ),
-                ],
+                ),
               ),
               SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  currentTrip.budget,
+                  budget,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -80,11 +77,11 @@ class TripDetail extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  currentTrip.details,
+                  "Days of Trip : $days",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -93,11 +90,11 @@ class TripDetail extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  currentTrip.days.toString(),
+                  details,
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 15.0,

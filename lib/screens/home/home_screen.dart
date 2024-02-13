@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(top: 20),
         child: BlocBuilder<GetTripBloc, GetTripState>(
           builder: (context, state) {
             if (state is GetTripSuccess) {
