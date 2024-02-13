@@ -20,6 +20,8 @@ dependencies:
     path: packages/user_repository
   trip_repository:
     path: packages/trip_repository
+  area_repository:
+    path: packages/area_repository
   bloc: ^8.1.2
   
 
