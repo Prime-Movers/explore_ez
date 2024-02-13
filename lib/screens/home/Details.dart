@@ -23,13 +23,13 @@ class TripDetail extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           buildSlider(currentTrip),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ListView(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             primary: false,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             children: <Widget>[
               Row(
@@ -39,7 +39,7 @@ class TripDetail extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       tripName,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
                       ),
@@ -49,7 +49,7 @@ class TripDetail extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               SizedBox(
                 child: Container(
                   alignment: Alignment.centerLeft,
@@ -64,12 +64,12 @@ class TripDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   budget,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
                   ),
@@ -77,12 +77,12 @@ class TripDetail extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Days of Trip : $days",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -90,25 +90,25 @@ class TripDetail extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   details,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 15.0,
                   ),
                   textAlign: TextAlign.left,
                 ),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
             ],
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(
+        child: const Icon(
           Icons.airplanemode_active,
         ),
         onPressed: () {},
@@ -118,7 +118,7 @@ class TripDetail extends StatelessWidget {
 
   buildSlider(Trip currentTrip) {
     return Container(
-      padding: EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 20),
       height: 250.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -128,7 +128,7 @@ class TripDetail extends StatelessWidget {
           Place currentPlace = currentTrip.place[index];
 
           return Padding(
-            padding: EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.only(right: 10.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(

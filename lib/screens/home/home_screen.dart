@@ -1,10 +1,8 @@
-import 'package:explore_ez/blocs/get_area_bloc/get_area_bloc.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
-import 'package:trip_repository/trip_repository.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'Details.dart';
-import '../../components/vertical_place_item.dart';
+
 import 'package:explore_ez/components/vertical_list.dart';
 
 class HomeScreen extends StatelessWidget {

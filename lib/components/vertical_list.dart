@@ -4,7 +4,7 @@ import 'package:trip_repository/trip_repository.dart';
 
 class VerticalList extends StatelessWidget {
   final List<Trip> trips;
-  const VerticalList({required this.trips});
+  const VerticalList({super.key, required this.trips});
 
   @override
   Widget build(BuildContext context) {
