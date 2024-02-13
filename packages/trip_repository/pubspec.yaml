@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   cloud_firestore: ^4.15.1
+  area_repository:
+    path: ../area_repository
 
 dev_dependencies:
   flutter_test:

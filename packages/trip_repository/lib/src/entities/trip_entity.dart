@@ -1,35 +1,39 @@
+import 'package:area_repository/area_repository.dart';
+
 class TripEntity {
   String area;
   String budget;
   int days;
-  List<dynamic> places;
-  List<dynamic> placesImage;
+  List<Place> place;
   String details;
-  TripEntity(
-      {required this.area,
-      required this.budget,
-      required this.days,
-      required this.places,
-      required this.details,
-      required this.placesImage});
+  TripEntity({
+    required this.area,
+    required this.budget,
+    required this.days,
+    required this.place,
+    required this.details,
+  });
   Map<String, Object?> toDocument() {
     return {
       'area': area,
       'budget': budget,
       'days': days,
-      'places': places,
-      'placesImage': placesImage,
+      'place': place,
       'details': details,
     };
   }
 
   static TripEntity fromDocument(Map<String, dynamic> doc) {
+    List<Map<String, dynamic>> placesData =
+        List<Map<String, dynamic>>.from(doc['place']);
     return TripEntity(
-        area: doc['area'],
-        budget: doc['budget'],
-        days: doc['days'],
-        places: doc['places'],
-        details: doc['details'],
-        placesImage: doc['placesImage']);
+      area: doc['area'],
+      budget: doc['budget'],
+      days: doc['days'],
+      place: placesData
+          .map((e) => Place.fromEntity(PlaceEntity.fromDocument(e)))
+          .toList(),
+      details: doc['details'],
+    );
   }
 }
