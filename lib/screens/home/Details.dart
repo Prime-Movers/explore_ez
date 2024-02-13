@@ -1,13 +1,19 @@
+import 'package:area_repository/area_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:trip_repository/trip_repository.dart';
 
-class Details extends StatelessWidget {
+class TripDetail extends StatelessWidget {
+  final Trip currentTrip;
+  const TripDetail({super.key, required this.currentTrip});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: ListView(
         children: <Widget>[
           SizedBox(height: 10.0),
-          buildSlider(),
+          buildSlider(currentTrip),
           SizedBox(height: 20),
           ListView(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -21,7 +27,7 @@ class Details extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${places[0]["name"]}",
+                      currentTrip.area,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 20,
@@ -49,7 +55,7 @@ class Details extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "${places[0]["location"]}",
+                      currentTrip.place[0].placeName,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -65,7 +71,7 @@ class Details extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "${places[0]["price"]}",
+                  currentTrip.budget,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -78,7 +84,7 @@ class Details extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "Details",
+                  currentTrip.details,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -91,7 +97,7 @@ class Details extends StatelessWidget {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "hellothere",
+                  currentTrip.days.toString(),
                   style: TextStyle(
                     fontWeight: FontWeight.normal,
                     fontSize: 15.0,
@@ -113,23 +119,23 @@ class Details extends StatelessWidget {
     );
   }
 
-  buildSlider() {
+  buildSlider(Trip currentTrip) {
     return Container(
       padding: EdgeInsets.only(left: 20),
       height: 250.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         primary: false,
-        itemCount: places == null ? 0 : places.length,
+        itemCount: currentTrip.place.length,
         itemBuilder: (BuildContext context, int index) {
-          Map place = places[index];
+          Place currentPlace = currentTrip.place[index];
 
           return Padding(
             padding: EdgeInsets.only(right: 10.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.asset(
-                "${place["img"]}",
+              child: Image.network(
+                currentPlace.placeImage,
                 height: 250.0,
                 width: MediaQuery.of(context).size.width - 40.0,
                 fit: BoxFit.cover,

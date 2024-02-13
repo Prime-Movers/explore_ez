@@ -1,32 +1,32 @@
+import 'package:explore_ez/screens/home/Details.dart';
 import 'package:flutter/material.dart';
-
-import '../screens/details.dart';
+import 'package:trip_repository/trip_repository.dart';
 
 class VerticalPlaceItem extends StatelessWidget {
-  final Map place;
+  final Trip currentTrip;
 
-  VerticalPlaceItem({this.place});
+  const VerticalPlaceItem({super.key, required this.currentTrip});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15.0),
       child: InkWell(
-        child: Container(
+        child: SizedBox(
           height: 70.0,
           child: Row(
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  "${place["img"]}",
+                child: Image.network(
+                  currentTrip.place[0].placeImage,
                   height: 70.0,
                   width: 70.0,
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 15.0),
-              Container(
+              const SizedBox(width: 15.0),
+              SizedBox(
                 height: 80.0,
                 width: MediaQuery.of(context).size.width - 130.0,
                 child: ListView(
@@ -37,7 +37,7 @@ class VerticalPlaceItem extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${place["name"]}",
+                        currentTrip.area,
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 14.0,
@@ -46,7 +46,7 @@ class VerticalPlaceItem extends StatelessWidget {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    SizedBox(height: 3.0),
+                    const SizedBox(height: 3.0),
                     Row(
                       children: <Widget>[
                         Icon(
@@ -54,11 +54,11 @@ class VerticalPlaceItem extends StatelessWidget {
                           size: 13.0,
                           color: Colors.blueGrey[300],
                         ),
-                        SizedBox(width: 3.0),
+                        const SizedBox(width: 3.0),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "${place["location"]}",
+                            currentTrip.budget,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13.0,
@@ -70,11 +70,11 @@ class VerticalPlaceItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${place["price"]}",
+                        currentTrip.days.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16.0,
@@ -93,7 +93,9 @@ class VerticalPlaceItem extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return Details();
+                return TripDetail(
+                  currentTrip: currentTrip,
+                );
               },
             ),
           );

@@ -16,4 +16,19 @@ class FirebaseAreaRepo implements AreaRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<String> searchArea(String value) async {
+    try {
+      return areaCollection
+          .orderBy('areaName')
+          .startAt([value])
+          .endAt(["$value\uf8ff"])
+          .get()
+          .toString();
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
