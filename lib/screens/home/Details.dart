@@ -109,7 +109,7 @@ class TripDetail extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(
-          Icons.airplanemode_active,
+          Icons.book,
         ),
         onPressed: () {},
       ),
