@@ -1,5 +1,6 @@
 import 'package:explore_ez/blocs/get_area_bloc/get_area_bloc.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
+import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/blocs/sign_in_bloc/sign_in_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:trip_repository/trip_repository.dart';
 import 'package:area_repository/area_repository.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/plan_details/search_screen.dart';
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
@@ -22,8 +24,8 @@ class MyAppView extends StatelessWidget {
             background: Colors.black,
             onBackground: Colors.white,
             primary: Colors.blue,
-            onPrimary: Colors.black,
-            secondary: Color.fromRGBO(143, 190, 244, 1),
+            onPrimary: Colors.white,
+            secondary: Color.fromRGBO(71, 132, 202, 1),
             onSecondary: Colors.white,
             tertiary: Color.fromRGBO(255, 204, 128, 1),
             error: Colors.red,
@@ -44,11 +46,10 @@ class MyAppView extends StatelessWidget {
                     GetTripBloc(FirebaseTripRepo())..add(GetTrip()),
               ),
               BlocProvider(
-                create: (context) =>
-                    GetAreaBloc(FirebaseAreaRepo())..add(GetArea()),
+                create: (context) => SearchAreaBloc(FirebaseAreaRepo()),
               )
             ],
-            child: const HomeScreen(),
+            child: const SearchAreaScreen(),
           );
         } else {
           return const WelcomeScreen();

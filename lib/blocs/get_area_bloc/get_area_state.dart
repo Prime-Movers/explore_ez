@@ -10,8 +10,8 @@ sealed class GetAreaState extends Equatable {
 class GetAreaInitial extends GetAreaState {}
 
 class GetAreaSuccess extends GetAreaState {
-  final List<MyArea> areas;
-  const GetAreaSuccess(this.areas);
+  final List<MyArea> area;
+  const GetAreaSuccess(this.area);
 }
 
 class GetAreaFailure extends GetAreaState {}

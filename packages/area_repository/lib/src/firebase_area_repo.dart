@@ -18,14 +18,23 @@ class FirebaseAreaRepo implements AreaRepo {
   }
 
   @override
-  Future<String> searchArea(String value) async {
+  Future<List<MyArea>> searchArea(String value) async {
+    if (value.isEmpty) {
+      // Return all areas if search query is empty
+      return await getAreas();
+    }
     try {
-      return areaCollection
-          .orderBy('areaName')
-          .startAt([value])
-          .endAt(["$value\uf8ff"])
+      return await areaCollection
+          .where(
+            'areaName',
+            isGreaterThanOrEqualTo: value,
+            isLessThanOrEqualTo: value + 'z', // Consider using endAt here
+          )
           .get()
-          .toString();
+          .then((value) => value.docs
+              .map(
+                  (e) => MyArea.fromEntity(MyAreaEntity.fromDocument(e.data())))
+              .toList());
     } catch (e) {
       log(e.toString());
       rethrow;
