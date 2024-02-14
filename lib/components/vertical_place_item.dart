@@ -1,4 +1,4 @@
-import 'package:explore_ez/screens/home/Details.dart';
+import 'package:explore_ez/screens/home/details.dart';
 import 'package:flutter/material.dart';
 import 'package:trip_repository/trip_repository.dart';
 
@@ -35,14 +35,14 @@ class VerticalPlaceItem extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 155,
                 child: ListView(
                   primary: false,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: <Widget>[
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         tripName,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 20.0,
                         ),
@@ -69,7 +69,7 @@ class VerticalPlaceItem extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Day of Trip: $days",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14.0,
                         ),
