@@ -41,7 +41,7 @@ class TripDetail extends StatelessWidget {
                       tripName,
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 20,
+                        fontSize: 50,
                       ),
                       maxLines: 2,
                       textAlign: TextAlign.left,
