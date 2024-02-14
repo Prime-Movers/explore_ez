@@ -7,11 +7,11 @@ class SearchAreaScreen extends StatefulWidget {
   const SearchAreaScreen({super.key});
 
   @override
-  _SearchAreaScreenState createState() => _SearchAreaScreenState();
+  State<SearchAreaScreen> createState() => _SearchAreaScreenState();
 }
 
 class _SearchAreaScreenState extends State<SearchAreaScreen> {
-  final _selectedAreas = Set<String>();
+  final _selectedAreas = <String>{};
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
               builder: (context, state) {
                 if (state is SearchAreaLoaded) {
                   if (state.areas.isEmpty) {
-                    return Center(child: Text('No results found'));
+                    return const Center(child: Text('No results found'));
                   }
                   return ListView.builder(
                     itemCount: state.areas.length,
@@ -79,11 +79,11 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
           contentPadding: const EdgeInsets.all(15.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.transparent),
+            borderSide: const BorderSide(color: Colors.transparent),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.transparent),
+            borderSide: const BorderSide(color: Colors.transparent),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -106,7 +106,7 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
     return ListTile(
       title: Text(
         area.areaName,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black87,
           fontWeight: FontWeight.w500,
           fontSize: 16,

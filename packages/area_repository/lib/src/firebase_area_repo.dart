@@ -28,7 +28,7 @@ class FirebaseAreaRepo implements AreaRepo {
           .where(
             'areaName',
             isGreaterThanOrEqualTo: value,
-            isLessThanOrEqualTo: value + 'z', // Consider using endAt here
+            isLessThanOrEqualTo: '${value}z', // Consider using endAt here
           )
           .get()
           .then((value) => value.docs

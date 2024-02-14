@@ -1,4 +1,5 @@
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
+import 'package:explore_ez/screens/plan_details/search_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,9 +30,18 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: SearchBar(),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const SearchAreaScreen();
+                          }),
+                        );
+                      },
+                      child: const Text("Create your Plan"),
+                    ),
                   ),
                   VerticalList(
                     trips: state.trips,
