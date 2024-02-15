@@ -50,16 +50,16 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
 
   AppBar _buildAppBar(ColorScheme colorScheme) {
     return AppBar(
-      backgroundColor: colorScheme.primary,
+      backgroundColor: colorScheme.onBackground,
       elevation: 0, // Remove default shadow
       leading: IconButton(
-        icon: Icon(Icons.arrow_back, color: colorScheme.onPrimary),
+        icon: Icon(Icons.arrow_back, color: colorScheme.background),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
         'Explore EZ',
         style: TextStyle(
-          color: colorScheme.onPrimary,
+          color: colorScheme.background,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -75,15 +75,12 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
           filled: true,
           fillColor: colorScheme.onPrimary,
           hintText: 'Search...',
-          hintStyle: TextStyle(color: Colors.grey[200]),
+          hintStyle: TextStyle(color: colorScheme.background),
           contentPadding: const EdgeInsets.all(15.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.transparent),
+            borderSide: BorderSide(
+                color: colorScheme.background, style: BorderStyle.solid),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
