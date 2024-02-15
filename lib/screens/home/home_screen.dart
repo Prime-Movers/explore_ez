@@ -1,9 +1,9 @@
-import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:explore_ez/components/vertical_list.dart';
+import 'package:trip_repository/trip_repository.dart';
+import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
+import 'package:explore_ez/screens/home/details.dart';
+import 'package:explore_ez/screens/plan_details/search_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,9 +29,18 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: SearchBar(),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const SearchAreaScreen();
+                          }),
+                        );
+                      },
+                      child: const Text("Create your Plan"),
+                    ),
                   ),
                   VerticalList(
                     trips: state.trips,
@@ -49,6 +58,127 @@ class HomeScreen extends StatelessWidget {
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class VerticalList extends StatelessWidget {
+  final List<Trip> trips;
+  const VerticalList({super.key, required this.trips});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: ListView.builder(
+        primary: false,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: trips.length,
+        itemBuilder: (BuildContext context, int index) {
+          Trip currentTrip = trips[index];
+          return VerticalPlaceItem(
+            currentTrip: currentTrip,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class VerticalPlaceItem extends StatelessWidget {
+  final Trip currentTrip;
+  const VerticalPlaceItem({super.key, required this.currentTrip});
+
+  @override
+  Widget build(BuildContext context) {
+    String placeImage = currentTrip.place[0].placeImage;
+    String tripName = currentTrip.area;
+    String budget = currentTrip.budget;
+    String days = currentTrip.days.toString();
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: InkWell(
+        child: SizedBox(
+          height: 100.0,
+          child: Row(
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.network(
+                  placeImage,
+                  height: 100.0,
+                  width: 100.0,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(width: 15.0),
+              SizedBox(
+                height: 100.0,
+                width: MediaQuery.of(context).size.width - 155,
+                child: ListView(
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        tripName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20.0,
+                        ),
+                        maxLines: 2,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Budget: $budget",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                          color: Colors.blueGrey[300],
+                        ),
+                        maxLines: 1,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    const SizedBox(height: 10.0),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Day of Trip: $days",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                        ),
+                        maxLines: 1,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (BuildContext context) {
+                return TripDetail(
+                  currentTrip: currentTrip,
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
