@@ -15,11 +15,14 @@ class _PlanDetailsState extends State<PlanDetails> {
   String _budget = ""; // initial description
   TimeOfDay _startTime = TimeOfDay.now(); // initial start time
   TimeOfDay _endTime = TimeOfDay.now(); // initial end time
-
+  TextEditingController StartdateInputController = TextEditingController();
+  TextEditingController EnddateInputController = TextEditingController();
+  var myFormat = DateFormat('d-MM-yyyy');
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.onBackground,
+      backgroundColor: colorScheme.onBackground,
       appBar: AppBar(
         title: Text('Plan Details'),
       ),
@@ -30,12 +33,15 @@ class _PlanDetailsState extends State<PlanDetails> {
           child: Column(
             children: <Widget>[
               // Start date
-              TextFormField(
+              TextField(
                 decoration: InputDecoration(
                   labelText: 'Start Date',
                   icon: Icon(Icons.calendar_today),
+                  hintText: "Enter Start Date",
+                  hintStyle: TextStyle(color: colorScheme.background),
                 ),
-                readOnly: true, // show date picker on tap
+                readOnly: true,
+                controller: StartdateInputController, // show date picker on tap
                 onTap: () async {
                   DateTime? newDate = await showDatePicker(
                     context: context,
@@ -44,25 +50,21 @@ class _PlanDetailsState extends State<PlanDetails> {
                     lastDate: DateTime(2025),
                   );
                   if (newDate != null) {
+                    StartdateInputController.text = myFormat.format(newDate);
                     setState(() {
                       _startDate = newDate;
                     });
                   }
                 },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select a start date.';
-                  }
-                  return null;
-                },
               ),
 
               // End date
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'End Date',
                   icon: Icon(Icons.calendar_today),
                 ),
+                controller: EnddateInputController,
                 readOnly: true, // show date picker on tap
                 onTap: () async {
                   DateTime? newDate = await showDatePicker(
@@ -72,6 +74,7 @@ class _PlanDetailsState extends State<PlanDetails> {
                     lastDate: DateTime(2025),
                   );
                   if (newDate != null) {
+                    EnddateInputController.text = myFormat.format(newDate);
                     setState(() {
                       _endDate = newDate;
                     });
