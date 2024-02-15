@@ -1,7 +1,11 @@
+import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
+import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:explore_ez/screens/authentication/welcome_screen.dart';
+import 'package:trip_repository/trip_repository.dart';
 import 'blocs/authentication_bloc/authentication_bloc.dart';
 import 'screens/home/home_screen.dart';
 
@@ -35,6 +39,13 @@ class MyAppView extends StatelessWidget {
                     userRepository:
                         context.read<AuthenticationBloc>().userRepository),
               ),
+              BlocProvider(
+                create: (context) =>
+                    GetTripBloc(FirebaseTripRepo())..add(GetTrip()),
+              ),
+              BlocProvider(
+                create: (context) => SearchAreaBloc(FirebaseAreaRepo()),
+              )
             ],
             child: const HomeScreen(),
           );

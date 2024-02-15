@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_repository/trip_repository.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
 import 'package:explore_ez/screens/home/details.dart';
-import 'package:explore_ez/screens/plan_details/search_screen.dart';
+import 'package:explore_ez/screens/plan_details/search_area_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

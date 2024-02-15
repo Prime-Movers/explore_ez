@@ -1,7 +1,9 @@
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
+import 'plan_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:explore_ez/components/visible_button.dart';
 
 class SearchAreaScreen extends StatefulWidget {
   const SearchAreaScreen({super.key});
@@ -12,7 +14,7 @@ class SearchAreaScreen extends StatefulWidget {
 
 class _SearchAreaScreenState extends State<SearchAreaScreen> {
   final _selectedAreas = <String>{};
-
+  bool get _hasSelectedAreas => _selectedAreas.isNotEmpty;
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -42,6 +44,15 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
                 return Container();
               },
             ),
+          ),
+          VisibleButton(
+            colorScheme: colorScheme,
+            visible: _hasSelectedAreas,
+            alignment: Alignment.bottomRight,
+            isPop: false,
+            isPush: true,
+            widget: const PlanDetails(),
+            text: 'Next',
           ),
         ],
       ),

@@ -23,6 +23,7 @@ dependencies:
   area_repository:
     path: packages/area_repository
   bloc: ^8.1.2
+  intl: ^0.19.0
   
 
 dev_dependencies:
