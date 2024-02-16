@@ -29,7 +29,7 @@ class Place {
 
   static Place fromEntityWithLatLong(PlaceEntity entity) {
     return Place.withLatLong(
-        placeName: entity.placeImage,
+        placeName: entity.placeName,
         placeImage: entity.placeImage,
         latitude: entity.latitude,
         longitude: entity.longitude);

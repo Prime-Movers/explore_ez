@@ -35,7 +35,7 @@ class ModelPlanRepo implements PlanRepo {
   }
 
   @override
-  Future<List<Place>> getPlaces() async {
+  List<Place> getPlaces() {
     try {
       return plan.places;
     } catch (e) {
