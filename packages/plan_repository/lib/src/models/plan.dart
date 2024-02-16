@@ -1,23 +1,28 @@
 import 'package:area_repository/area_repository.dart';
 
 class MyPlan {
-  String? areaName;
-  DateTime? beginJourney;
-  DateTime? endJourney;
-  int? budget;
-  String? accomodation;
-  String? dailyBeginTime;
-  String? dailyEndTime;
-  List<Place>? places;
+  String areaName;
+  String beginJourney;
+  String endJourney;
+  String budget;
+  String dailyBeginTime;
+  String dailyEndTime;
+  List<Place> places;
 
-  MyPlan({this.areaName});
+  MyPlan(
+      {required this.areaName,
+      required this.beginJourney,
+      required this.endJourney,
+      required this.budget,
+      required this.dailyBeginTime,
+      required this.dailyEndTime,
+      required this.places});
 
-  getPlanDetails(DateTime beginJourney, DateTime endJourney, int budget,
-      String accomodation, String dailyBeginTime, String dailyEndTime) {
+  getPlanDetails(String beginJourney, String endJourney, String budget,
+      String dailyBeginTime, String dailyEndTime) {
     this.beginJourney = beginJourney;
     this.endJourney = endJourney;
     this.budget = budget;
-    this.accomodation = accomodation;
     this.dailyBeginTime = dailyBeginTime;
     this.dailyEndTime = dailyEndTime;
   }
