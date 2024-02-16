@@ -1,4 +1,6 @@
 import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+import 'package:plan_repository/plan_repository.dart';
 import 'package:trip_repository/trip_repository.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
@@ -22,6 +24,8 @@ class MainApp extends StatelessWidget {
           create: (_) => GetTripBloc(FirebaseTripRepo())),
       RepositoryProvider<SearchAreaBloc>(
           create: (_) => SearchAreaBloc(FirebaseAreaRepo())),
+      RepositoryProvider<CreatePlanBloc>(
+          create: (_) => CreatePlanBloc(ModelPlanRepo())),
     ], child: const MyAppView());
   }
 }
