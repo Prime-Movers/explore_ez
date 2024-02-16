@@ -27,6 +27,14 @@ class CreatePlanBloc extends Bloc<CreatePlanEvent, CreatePlanState> {
           emit(GetDetailsFailure());
         }
       }
+      if (event is SelectPlacesEvent) {
+        try {
+          List<Place> places = _planRepo.getPlaces();
+          emit(SelectPlacesSuccess(places: places));
+        } catch (e) {
+          emit(SelectPlacesFailure());
+        }
+      }
     });
   }
 }

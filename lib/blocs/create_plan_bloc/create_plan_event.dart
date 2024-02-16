@@ -27,3 +27,5 @@ class GetDetailsEvent extends CreatePlanEvent {
       required this.endTime,
       required this.budget});
 }
+
+class SelectPlacesEvent extends CreatePlanEvent {}
