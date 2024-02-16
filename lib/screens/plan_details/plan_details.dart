@@ -1,4 +1,6 @@
+import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:explore_ez/components/visible_button.dart';
@@ -12,8 +14,8 @@ class PlanDetails extends StatefulWidget {
 
 class _PlanDetailsState extends State<PlanDetails> {
   final _formKey = GlobalKey<FormState>();
-  DateTime _startDate = DateTime.now();
-  DateTime _endDate = DateTime.now();
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
   String budget = "";
   TimeOfDay startTime = TimeOfDay.now();
   TimeOfDay endTime = TimeOfDay.now();
@@ -21,6 +23,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   TextEditingController enddateInputController = TextEditingController();
   TextEditingController startTimeInputController = TextEditingController();
   TextEditingController endTimeInputController = TextEditingController();
+  TextEditingController budgetInputController = TextEditingController();
   var myFormat = DateFormat('d-MM-yyyy');
 
   @override
@@ -29,10 +32,10 @@ class _PlanDetailsState extends State<PlanDetails> {
     return Scaffold(
       backgroundColor: colorScheme.onBackground,
       appBar: AppBar(
-        title: Text('Plan Details'),
+        title: const Text('Plan Details'),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             Form(
@@ -44,21 +47,7 @@ class _PlanDetailsState extends State<PlanDetails> {
                       context,
                       "Start Date : ",
                       startdateInputController,
-                      () async {
-                        DateTime? newDate = await showDatePicker(
-                          context: context,
-                          initialDate: _startDate,
-                          firstDate: DateTime(2024),
-                          lastDate: DateTime(2025),
-                        );
-                        if (newDate != null) {
-                          startdateInputController.text =
-                              myFormat.format(newDate);
-                          setState(() {
-                            _startDate = newDate;
-                          });
-                        }
-                      },
+                      startDate,
                     ),
                     const SizedBox(
                       height: 20,
@@ -68,26 +57,12 @@ class _PlanDetailsState extends State<PlanDetails> {
                       context,
                       "End Date : ",
                       enddateInputController,
-                      () async {
-                        DateTime? newDate = await showDatePicker(
-                          context: context,
-                          initialDate: _endDate,
-                          firstDate: DateTime(2024),
-                          lastDate: DateTime(2025),
-                        );
-                        if (newDate != null) {
-                          enddateInputController.text =
-                              myFormat.format(newDate);
-                          setState(() {
-                            _endDate = newDate;
-                          });
-                        }
-                      },
+                      endDate,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    budgetField(context),
+                    budgetField(context, budgetInputController),
                     const SizedBox(
                       height: 20,
                     ),
@@ -109,12 +84,41 @@ class _PlanDetailsState extends State<PlanDetails> {
           ],
         ),
       ),
+      floatingActionButton: VisibleButton(
+        colorScheme: colorScheme,
+        visible: true,
+        alignment: Alignment.bottomRight,
+        isPop: false,
+        isPush: false,
+        widget: widget,
+        text: "Next",
+        onPressed: onPressed,
+      ),
     );
   }
 
-  TextFormField budgetField(BuildContext context) {
+  Function()? onPressed() {
+    if (_formKey.currentState!.validate()) {
+      context.read<CreatePlanBloc>().add(GetDetailsEvent(
+          startDate: startDate.toString(),
+          endDate: endDate.toString(),
+          startTime: startTime.toString(),
+          endTime: endTime.toString(),
+          budget: budget));
+    }
+
+    return null;
+  }
+
+  TextFormField budgetField(
+      BuildContext context, TextEditingController inputController) {
     return TextFormField(
-      onChanged: (value) => budget = value,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: inputController,
+      onChanged: (value) {
+        inputController.text = value;
+        budget = value;
+      },
       decoration: InputDecoration(
         labelText: 'Budget Amount', // More descriptive label
         prefixIcon: Icon(Icons.currency_rupee,
@@ -154,8 +158,9 @@ class _PlanDetailsState extends State<PlanDetails> {
   }
 
   TextFormField dateField(BuildContext context, String labelText,
-      TextEditingController inputController, Function()? onTap) {
+      TextEditingController inputController, DateTime startDate) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: Icon(
@@ -174,7 +179,20 @@ class _PlanDetailsState extends State<PlanDetails> {
         ),
       ),
       readOnly: true,
-      onTap: onTap,
+      onTap: () async {
+        DateTime? newDate = await showDatePicker(
+          context: context,
+          initialDate: startDate,
+          firstDate: startDate,
+          lastDate: DateTime(2025),
+        );
+        if (newDate != null) {
+          inputController.text = myFormat.format(newDate);
+          setState(() {
+            startDate = newDate;
+          });
+        }
+      },
       // Use a more descriptive function name
       controller: inputController,
       validator: (value) {
@@ -189,6 +207,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   TextFormField timeField(BuildContext context, String labelText,
       TextEditingController inputController, TimeOfDay currentTime) {
     return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: labelText,
         prefixIcon: Icon(

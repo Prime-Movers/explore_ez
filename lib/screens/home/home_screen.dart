@@ -32,6 +32,13 @@ class HomeScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onBackground,
+                        elevation: 10,
+                      ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
@@ -39,7 +46,28 @@ class HomeScreen extends StatelessWidget {
                           }),
                         );
                       },
-                      child: const Text("Create your Plan"),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 5),
+                              child: Icon(Icons.create),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Create your Plan",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   VerticalList(
