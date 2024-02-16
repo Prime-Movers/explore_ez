@@ -1,11 +1,15 @@
-// ignore: unnecessary_import
+// ignore;: unnecessary_import;
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gemini_model/api/gemini_api.dart';
 import 'package:get/get.dart';
 
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:google_gemini/google_gemini.dart';
+import 'package:flutter_test/flutter_test.dart';
+// ignore: depend_on_referenced_packages
+import 'package:google_gemini/google_gemini.dart';
+
 void main() {
   runApp(const MainApp());
 }
