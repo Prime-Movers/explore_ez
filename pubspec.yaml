@@ -22,8 +22,12 @@ dependencies:
     path: packages/trip_repository
   area_repository:
     path: packages/area_repository
+  plan_repository:
+    path: packages/plan_repository
   bloc: ^8.1.2
   intl: ^0.19.0
+  get: ^4.6.6
+  http: ^1.2.0
   
 
 dev_dependencies:

@@ -8,6 +8,7 @@ class VisibleButton extends StatelessWidget {
   final bool isPush;
   final Widget widget;
   final String text;
+  final Function()? onPressed;
   const VisibleButton({
     super.key,
     required this.colorScheme,
@@ -17,6 +18,7 @@ class VisibleButton extends StatelessWidget {
     required this.isPush,
     required this.widget,
     required this.text,
+    required this.onPressed,
   });
 
   @override
@@ -27,27 +29,15 @@ class VisibleButton extends StatelessWidget {
         alignment: alignment,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: ElevatedButton(
-            onPressed: () {
-              if (isPop) {
-                Navigator.pop(context);
-              } else if (isPush) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) {
-                    return widget;
-                  }),
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.background,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+          child: FloatingActionButton.extended(
+            onPressed: onPressed,
+            backgroundColor: colorScheme.background,
+            label: Padding(
+              padding: const EdgeInsets.only(right: 8, left: 8),
+              child: Text(
+                text,
+                style: TextStyle(color: colorScheme.onBackground, fontSize: 18),
               ),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(color: colorScheme.onBackground),
             ),
           ),
         ),

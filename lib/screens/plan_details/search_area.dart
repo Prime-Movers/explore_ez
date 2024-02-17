@@ -1,4 +1,5 @@
 import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
 import 'plan_details.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SearchAreaScreen extends StatefulWidget {
 }
 
 class _SearchAreaScreenState extends State<SearchAreaScreen> {
-  final _selectedAreas = <String>{};
+  final _selectedAreas = <MyArea>{};
   bool get _hasSelectedAreas => _selectedAreas.isNotEmpty;
   @override
   Widget build(BuildContext context) {
@@ -45,18 +46,29 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
               },
             ),
           ),
-          VisibleButton(
-            colorScheme: colorScheme,
-            visible: _hasSelectedAreas,
-            alignment: Alignment.bottomRight,
-            isPop: false,
-            isPush: true,
-            widget: const PlanDetails(),
-            text: 'Next',
-          ),
         ],
       ),
+      floatingActionButton: VisibleButton(
+        colorScheme: colorScheme,
+        visible: _hasSelectedAreas,
+        alignment: Alignment.bottomRight,
+        isPop: false,
+        isPush: true,
+        widget: const PlanDetails(),
+        text: 'Next',
+        onPressed: onPressed,
+      ),
     );
+  }
+
+  Function()? onPressed() {
+    context
+        .read<CreatePlanBloc>()
+        .add(GetAreaEvent(area: _selectedAreas.first));
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return const PlanDetails();
+    }));
+    return null;
   }
 
   AppBar _buildAppBar(ColorScheme colorScheme) {
@@ -110,7 +122,7 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
   }
 
   Widget _listItem(BuildContext context, MyArea area, ColorScheme colorScheme) {
-    final isSelected = _selectedAreas.contains(area.areaName);
+    final isSelected = _selectedAreas.contains(area);
     return ListTile(
       title: Text(
         area.areaName,
@@ -124,9 +136,9 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
       onTap: () {
         setState(() {
           if (isSelected) {
-            _selectedAreas.remove(area.areaName);
+            _selectedAreas.remove(area);
           } else {
-            _selectedAreas.add(area.areaName);
+            _selectedAreas.add(area);
           }
         });
       },

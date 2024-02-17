@@ -108,10 +108,11 @@ class TripDetail extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        onPressed: () {},
         child: const Icon(
           Icons.book,
         ),
-        onPressed: () {},
       ),
     );
   }

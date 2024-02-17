@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trip_repository/trip_repository.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
 import 'package:explore_ez/screens/home/details.dart';
-import 'package:explore_ez/screens/plan_details/search_area_screen.dart';
+import 'package:explore_ez/screens/plan_details/search_area.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -32,6 +32,13 @@ class HomeScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onBackground,
+                        elevation: 10,
+                      ),
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
@@ -39,7 +46,28 @@ class HomeScreen extends StatelessWidget {
                           }),
                         );
                       },
-                      child: const Text("Create your Plan"),
+                      child: const Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: 5),
+                              child: Icon(Icons.create),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Create your Plan",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                   VerticalList(
