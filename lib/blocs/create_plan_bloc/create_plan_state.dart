@@ -23,3 +23,7 @@ class GetPlacesSuccess extends CreatePlanState {
 }
 
 class GetPlacesFailure extends CreatePlanState {}
+
+class PutPlacesSuccess extends CreatePlanState {}
+
+class PutPlacesFailure extends CreatePlanState {}

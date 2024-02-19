@@ -31,13 +31,22 @@ class CreatePlanBloc extends Bloc<CreatePlanEvent, CreatePlanState> {
       }
       if (event is GetPlacesEvent) {
         try {
-          List<Place> places = _planRepo.getPlaces();
+          List<Place> places = _planRepo.fetchPlaces();
           if (places.isEmpty) {
             emit(GetPlacesFailure());
           }
           emit(GetPlacesSuccess(places: places));
         } catch (e) {
           emit(GetPlacesFailure());
+        }
+      }
+
+      if (event is PutPlacesEvent) {
+        try {
+          _planRepo.getPlaces(event.places);
+          emit(PutPlacesSuccess());
+        } catch (e) {
+          emit(PutPlacesFailure());
         }
       }
     });

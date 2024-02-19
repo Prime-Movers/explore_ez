@@ -27,3 +27,8 @@ class GetDetailsEvent extends CreatePlanEvent {
 }
 
 class GetPlacesEvent extends CreatePlanEvent {}
+
+class PutPlacesEvent extends CreatePlanEvent {
+  final List<Place> places;
+  const PutPlacesEvent({required this.places});
+}
