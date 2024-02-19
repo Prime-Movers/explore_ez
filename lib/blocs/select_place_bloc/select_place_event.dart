@@ -8,7 +8,7 @@ abstract class SelectPlaceEvent extends Equatable {
 }
 
 class PlaceSelected extends SelectPlaceEvent {
-  final String selectPlace;
+  final Place selectPlace;
   const PlaceSelected(this.selectPlace);
   @override
   List<Object> get props => [selectPlace];

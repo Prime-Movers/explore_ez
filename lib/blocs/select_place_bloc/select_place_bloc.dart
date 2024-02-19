@@ -1,3 +1,4 @@
+import 'package:area_repository/area_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,7 +10,7 @@ class SelectPlaceBloc extends Bloc<SelectPlaceEvent, SelectPlaceState> {
     on<PlaceSelected>(_onPlaceSelected);
   }
   void _onPlaceSelected(PlaceSelected event, Emitter<SelectPlaceState> emit) {
-    final updatedSelectedPlaces = List<String>.from(state.selectedPlaces);
+    final updatedSelectedPlaces = List<Place>.from(state.selectedPlaces);
     if (updatedSelectedPlaces.contains(event.selectPlace)) {
       updatedSelectedPlaces.remove(event.selectPlace);
     } else {
