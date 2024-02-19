@@ -4,5 +4,7 @@ abstract class PlanRepo {
   Future<void> getArea(MyArea area);
   Future<void> getDetails(String beginJourney, String endJourney, String budget,
       String dailyBeginTime, String dailyEndTime);
-  List<Place> getPlaces();
+  List<Place> fetchPlaces();
+
+  Future<void> getPlaces(List<Place> places);
 }

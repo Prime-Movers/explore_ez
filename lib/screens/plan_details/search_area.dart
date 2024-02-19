@@ -1,31 +1,24 @@
 import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
 import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
+import 'package:get/get.dart';
 import 'plan_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
 
-class SearchAreaScreen extends StatefulWidget {
+class SearchAreaScreen extends StatelessWidget {
   const SearchAreaScreen({super.key});
-
-  @override
-  State<SearchAreaScreen> createState() => _SearchAreaScreenState();
-}
-
-class _SearchAreaScreenState extends State<SearchAreaScreen> {
-  final _selectedAreas = <MyArea>{};
-  bool get _hasSelectedAreas => _selectedAreas.isNotEmpty;
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      appBar: _buildAppBar(colorScheme),
+      appBar: _buildAppBar(colorScheme, context),
       backgroundColor: colorScheme.onBackground,
       body: Column(
         children: [
-          _buildSearchField(colorScheme),
+          _buildSearchField(colorScheme, context),
           Expanded(
             child: BlocBuilder<SearchAreaBloc, SearchAreaState>(
               builder: (context, state) {
@@ -33,12 +26,19 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
                   if (state.areas.isEmpty) {
                     return const Center(child: Text('No results found'));
                   }
-                  return ListView.builder(
-                    itemCount: state.areas.length,
-                    padding: const EdgeInsets.all(8),
-                    itemBuilder: (context, index) {
-                      final MyArea area = state.areas[index];
-                      return _listItem(context, area, colorScheme);
+                  List<MyArea> areas = state.areas;
+                  return BlocBuilder<SelectAreaBloc, SelectAreaState>(
+                    builder: (context, state) {
+                      return ListView.builder(
+                        itemCount: areas.length,
+                        padding: const EdgeInsets.all(8),
+                        itemBuilder: (context, index) {
+                          final isSelected = state.selectArea.areaName ==
+                              areas[index].areaName;
+                          return _listItem(
+                              context, areas[index], colorScheme, isSelected);
+                        },
+                      );
                     },
                   );
                 }
@@ -48,30 +48,38 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
           ),
         ],
       ),
-      floatingActionButton: VisibleButton(
-        colorScheme: colorScheme,
-        visible: _hasSelectedAreas,
-        alignment: Alignment.bottomRight,
-        isPop: false,
-        isPush: true,
-        widget: const PlanDetails(),
-        text: 'Next',
-        onPressed: onPressed,
+      floatingActionButton: BlocBuilder<SelectAreaBloc, SelectAreaState>(
+        builder: (context, state) {
+          if (state.selectArea.areaName != '') {
+            return VisibleButton(
+              colorScheme: colorScheme,
+              visible: true,
+              alignment: Alignment.bottomRight,
+              isPop: false,
+              isPush: true,
+              widget: const PlanDetails(),
+              text: 'Next',
+              onPressed: () {
+                context
+                    .read<CreatePlanBloc>()
+                    .add(PutAreaEvent(area: state.selectArea));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const PlanDetails();
+                  }),
+                );
+              },
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
 
-  Function()? onPressed() {
-    context
-        .read<CreatePlanBloc>()
-        .add(GetAreaEvent(area: _selectedAreas.first));
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return const PlanDetails();
-    }));
-    return null;
-  }
-
-  AppBar _buildAppBar(ColorScheme colorScheme) {
+  AppBar _buildAppBar(ColorScheme colorScheme, BuildContext context) {
     return AppBar(
       backgroundColor: colorScheme.onBackground,
       elevation: 0, // Remove default shadow
@@ -90,7 +98,7 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
     );
   }
 
-  Widget _buildSearchField(ColorScheme colorScheme) {
+  Widget _buildSearchField(ColorScheme colorScheme, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextField(
@@ -121,8 +129,8 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
     );
   }
 
-  Widget _listItem(BuildContext context, MyArea area, ColorScheme colorScheme) {
-    final isSelected = _selectedAreas.contains(area);
+  Widget _listItem(BuildContext context, MyArea area, ColorScheme colorScheme,
+      bool isSelected) {
     return ListTile(
       title: Text(
         area.areaName,
@@ -134,13 +142,7 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
       ),
       tileColor: colorScheme.secondary.withOpacity(0.1),
       onTap: () {
-        setState(() {
-          if (isSelected) {
-            _selectedAreas.remove(area);
-          } else {
-            _selectedAreas.add(area);
-          }
-        });
+        context.read<SelectAreaBloc>().add(SelectArea(selectedArea: area));
       },
       leading: Container(
         width: 40,
@@ -149,11 +151,8 @@ class _SearchAreaScreenState extends State<SearchAreaScreen> {
           color: colorScheme.primary.withOpacity(0.2),
           shape: BoxShape.circle,
         ),
-        child: Icon(
-          isSelected ? Icons.check_circle : Icons.circle_outlined,
-          color: colorScheme.primary,
-          size: 24,
-        ),
+        child: Icon(isSelected ? Icons.check_circle : Icons.circle_outlined,
+            color: colorScheme.primary, size: 24),
       ),
     );
   }

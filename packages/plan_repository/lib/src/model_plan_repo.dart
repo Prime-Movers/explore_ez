@@ -12,11 +12,12 @@ class ModelPlanRepo implements PlanRepo {
       dailyBeginTime: "",
       dailyEndTime: "",
       places: []);
+  List<Place> places = [];
   @override
   Future<void> getArea(MyArea area) async {
     try {
       plan.areaName = area.areaName;
-      plan.places = area.places;
+      places = area.places;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -35,9 +36,19 @@ class ModelPlanRepo implements PlanRepo {
   }
 
   @override
-  List<Place> getPlaces() {
+  List<Place> fetchPlaces() {
     try {
-      return plan.places;
+      return places;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> getPlaces(List<Place> places) async {
+    try {
+      plan.places = places;
     } catch (e) {
       log(e.toString());
       rethrow;

@@ -9,17 +9,21 @@ sealed class CreatePlanState extends Equatable {
 
 final class CreatePlanInitial extends CreatePlanState {}
 
-class GetAreaFailure extends CreatePlanState {}
+class PutAreaSuccess extends CreatePlanState {}
+
+class PutAreaFailure extends CreatePlanState {}
 
 class GetDetailsFailure extends CreatePlanState {}
 
-class GetAreaSuccess extends CreatePlanState {}
-
 class GetDetailsSuccess extends CreatePlanState {}
 
-class SelectPlacesSuccess extends CreatePlanState {
+class GetPlacesSuccess extends CreatePlanState {
   final List<Place> places;
-  const SelectPlacesSuccess({required this.places});
+  const GetPlacesSuccess({required this.places});
 }
 
-class SelectPlacesFailure extends CreatePlanState {}
+class GetPlacesFailure extends CreatePlanState {}
+
+class PutPlacesSuccess extends CreatePlanState {}
+
+class PutPlacesFailure extends CreatePlanState {}

@@ -108,7 +108,7 @@ class _PlanDetailsState extends State<PlanDetails> {
           budget: budget));
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        BlocProvider.of<CreatePlanBloc>(context).add(SelectPlacesEvent());
+        BlocProvider.of<CreatePlanBloc>(context).add(GetPlacesEvent());
         return const PlaceSelectionScreen();
       }));
     }

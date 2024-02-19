@@ -1,5 +1,8 @@
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
+import 'package:explore_ez/components/visible_button.dart';
+import 'package:explore_ez/screens/plan_details/review_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,7 +18,7 @@ class PlaceSelectionScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<CreatePlanBloc, CreatePlanState>(
           builder: (context, state) {
-            if (state is SelectPlacesSuccess) {
+            if (state is GetPlacesSuccess) {
               return ListView(
                 children: <Widget>[
                   const Padding(
@@ -39,6 +42,33 @@ class PlaceSelectionScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: BlocBuilder<SelectPlaceBloc, SelectPlaceState>(
+        builder: (context, state) {
+          if (state.selectedPlaces.isNotEmpty) {
+            return VisibleButton(
+              colorScheme: Theme.of(context).colorScheme,
+              visible: true,
+              alignment: Alignment.bottomRight,
+              isPop: false,
+              isPush: false,
+              widget: const ReviewPlan(),
+              text: "Next",
+              onPressed: () {
+                BlocProvider.of<CreatePlanBloc>(context)
+                    .add(PutPlacesEvent(places: state.selectedPlaces));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const ReviewPlan();
+                  }),
+                );
+              },
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 }
@@ -49,28 +79,35 @@ class VerticalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: ListView.builder(
-        primary: false,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: places.length,
-        itemBuilder: (BuildContext context, int index) {
-          Place currentPlace = places[index];
-          return VerticalPlaceItem(
-            currentPlace: currentPlace,
-          );
-        },
-      ),
+    return BlocBuilder<SelectPlaceBloc, SelectPlaceState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListView.builder(
+            primary: false,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: places.length,
+            itemBuilder: (BuildContext context, int index) {
+              Place currentPlace = places[index];
+              final isSelected = state.selectedPlaces.contains(currentPlace);
+              return VerticalPlaceItem(
+                currentPlace: currentPlace,
+                isSelected: isSelected,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
 
 class VerticalPlaceItem extends StatelessWidget {
   final Place currentPlace;
-  const VerticalPlaceItem({super.key, required this.currentPlace});
-
+  final bool isSelected;
+  const VerticalPlaceItem(
+      {super.key, required this.currentPlace, required this.isSelected});
   @override
   Widget build(BuildContext context) {
     String placeImage = currentPlace.placeImage;
@@ -87,6 +124,14 @@ class VerticalPlaceItem extends StatelessWidget {
                   height: 100.0, width: 100.0, fit: BoxFit.cover),
             ),
             const SizedBox(width: 15.0),
+            Icon(
+              isSelected
+                  ? Icons.check_box_rounded
+                  : Icons.check_box_outline_blank,
+              color: Theme.of(context).colorScheme.background,
+              size: 30,
+            ),
+            const SizedBox(width: 15.0),
             Text(
               placeName,
               style: const TextStyle(
@@ -98,7 +143,10 @@ class VerticalPlaceItem extends StatelessWidget {
             ),
           ]),
         ),
-        onTap: () {},
+        onTap: () {
+          BlocProvider.of<SelectPlaceBloc>(context)
+              .add(PlaceSelected(currentPlace));
+        },
       ),
     );
   }

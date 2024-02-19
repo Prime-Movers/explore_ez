@@ -7,19 +7,21 @@ part 'create_plan_state.dart';
 
 class CreatePlanBloc extends Bloc<CreatePlanEvent, CreatePlanState> {
   final PlanRepo _planRepo;
+  final _selectedAreas = <MyArea>{};
   CreatePlanBloc(this._planRepo) : super(CreatePlanInitial()) {
     on<CreatePlanEvent>((event, emit) {
-      if (event is GetAreaEvent) {
+      if (event is PutAreaEvent) {
         try {
           _planRepo.getArea(event.area);
-          emit(GetAreaSuccess());
+          emit(PutAreaSuccess());
         } catch (e) {
-          emit(GetAreaFailure());
+          emit(PutAreaFailure());
         }
       }
 
       if (event is GetDetailsEvent) {
         try {
+          _planRepo.getArea(_selectedAreas.first);
           _planRepo.getDetails(event.startDate, event.endDate, event.budget,
               event.startTime, event.endTime);
           emit(GetDetailsSuccess());
@@ -27,12 +29,24 @@ class CreatePlanBloc extends Bloc<CreatePlanEvent, CreatePlanState> {
           emit(GetDetailsFailure());
         }
       }
-      if (event is SelectPlacesEvent) {
+      if (event is GetPlacesEvent) {
         try {
-          List<Place> places = _planRepo.getPlaces();
-          emit(SelectPlacesSuccess(places: places));
+          List<Place> places = _planRepo.fetchPlaces();
+          if (places.isEmpty) {
+            emit(GetPlacesFailure());
+          }
+          emit(GetPlacesSuccess(places: places));
         } catch (e) {
-          emit(SelectPlacesFailure());
+          emit(GetPlacesFailure());
+        }
+      }
+
+      if (event is PutPlacesEvent) {
+        try {
+          _planRepo.getPlaces(event.places);
+          emit(PutPlacesSuccess());
+        } catch (e) {
+          emit(PutPlacesFailure());
         }
       }
     });

@@ -7,11 +7,9 @@ sealed class CreatePlanEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAreaEvent extends CreatePlanEvent {
+class PutAreaEvent extends CreatePlanEvent {
   final MyArea area;
-  const GetAreaEvent({
-    required this.area,
-  });
+  const PutAreaEvent({required this.area});
 }
 
 class GetDetailsEvent extends CreatePlanEvent {
@@ -28,4 +26,9 @@ class GetDetailsEvent extends CreatePlanEvent {
       required this.budget});
 }
 
-class SelectPlacesEvent extends CreatePlanEvent {}
+class GetPlacesEvent extends CreatePlanEvent {}
+
+class PutPlacesEvent extends CreatePlanEvent {
+  final List<Place> places;
+  const PutPlacesEvent({required this.places});
+}

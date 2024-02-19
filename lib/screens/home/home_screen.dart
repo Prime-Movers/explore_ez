@@ -42,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
-                            return const SearchAreaScreen();
+                            return SearchAreaScreen();
                           }),
                         );
                       },
