@@ -1,6 +1,8 @@
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
 import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
+import 'package:explore_ez/components/visible_button.dart';
+import 'package:explore_ez/screens/plan_details/review_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,6 +42,33 @@ class PlaceSelectionScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: BlocBuilder<SelectPlaceBloc, SelectPlaceState>(
+        builder: (context, state) {
+          if (state.selectedPlaces.isNotEmpty) {
+            return VisibleButton(
+              colorScheme: Theme.of(context).colorScheme,
+              visible: true,
+              alignment: Alignment.bottomRight,
+              isPop: false,
+              isPush: false,
+              widget: const ReviewPlan(),
+              text: "Next",
+              onPressed: () {
+                BlocProvider.of<CreatePlanBloc>(context)
+                    .add(PutPlacesEvent(places: state.selectedPlaces));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (BuildContext context) {
+                    return const ReviewPlan();
+                  }),
+                );
+              },
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
     );
   }
 }
@@ -61,8 +90,7 @@ class VerticalList extends StatelessWidget {
             itemCount: places.length,
             itemBuilder: (BuildContext context, int index) {
               Place currentPlace = places[index];
-              final isSelected =
-                  state.selectedPlaces.contains(currentPlace.placeName);
+              final isSelected = state.selectedPlaces.contains(currentPlace);
               return VerticalPlaceItem(
                 currentPlace: currentPlace,
                 isSelected: isSelected,
@@ -117,7 +145,7 @@ class VerticalPlaceItem extends StatelessWidget {
         ),
         onTap: () {
           BlocProvider.of<SelectPlaceBloc>(context)
-              .add(PlaceSelected(placeName));
+              .add(PlaceSelected(currentPlace));
         },
       ),
     );

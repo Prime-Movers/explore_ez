@@ -12,7 +12,6 @@ class SearchAreaScreen extends StatelessWidget {
   const SearchAreaScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    bool visible = false;
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: _buildAppBar(colorScheme, context),
