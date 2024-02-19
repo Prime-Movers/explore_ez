@@ -1,5 +1,7 @@
 import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
 import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
 import 'package:plan_repository/plan_repository.dart';
 import 'package:trip_repository/trip_repository.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
@@ -26,6 +28,8 @@ class MainApp extends StatelessWidget {
           create: (_) => SearchAreaBloc(FirebaseAreaRepo())),
       RepositoryProvider<CreatePlanBloc>(
           create: (_) => CreatePlanBloc(ModelPlanRepo())),
+      RepositoryProvider(create: (_) => SelectAreaBloc()),
+      RepositoryProvider(create: (_) => SelectPlaceBloc()),
     ], child: const MyAppView());
   }
 }
