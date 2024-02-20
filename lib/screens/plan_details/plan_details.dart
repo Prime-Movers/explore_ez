@@ -15,11 +15,6 @@ class PlanDetails extends StatefulWidget {
 
 class _PlanDetailsState extends State<PlanDetails> {
   final _formKey = GlobalKey<FormState>();
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now();
-  String budget = "";
-  TimeOfDay startTime = TimeOfDay.now();
-  TimeOfDay endTime = TimeOfDay.now();
   TextEditingController startdateInputController = TextEditingController();
   TextEditingController enddateInputController = TextEditingController();
   TextEditingController startTimeInputController = TextEditingController();
@@ -48,7 +43,6 @@ class _PlanDetailsState extends State<PlanDetails> {
                       context,
                       "Start Date : ",
                       startdateInputController,
-                      startDate,
                     ),
                     const SizedBox(
                       height: 20,
@@ -58,7 +52,6 @@ class _PlanDetailsState extends State<PlanDetails> {
                       context,
                       "End Date : ",
                       enddateInputController,
-                      endDate,
                     ),
                     const SizedBox(
                       height: 20,
@@ -68,14 +61,12 @@ class _PlanDetailsState extends State<PlanDetails> {
                       height: 20,
                     ),
 
-                    timeField(context, "Start Time", startTimeInputController,
-                        startTime),
+                    timeField(context, "Start Time", startTimeInputController),
 
                     const SizedBox(
                       height: 20,
                     ),
-                    timeField(
-                        context, "End Time", endTimeInputController, endTime),
+                    timeField(context, "End Time", endTimeInputController),
 
                     const SizedBox(height: 20.0),
                   ],
@@ -101,11 +92,11 @@ class _PlanDetailsState extends State<PlanDetails> {
   Function()? onPressed() {
     if (_formKey.currentState!.validate()) {
       context.read<PlanDetailsBloc>().add(GetDetails(
-          startDate: startDate.toString(),
-          endDate: endDate.toString(),
-          startTime: startTime.toString(),
-          endTime: endTime.toString(),
-          budget: budget));
+          startDate: startdateInputController.text,
+          endDate: enddateInputController.text,
+          startTime: startTimeInputController.text,
+          endTime: endTimeInputController.text,
+          budget: budgetInputController.text));
 
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
@@ -123,7 +114,6 @@ class _PlanDetailsState extends State<PlanDetails> {
       controller: inputController,
       onChanged: (value) {
         inputController.text = value;
-        budget = value;
       },
       decoration: InputDecoration(
         labelText: 'Budget Amount', // More descriptive label
@@ -164,7 +154,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   }
 
   TextFormField dateField(BuildContext context, String labelText,
-      TextEditingController inputController, DateTime startDate) {
+      TextEditingController inputController) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
@@ -188,15 +178,12 @@ class _PlanDetailsState extends State<PlanDetails> {
       onTap: () async {
         DateTime? newDate = await showDatePicker(
           context: context,
-          initialDate: startDate,
-          firstDate: startDate,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
           lastDate: DateTime(2025),
         );
         if (newDate != null) {
           inputController.text = myFormat.format(newDate);
-          setState(() {
-            startDate = newDate;
-          });
         }
       },
       // Use a more descriptive function name
@@ -211,7 +198,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   }
 
   TextFormField timeField(BuildContext context, String labelText,
-      TextEditingController inputController, TimeOfDay currentTime) {
+      TextEditingController inputController) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
@@ -235,14 +222,11 @@ class _PlanDetailsState extends State<PlanDetails> {
       onTap: () async {
         TimeOfDay? newTime = await showTimePicker(
           context: context,
-          initialTime: currentTime,
+          initialTime: TimeOfDay.now(),
         );
         if (newTime != null) {
           // ignore: use_build_context_synchronously
           inputController.text = newTime.format(context);
-          setState(() {
-            currentTime = newTime;
-          });
         }
       }, // Use a more descriptive function name
       controller: inputController,
