@@ -36,3 +36,5 @@ class GetPlaces extends PlanDetailsEvent {
   @override
   List<Object> get props => [places];
 }
+
+class GetPlan extends PlanDetailsEvent {}
