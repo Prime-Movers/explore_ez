@@ -1,5 +1,6 @@
 import 'package:area_repository/area_repository.dart';
-import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
+import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
 import 'package:explore_ez/screens/plan_details/review_plan.dart';
@@ -11,14 +12,16 @@ class PlaceSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<FetchPlacesBloc>(context)
+        .add(FetchPlaces(areaName: context.read<PlanDetailsBloc>().state.area));
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<CreatePlanBloc, CreatePlanState>(
+        child: BlocBuilder<FetchPlacesBloc, FetchPlacesState>(
           builder: (context, state) {
-            if (state is GetPlacesSuccess) {
+            if (state is FetchPlacesSuccess) {
               return ListView(
                 children: <Widget>[
                   const Padding(
@@ -33,6 +36,10 @@ class PlaceSelectionScreen extends StatelessWidget {
                   ),
                   VerticalList(places: state.places),
                 ],
+              );
+            } else if (state is FetchPlacesLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             } else {
               return const Center(
@@ -54,8 +61,9 @@ class PlaceSelectionScreen extends StatelessWidget {
               widget: const ReviewPlan(),
               text: "Next",
               onPressed: () {
-                BlocProvider.of<CreatePlanBloc>(context)
-                    .add(PutPlacesEvent(places: state.selectedPlaces));
+                BlocProvider.of<PlanDetailsBloc>(context)
+                    .add(GetPlaces(places: state.selectedPlaces));
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (BuildContext context) {

@@ -11,7 +11,7 @@ class SearchAreaBloc extends Bloc<SearchAreaEvent, SearchAreaState> {
       if (event is SearchArea) {
         emit(SearchAreaLoading());
         try {
-          List<MyArea> areas = await _areaRepo.searchArea(event.value);
+          List<String> areas = await _areaRepo.searchAreaNames(event.value);
           emit(SearchAreaLoaded(areas: areas));
         } catch (e) {
           emit(SearchAreaFailure());

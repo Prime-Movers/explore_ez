@@ -14,77 +14,73 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
-        child: BlocBuilder<GetTripBloc, GetTripState>(
-          builder: (context, state) {
-            if (state is GetTripSuccess) {
-              return ListView(
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text(
-                      "Where are you \ngoing?",
-                      style: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.w600,
+        child: ListView(
+          children: <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                "Where are you \ngoing?",
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  foregroundColor: Theme.of(context).colorScheme.onBackground,
+                  elevation: 10,
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SearchAreaScreen();
+                    }),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 5),
+                        child: Icon(Icons.create),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.background,
-                        foregroundColor:
-                            Theme.of(context).colorScheme.onBackground,
-                        elevation: 10,
+                      SizedBox(
+                        width: 10,
                       ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return SearchAreaScreen();
-                          }),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(bottom: 5),
-                              child: Icon(Icons.create),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Create your Plan",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
+                      Text(
+                        "Create your Plan",
+                        style: TextStyle(fontSize: 20),
                       ),
-                    ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
                   ),
-                  VerticalList(
-                    trips: state.trips,
-                  ),
-                ],
-              );
-            } else if (state is GetTripLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return const Center(
-                child: Text("An error has occured..."),
-              );
-            }
-          },
+                ),
+              ),
+            ),
+            BlocBuilder<GetTripBloc, GetTripState>(builder: (context, state) {
+              if (state is GetTripSuccess) {
+                return VerticalList(
+                  trips: state.trips,
+                );
+              } else if (state is GetTripLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Center(
+                  child: Text("An error has occured..."),
+                );
+              }
+            }),
+          ],
         ),
       ),
     );

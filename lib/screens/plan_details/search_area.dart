@@ -1,8 +1,8 @@
-import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
-import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
-import 'package:get/get.dart';
+
 import 'plan_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,15 +26,14 @@ class SearchAreaScreen extends StatelessWidget {
                   if (state.areas.isEmpty) {
                     return const Center(child: Text('No results found'));
                   }
-                  List<MyArea> areas = state.areas;
+                  List<String> areas = state.areas;
                   return BlocBuilder<SelectAreaBloc, SelectAreaState>(
                     builder: (context, state) {
                       return ListView.builder(
                         itemCount: areas.length,
                         padding: const EdgeInsets.all(8),
                         itemBuilder: (context, index) {
-                          final isSelected = state.selectArea.areaName ==
-                              areas[index].areaName;
+                          final isSelected = state.selectArea == areas[index];
                           return _listItem(
                               context, areas[index], colorScheme, isSelected);
                         },
@@ -50,7 +49,7 @@ class SearchAreaScreen extends StatelessWidget {
       ),
       floatingActionButton: BlocBuilder<SelectAreaBloc, SelectAreaState>(
         builder: (context, state) {
-          if (state.selectArea.areaName != '') {
+          if (state.selectArea != '') {
             return VisibleButton(
               colorScheme: colorScheme,
               visible: true,
@@ -61,8 +60,8 @@ class SearchAreaScreen extends StatelessWidget {
               text: 'Next',
               onPressed: () {
                 context
-                    .read<CreatePlanBloc>()
-                    .add(PutAreaEvent(area: state.selectArea));
+                    .read<PlanDetailsBloc>()
+                    .add(GetArea(area: state.selectArea));
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (BuildContext context) {
@@ -129,11 +128,11 @@ class SearchAreaScreen extends StatelessWidget {
     );
   }
 
-  Widget _listItem(BuildContext context, MyArea area, ColorScheme colorScheme,
+  Widget _listItem(BuildContext context, String area, ColorScheme colorScheme,
       bool isSelected) {
     return ListTile(
       title: Text(
-        area.areaName,
+        /*area.areaName*/ area,
         style: const TextStyle(
           color: Colors.black87,
           fontWeight: FontWeight.w500,

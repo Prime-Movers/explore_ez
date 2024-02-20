@@ -8,7 +8,7 @@ abstract class SelectAreaEvent extends Equatable {
 }
 
 class SelectArea extends SelectAreaEvent {
-  final MyArea selectedArea;
+  final String selectedArea;
   const SelectArea({required this.selectedArea});
   @override
   List<Object> get props => [selectedArea];

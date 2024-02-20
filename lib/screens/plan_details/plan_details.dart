@@ -1,4 +1,4 @@
-import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
+import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/screens/plan_details/place_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,15 +100,15 @@ class _PlanDetailsState extends State<PlanDetails> {
 
   Function()? onPressed() {
     if (_formKey.currentState!.validate()) {
-      context.read<CreatePlanBloc>().add(GetDetailsEvent(
+      context.read<PlanDetailsBloc>().add(GetDetails(
           startDate: startDate.toString(),
           endDate: endDate.toString(),
           startTime: startTime.toString(),
           endTime: endTime.toString(),
           budget: budget));
+
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        BlocProvider.of<CreatePlanBloc>(context).add(GetPlacesEvent());
         return const PlaceSelectionScreen();
       }));
     }

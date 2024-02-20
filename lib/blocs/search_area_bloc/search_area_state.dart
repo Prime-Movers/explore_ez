@@ -12,7 +12,7 @@ class SearchAreaInitial extends SearchAreaState {}
 class SearchAreaLoading extends SearchAreaState {}
 
 class SearchAreaLoaded extends SearchAreaState {
-  final List<MyArea> areas;
+  final List<String> areas;
   const SearchAreaLoaded({required this.areas});
 }
 

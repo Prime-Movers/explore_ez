@@ -1,6 +1,7 @@
 import 'package:area_repository/area_repository.dart';
+import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
+import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
-import 'package:explore_ez/blocs/create_plan_bloc/create_plan_bloc.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
 import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
@@ -20,7 +21,7 @@ class MyAppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'InstaX',
+      title: 'Explore EZ',
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
             background: Colors.black,
@@ -51,8 +52,10 @@ class MyAppView extends StatelessWidget {
                 create: (context) => SearchAreaBloc(FirebaseAreaRepo()),
               ),
               BlocProvider(
-                create: (context) => CreatePlanBloc(ModelPlanRepo()),
+                create: (context) => FetchPlacesBloc(FirebaseAreaRepo()),
               ),
+              BlocProvider(
+                  create: (context) => PlanDetailsBloc(ModelPlanRepo())),
               BlocProvider(create: (context) => SelectAreaBloc()),
               BlocProvider(create: (context) => SelectPlaceBloc()),
             ],

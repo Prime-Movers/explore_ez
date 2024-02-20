@@ -1,16 +1,15 @@
 import 'package:area_repository/area_repository.dart';
 
 class MyPlan {
-  String areaName;
+  MyArea area;
   String beginJourney;
   String endJourney;
   String budget;
   String dailyBeginTime;
   String dailyEndTime;
   List<Place> places;
-
   MyPlan(
-      {required this.areaName,
+      {required this.area,
       required this.beginJourney,
       required this.endJourney,
       required this.budget,
