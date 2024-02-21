@@ -5,7 +5,11 @@ abstract class SelectPlaceEvent extends Equatable {
 
   @override
   List<Object> get props => [];
+
+  void add(InitializeSelection initializeSelection) {}
 }
+
+class InitializeSelection extends SelectPlaceEvent {}
 
 class PlaceSelected extends SelectPlaceEvent {
   final Place selectPlace;

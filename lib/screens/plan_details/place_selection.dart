@@ -14,6 +14,7 @@ class PlaceSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<FetchPlacesBloc>(context)
         .add(FetchPlaces(areaName: context.read<PlanDetailsBloc>().state.area));
+    BlocProvider.of<SelectPlaceBloc>(context).add(InitializeSelection());
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).colorScheme.onBackground,
@@ -146,7 +147,7 @@ class VerticalPlaceItem extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 fontSize: 20.0,
               ),
-              maxLines: 2,
+              maxLines: 3,
               textAlign: TextAlign.left,
             ),
           ]),

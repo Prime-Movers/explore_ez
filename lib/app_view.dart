@@ -54,8 +54,7 @@ class MyAppView extends StatelessWidget {
               BlocProvider(
                 create: (context) => FetchPlacesBloc(FirebaseAreaRepo()),
               ),
-              BlocProvider(
-                  create: (context) => PlanDetailsBloc(ModelPlanRepo())),
+              BlocProvider(create: (context) => PlanDetailsBloc()),
               BlocProvider(create: (context) => SelectAreaBloc()),
               BlocProvider(create: (context) => SelectPlaceBloc()),
             ],

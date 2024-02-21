@@ -27,8 +27,7 @@ class MainApp extends StatelessWidget {
           create: (_) => GetTripBloc(FirebaseTripRepo())),
       RepositoryProvider<SearchAreaBloc>(
           create: (_) => SearchAreaBloc(FirebaseAreaRepo())),
-      RepositoryProvider<PlanDetailsBloc>(
-          create: (_) => PlanDetailsBloc(ModelPlanRepo())),
+      RepositoryProvider<PlanDetailsBloc>(create: (_) => PlanDetailsBloc()),
       RepositoryProvider<FetchPlacesBloc>(
           create: (_) => FetchPlacesBloc(FirebaseAreaRepo())),
       RepositoryProvider(create: (_) => SelectAreaBloc()),

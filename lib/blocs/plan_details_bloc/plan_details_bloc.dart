@@ -6,8 +6,7 @@ part 'plan_details_event.dart';
 part 'plan_details_state.dart';
 
 class PlanDetailsBloc extends Bloc<PlanDetailsEvent, PlanDetailsState> {
-  final PlanRepo _planRepo;
-  PlanDetailsBloc(this._planRepo)
+  PlanDetailsBloc()
       : super(PlanDetailsState("", "", "", "", "", "", const [], MyPlan())) {
     on<GetArea>(_getArea);
     on<GetDetails>(_getDetails);

@@ -1,3 +1,4 @@
+import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
 import 'package:explore_ez/screens/trip_plan/plan_data.dart';
@@ -30,54 +31,73 @@ class ReviewPlan extends StatelessWidget {
       body: BlocBuilder<PlanDetailsBloc, PlanDetailsState>(
           builder: (context, state) {
         return Center(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text(" Area Name : "),
-                  Text(state.area),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" Begin Journey : "),
-                  Text(state.startDate),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" End Journey : "),
-                  Text(state.endDate),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" Start Time : "),
-                  Text(state.startTime),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" End Time: "),
-                  Text(state.endTime),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" Budget : "),
-                  Text(state.budget),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text(" Places Selected : "),
-                  Text(state.places.toString()),
-                ],
-              ),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    const Text(" Area Name : "),
+                    Text(state.area),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" Begin Journey : "),
+                    Text(state.startDate),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" End Journey : "),
+                    Text(state.endDate),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" Start Time : "),
+                    Text(state.startTime),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" End Time: "),
+                    Text(state.endTime),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" Budget : "),
+                    Text(state.budget),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(" Places Selected : "),
+                    Text(
+                      printPlaces(state.places),
+                      maxLines: 10,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       }),
     );
+  }
+
+  String printPlaces(List<Place> places) {
+    String value = "";
+    for (int i = 0; i < places.length; i++) {
+      value += places[i].placeName;
+      if (i < places.length - 1) {
+        value += ",";
+      }
+    }
+    return value;
   }
 }
