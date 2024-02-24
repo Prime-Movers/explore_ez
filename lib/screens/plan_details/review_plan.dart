@@ -75,10 +75,12 @@ class ReviewPlan extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Text(" Places Selected : "),
-                    Text(
-                      printPlaces(state.places),
-                      maxLines: 10,
+                    Flexible(
+                      child: Text(
+                        "Places Selected : ${printPlaces(state.places)}",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),

@@ -44,7 +44,7 @@ class PlaceSelectionScreen extends StatelessWidget {
               );
             } else {
               return const Center(
-                child: Text("Get Plan Details"),
+                child: Text("Error in loading the places..."),
               );
             }
           },
@@ -141,14 +141,16 @@ class VerticalPlaceItem extends StatelessWidget {
               size: 30,
             ),
             const SizedBox(width: 15.0),
-            Text(
-              placeName,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 20.0,
+            Flexible(
+              child: Text(
+                placeName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15.0,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: 3,
-              textAlign: TextAlign.left,
             ),
           ]),
         ),

@@ -17,7 +17,7 @@ class MyAreaEntity {
 
   static MyAreaEntity fromDocument(Map<String, dynamic> doc) {
     List<Map<String, dynamic>> placesData =
-        List<Map<String, dynamic>>.from(doc['places']);
+        List<Map<String, dynamic>>.from(doc['Place']);
 
     return MyAreaEntity(
         areaName: doc['areaName'],
