@@ -12,12 +12,14 @@ def returnascii():
     lst=inputstr.split(',')
     a=lst[0]
     del lst[0]
+    for i in lst:
+        i+="Chennai"
     obj=TSPModel(lst)
     # d["output1"]=obj.places
     # obj+=a
     str1=a+"days"+","
     for i in obj.places:
-        str1+=i+"chennai"
+        str1+=i
     # d["output1"]=str1
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
@@ -53,7 +55,7 @@ def returnascii():
 
 
         prompt_parts = [
-        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.Within "+s
+        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.No of days="+s
         ]
 
         response = model.generate_content(prompt_parts)
