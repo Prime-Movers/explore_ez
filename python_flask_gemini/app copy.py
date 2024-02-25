@@ -1,17 +1,24 @@
 from flask import Flask,request,jsonify
 import google.generativeai as genai
+from distance_matrix import TSPModel
+
+
 app = Flask(__name__)
 
 @app.route('/api',methods = ['GET'])
 def returnascii():
     d={}
     inputstr = str(request.args['query'])
-    lst=inputstr.split(',',1)
+    lst=inputstr.split(',')
     a=lst[0]
     del lst[0]
-    obj= TSPModel(lst)
-    d["output1"]=obj
-    obj+=a
+    # print(lst)
+    # obj= TSPModel(lst)
+    # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
+    obj=TSPModel(lst)
+    # print(obj.places)
+    d["output1"]=obj.places
+    # obj+=a
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -52,7 +59,7 @@ def returnascii():
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
-    model(obj)    
+    # model(obj)    
     return jsonify(d)
 if __name__ == '__main__':
     app.run()
