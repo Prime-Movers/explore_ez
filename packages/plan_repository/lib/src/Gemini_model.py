@@ -12,6 +12,8 @@ def returnascii():
     lst=inputstr.split(',')
     a=lst[0]
     del lst[0]
+    for i in lst:
+        i+="Chennai"
     obj=TSPModel(lst)
     # d["output1"]=obj.places
     # obj+=a
@@ -53,7 +55,7 @@ def returnascii():
 
 
         prompt_parts = [
-        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.Within "+s
+        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.No of days="+s
         ]
 
         response = model.generate_content(prompt_parts)
