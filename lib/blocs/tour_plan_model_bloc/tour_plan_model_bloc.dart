@@ -7,11 +7,11 @@ part 'tour_plan_model_state.dart';
 class TourPlanModelBloc extends Bloc<TourPlanModelEvent, TourPlanModelState> {
   final PlanRepo _planRepo;
   TourPlanModelBloc(this._planRepo) : super(TourPlanModelInitial()) {
-    on<TourPlanModelEvent>((event, emit) {
+    on<TourPlanModelEvent>((event, emit) async {
       if (event is GetTourPlan) {
         emit(TourPlanModelLoading());
         try {
-          String tourPlan = _planRepo.getPlan(event.plan);
+          final String tourPlan = await _planRepo.getPlan(event.plan);
           emit(TourPlanModelSuccess(tourPlan: tourPlan));
         } catch (e) {
           emit(TourPlanModelFailure());

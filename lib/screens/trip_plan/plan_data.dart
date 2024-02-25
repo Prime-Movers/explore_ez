@@ -15,7 +15,7 @@ class PlanData extends StatelessWidget {
       body: BlocBuilder<TourPlanModelBloc, TourPlanModelState>(
         builder: (context, state) {
           if (state is TourPlanModelLoading) {
-            return const CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator());
           } else if (state is TourPlanModelSuccess) {
             return Center(
               child: Padding(

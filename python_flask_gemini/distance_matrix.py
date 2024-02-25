@@ -47,6 +47,6 @@ class TSPModel:
       route+=", "
     self.places=route
 # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
-# place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach"]
-# obj=TSPModel(place)
-# print(obj.places)
+place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach"]
+obj=TSPModel(place)
+print(obj.places)
