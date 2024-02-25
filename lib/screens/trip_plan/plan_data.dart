@@ -18,7 +18,14 @@ class PlanData extends StatelessWidget {
             return const CircularProgressIndicator();
           } else if (state is TourPlanModelSuccess) {
             return Center(
-              child: Text(state.tourPlan),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Flexible(
+                    child: Text(
+                  state.tourPlan,
+                  maxLines: 100,
+                )),
+              ),
             );
           } else {
             return const Center(
