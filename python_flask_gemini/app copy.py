@@ -12,13 +12,12 @@ def returnascii():
     lst=inputstr.split(',')
     a=lst[0]
     del lst[0]
-    # print(lst)
-    # obj= TSPModel(lst)
-    # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
     obj=TSPModel(lst)
-    # print(obj.places)
     d["output1"]=obj.places
     # obj+=a
+    str1=a
+    for i in obj.places:
+        str1+=i
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -53,13 +52,14 @@ def returnascii():
 
 
         prompt_parts = [
-        "Make a tour plan for these places in Chennai, the plan must be optimized based on the minimum distance and time to travel, the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.Within no of days"+s
+        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.Within no of days"+s
         ]
 
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
-    # model(obj)    
-    return jsonify(d)
+    model(str1)    
+    # return jsonify(d)
+    return d 
 if __name__ == '__main__':
     app.run()
