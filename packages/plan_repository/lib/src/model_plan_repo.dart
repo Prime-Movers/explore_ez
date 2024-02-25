@@ -5,15 +5,27 @@ import 'package:plan_repository/src/models/plan.dart';
 import 'package:plan_repository/src/plan_repo.dart';
 
 class ModelPlanRepo implements PlanRepo {
+  String url = "";
+  var data;
+  String output = "";
   @override
   String getPlan(MyPlan plan) {
-    var data;
-    String days =
-        daysBetween(plan.startDate as DateTime, plan.endDate as DateTime)
-            as String;
-    String value = days + "," + plan.area as String;
-    String url = 'http://10.0.2.2:5000/api?query=' + value;
-    return "Hello there";
+    int days =
+        daysBetween(plan.startDate as DateTime, plan.endDate as DateTime);
+    List value1 = plan.places;
+    String value = value1.join(",");
+    value += "$days";
+    // String value = days + "," + plan.area as String;
+    url = 'http://10.0.2.2:5000/api?query=' + value;
+    String ans = getdata(url) as String;
+    return ans;
+  }
+
+  Future<String> getdata(String url) async {
+    data = await fetchdata(url);
+    var decoded = jsonDecode(data);
+    output = decoded['output'];
+    return output;
   }
 
   int daysBetween(DateTime from, DateTime to) {
