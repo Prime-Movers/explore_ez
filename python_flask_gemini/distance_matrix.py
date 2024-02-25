@@ -20,13 +20,13 @@ class TSPModel:
   
   def __init__(self,places):
     gmaps_client=googlemaps.Client(key="AIzaSyCzrc2PIy4hiaVp53zFxoLhv88psoqGHsg")
-    result =  []
+    # result =  []
     distance_dict={}
     for place1 in places:
       for place2 in places:
         direction_result=gmaps_client.directions(place1,place2,mode="driving")
-        a=place1+" "+place2
-        result.append((a,direction_result[0]['legs'][0]['distance']['text']))
+        # a=place1+" "+place2
+        # result.append((a,direction_result[0]['legs'][0]['distance']['text']))
         distance_dict[place1,place2]=direction_result[0]['legs'][0]['distance']['value']
     distance=[]
     for place in places:
@@ -39,7 +39,7 @@ class TSPModel:
 
     permutation,distance = solve_tsp_simulated_annealing(distance_matrix)
     # permutation,distance = solve_tsp_dynamic_programming(distance_matrix)
-    permutation
+    # permutation
 
     route = ""
     for i in permutation:
@@ -47,5 +47,6 @@ class TSPModel:
       route+=", "
     self.places=route
 # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
+# place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach"]
 # obj=TSPModel(place)
 # print(obj.places)
