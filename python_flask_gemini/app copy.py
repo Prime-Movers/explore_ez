@@ -6,10 +6,12 @@ app = Flask(__name__)
 def returnascii():
     d={}
     inputstr = str(request.args['query'])
-    # answer = str(ord(intputchr))
     lst=inputstr.split(',',1)
+    a=lst[0]
     del lst[0]
-    d["output1"]=lst
+    obj= TSPModel(lst)
+    d["output1"]=obj
+    obj+=a
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -50,7 +52,7 @@ def returnascii():
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
-    model(inputstr)
+    model(obj)    
     return jsonify(d)
 if __name__ == '__main__':
     app.run()
