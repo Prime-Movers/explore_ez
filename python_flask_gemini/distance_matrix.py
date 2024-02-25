@@ -3,7 +3,7 @@
 # !pip install python_tsp
 
 import googlemaps
-gmaps_client=googlemaps.Client(key="AIzaSyCzrc2PIy4hiaVp53zFxoLhv88psoqGHsg")
+
 
 # print(direction_result[0]['legs'][0]['distance'])
 # print(direction_result[0]['legs'][0]['duration'])
@@ -17,10 +17,9 @@ from python_tsp.heuristics import solve_tsp_simulated_annealing
 
 
 class TSPModel:
-
+  
   def __init__(self,places):
-    # places=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
-
+    gmaps_client=googlemaps.Client(key="AIzaSyCzrc2PIy4hiaVp53zFxoLhv88psoqGHsg")
     result =  []
     distance_dict={}
     for place1 in places:
@@ -44,7 +43,9 @@ class TSPModel:
 
     route = ""
     for i in permutation:
-      route+=i
+      route+=places[i]
       route+=", "
-    return route
-
+    self.places=route
+# place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
+# obj=TSPModel(place)
+# print(obj.places)
