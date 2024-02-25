@@ -17,7 +17,7 @@ def returnascii():
     # obj+=a
     str1=a+"days"+","
     for i in obj.places:
-        str1+=i
+        str1+=i+"chennai"
     # d["output1"]=str1
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
