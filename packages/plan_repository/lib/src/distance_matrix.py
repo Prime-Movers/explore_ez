@@ -19,7 +19,7 @@ from python_tsp.heuristics import solve_tsp_simulated_annealing
 class TSPModel:
   
   def __init__(self,places):
-    gmaps_client=googlemaps.Client(key="AIzaSyCzrc2PIy4hiaVp53zFxoLhv88psoqGHsg")
+    gmaps_client=googlemaps.Client(key="AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE")
     # result =  []
     distance_dict={}
     for place1 in places:
