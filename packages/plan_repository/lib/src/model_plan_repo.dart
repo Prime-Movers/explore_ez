@@ -18,11 +18,12 @@ class ModelPlanRepo implements PlanRepo {
       value += plan.places[i].placeName + " " + "chennai" + "," + " ";
     }
     value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
-    // String value1 = plan.places[0].placeName;
-    // String value = value1.join(",");
     // value += "$days";
     // String value = days + "," + plan.area as String;
-    url = 'http://10.0.2.2:5000/api?query=' + value;
+    url =
+        'https://f5f1-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=' +
+            value;
+    // url = 'http://10.0.2.2:5000/?query=' + value;
     try {
       final String ans = await getdata(url);
       return ans;
