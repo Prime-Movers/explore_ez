@@ -20,7 +20,7 @@ class ModelPlanRepo implements PlanRepo {
       }
       value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
       url =
-          "https://9e5e-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=" +
+          "https://41ea-2405-201-e01b-1117-6577-935d-a1b8-4d5c.ngrok-free.app/?query=" +
               value;
       // url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
@@ -51,7 +51,7 @@ class ModelPlanRepo implements PlanRepo {
   }
 
   List<DayPlan> getDayPlanData(String val) {
-    Map<String, dynamic> jsonData = json.decode(val);
+    Map<int, dynamic> jsonData = json.decode(val);
     List<DayPlan> dayPlanData = [];
     jsonData.forEach((key, value) {
       dayPlanData.add(DayPlan.fromEntity(DayPlanEntity.fromDocument(value)));
