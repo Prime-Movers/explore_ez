@@ -57,7 +57,7 @@ def returnascii():
         # prompt_parts =  [ "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days and in table formate.Maximum days="+s ]
         prompt_parts=[
         {
-          "text": "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days and in table formate.Maximum days="+s
+          "text": "Make a tour plan for these places in Chennai, the plan must be optimized based on  with an exact time slot, and the entry fee. Give results in minimum no days and in table formate.Maximum days="+s
         }
         ]
         response = model.generate_content(prompt_parts)
