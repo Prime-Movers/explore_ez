@@ -35,17 +35,15 @@ class TripDetail extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
+                  Flexible(
                     child: Text(
                       tripName,
                       // "hello world",
                       style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 25,
-                      ),
-                      maxLines: 2,
+                          fontWeight: FontWeight.w700, fontSize: 30),
+                      maxLines: 3,
                       textAlign: TextAlign.left,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
