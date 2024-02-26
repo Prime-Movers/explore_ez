@@ -1,10 +1,8 @@
+import json
 from flask import Flask,request,jsonify
 import google.generativeai as genai
 from distance_matrix import TSPModel
-
-
 app = Flask(__name__)
-
 @app.route('/',methods = ['GET'])
 def returnascii():
     d={}
@@ -49,21 +47,13 @@ def returnascii():
                                     generation_config=generation_config,
                                     safety_settings=safety_settings)
 
-
-        # prompt_parts = [
-        # "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days.Maximum days="+s
-        # ]
-
-        # prompt_parts =  [ "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days and in table formate.Maximum days="+s ]
-        prompt_parts=[
-        {
-          "text": "Make a tour plan for these places in Chennai, the plan must be optimized based on  with an exact time slot, and the entry fee. Give results in minimum no days and in table formate.Maximum days="+s
-        }
+        prompt_parts = [
+        "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in single line eg {\"day1\"={\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"day2\"=detials} .Maximum days="+s
         ]
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
     model(str1)
-    return jsonify(d) 
+    return d
 if __name__ == '__main__':
     app.run()
