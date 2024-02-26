@@ -8,7 +8,7 @@ class ModelPlanRepo implements PlanRepo {
   String output = "";
 
   @override
-  Future<String> getPlan(MyPlan plan) async {
+  Future<List<DayPlan>> getPlan(MyPlan plan) async {
     String value = "";
     int days = 1;
     try {
@@ -19,19 +19,16 @@ class ModelPlanRepo implements PlanRepo {
         value += plan.places[i].placeName + " " + "chennai" + "," + " ";
       }
       value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
-      url =
+      /*url =
           "https://9e5e-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=" +
-              value;
-      // url = 'http://10.0.2.2:5000/?query=' + value;
+              value;*/
+      url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
-      try {
-        List<DayPlan> dayPlanData = getDayPlanData(ans);
-        log(dayPlanData.toString());
-      } catch (e) {
-        log(e.toString());
-        rethrow;
-      }
-      return ans;
+
+      List<DayPlan> dayPlanData = getDayPlanData(ans);
+      log(dayPlanData.toString());
+
+      return dayPlanData;
     } catch (e) {
       log(e.toString());
       rethrow;
