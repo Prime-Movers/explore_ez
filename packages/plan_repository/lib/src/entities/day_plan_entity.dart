@@ -13,7 +13,7 @@ class DayPlanEntity {
       required this.distFromPrevLoc,
       required this.travelTime});
 
-  static DayPlanEntity fromDocument(Map<int, dynamic> doc) {
+  static DayPlanEntity fromDocument(Map<String, dynamic> doc) {
     return DayPlanEntity(
         day: doc['day'].toString(),
         placeName: doc['place_name'],

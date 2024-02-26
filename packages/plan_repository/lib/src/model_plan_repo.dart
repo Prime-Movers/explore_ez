@@ -51,7 +51,7 @@ class ModelPlanRepo implements PlanRepo {
   }
 
   List<DayPlan> getDayPlanData(String val) {
-    Map<int, dynamic> jsonData = json.decode(val);
+    Map<String, dynamic> jsonData = json.decode(val);
     List<DayPlan> dayPlanData = [];
     jsonData.forEach((key, value) {
       dayPlanData.add(DayPlan.fromEntity(DayPlanEntity.fromDocument(value)));
