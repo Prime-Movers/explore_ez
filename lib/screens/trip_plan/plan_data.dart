@@ -54,7 +54,7 @@ class VerticalList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         primary: false,
         physics: const NeverScrollableScrollPhysics(),
@@ -85,31 +85,70 @@ class VerticalPlaceItem extends StatelessWidget {
     String timeSlot = dayPlan.timeSlot;
     String travelTime = dayPlan.travelTime;
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: InkWell(
-        child: SizedBox(
-          height: 100.0,
-          child: Row(children: <Widget>[
-            const SizedBox(width: 15.0),
-            Flexible(
-              child: Text(
-                placeName +
-                    distFromPrevLoc +
-                    entryFee +
-                    timeSlot +
-                    travelTime +
-                    day,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20.0,
-                ),
-                maxLines: 6,
-                overflow: TextOverflow.ellipsis,
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Day $day",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20.0,
+              ),
+              textAlign: TextAlign.left,
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Text(
+              "Place : $placeName",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 20.0,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              "Time Slot :  $timeSlot",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 10.0,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              "Entry Free :  $entryFee",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 10.0,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              "Distance From previous place :  $distFromPrevLoc",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 10.0,
+              ),
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            Text(
+              "travel time :  $travelTime",
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 10.0,
               ),
             ),
           ]),
-        ),
-      ),
     );
   }
 }

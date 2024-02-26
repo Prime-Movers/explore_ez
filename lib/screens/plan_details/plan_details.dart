@@ -61,12 +61,14 @@ class _PlanDetailsState extends State<PlanDetails> {
                       height: 20,
                     ),
 
-                    timeField(context, "Start Time", startTimeInputController),
+                    timeField(context, "Start Time", startTimeInputController,
+                        const TimeOfDay(hour: 8, minute: 00)),
 
                     const SizedBox(
                       height: 20,
                     ),
-                    timeField(context, "End Time", endTimeInputController),
+                    timeField(context, "End Time", endTimeInputController,
+                        const TimeOfDay(hour: 18, minute: 00)),
 
                     const SizedBox(height: 20.0),
                   ],
@@ -198,7 +200,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   }
 
   TextFormField timeField(BuildContext context, String labelText,
-      TextEditingController inputController) {
+      TextEditingController inputController, TimeOfDay defaultTime) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
@@ -222,7 +224,7 @@ class _PlanDetailsState extends State<PlanDetails> {
       onTap: () async {
         TimeOfDay? newTime = await showTimePicker(
           context: context,
-          initialTime: TimeOfDay.now(),
+          initialTime: defaultTime,
         );
         if (newTime != null) {
           // ignore: use_build_context_synchronously
