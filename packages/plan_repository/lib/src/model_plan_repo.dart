@@ -14,7 +14,8 @@ class ModelPlanRepo implements PlanRepo {
     try {
       days = calculateDays(plan.startDate, plan.endDate);
       value += "$days" + ",";
-      // value += "$days" + ",";
+      value += plan.startTime + "-" + plan.endTime + "time fram per day" + ",";
+      value += plan.budget + "total budget for trip";
       for (int i = 0; i < plan.places.length - 1; i++) {
         value += plan.places[i].placeName + " " + "chennai" + "," + " ";
       }
