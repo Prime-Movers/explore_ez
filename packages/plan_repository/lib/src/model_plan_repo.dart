@@ -24,8 +24,13 @@ class ModelPlanRepo implements PlanRepo {
               value;
       // url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
-      List<DayPlan> dayPlanData = getDayPlanData(ans);
-      log(dayPlanData.toString());
+      try {
+        List<DayPlan> dayPlanData = getDayPlanData(ans);
+        log(dayPlanData.toString());
+      } catch (e) {
+        log(e.toString());
+        rethrow;
+      }
       return ans;
     } catch (e) {
       log(e.toString());
