@@ -16,8 +16,7 @@ def returnascii():
     str1=a+"days"+","
     for i in obj.places:
         str1+=i
-    # d["output1"]=inputstr
-    # return jsonify(d)
+
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -51,16 +50,20 @@ def returnascii():
                                     safety_settings=safety_settings)
 
 
-        prompt_parts = [
-        "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. give results in table formate each day separately.No of days="+s
-        ]
+        # prompt_parts = [
+        # "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days.Maximum days="+s
+        # ]
 
+        # prompt_parts =  [ "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days and in table formate.Maximum days="+s ]
+        prompt_parts=[
+        {
+          "text": "Make a tour plan for these places in Chennai, the plan must be optimized based on  the best time to visit, and the entry fee with an exact time slot. Give results in minimum no days and in table formate.Maximum days="+s
+        }
+        ]
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
     model(str1)
-    # model(inputstr)
-    # return jsonify(d)
-    return d 
+    return jsonify(d) 
 if __name__ == '__main__':
     app.run()

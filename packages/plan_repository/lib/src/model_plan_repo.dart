@@ -21,7 +21,7 @@ class ModelPlanRepo implements PlanRepo {
     // value += "$days";
     // String value = days + "," + plan.area as String;
     url =
-        'https://f5f1-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=' +
+        'https://60a7-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=' +
             value;
     // url = 'http://10.0.2.2:5000/?query=' + value;
     try {
