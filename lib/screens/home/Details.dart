@@ -39,9 +39,10 @@ class TripDetail extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       tripName,
+                      // "hello world",
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
-                        fontSize: 50,
+                        fontSize: 25,
                       ),
                       maxLines: 2,
                       textAlign: TextAlign.left,
