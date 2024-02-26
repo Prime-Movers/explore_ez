@@ -93,67 +93,17 @@ class VerticalPlaceItem extends StatelessWidget {
             const SizedBox(width: 15.0),
             Flexible(
               child: Text(
-                placeName,
+                placeName +
+                    distFromPrevLoc +
+                    entryFee +
+                    timeSlot +
+                    travelTime +
+                    day,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 20.0,
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                day,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10.0,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                timeSlot,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15.0,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                distFromPrevLoc,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15.0,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                entryFee,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15.0,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Flexible(
-              child: Text(
-                travelTime,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15.0,
-                ),
-                maxLines: 2,
+                maxLines: 6,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
