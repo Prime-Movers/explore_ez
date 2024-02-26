@@ -55,6 +55,6 @@ class ModelPlanRepo implements PlanRepo {
       dayPlanData
           .add(DayPlan.fromEntity(DayPlanEntity.fromDocument(key, value)));
     });
-    return [];
+    return dayPlanData;
   }
 }
