@@ -20,7 +20,7 @@ class _PlanDetailsState extends State<PlanDetails> {
   TextEditingController startTimeInputController = TextEditingController();
   TextEditingController endTimeInputController = TextEditingController();
   TextEditingController budgetInputController = TextEditingController();
-  var myFormat = DateFormat('d-MM-yyyy');
+  var myFormat = DateFormat('yyyy-MM-dd');
 
   @override
   Widget build(BuildContext context) {

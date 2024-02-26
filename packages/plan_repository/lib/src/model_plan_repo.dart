@@ -11,20 +11,20 @@ class ModelPlanRepo implements PlanRepo {
 
   @override
   Future<String> getPlan(MyPlan plan) async {
-    String value = "2,";
-    // int days =
-    //     daysBetween(plan.startDate as DateTime, plan.endDate as DateTime);
-    for (int i = 0; i < plan.places.length - 1; i++) {
-      value += plan.places[i].placeName + " " + "chennai" + "," + " ";
-    }
-    value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
-    // value += "$days";
-    // String value = days + "," + plan.area as String;
-    url =
-        'https://60a7-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=' +
-            value;
-    // url = 'http://10.0.2.2:5000/?query=' + value;
+    String value = "";
+    int days = 1;
     try {
+      days = calculateDays(plan.startDate, plan.endDate);
+      value += "$days" + ",";
+      // value += "$days" + ",";
+      for (int i = 0; i < plan.places.length - 1; i++) {
+        value += plan.places[i].placeName + " " + "chennai" + "," + " ";
+      }
+      value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
+      url =
+          "https://d31e-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=" +
+              value;
+      // url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
       return ans;
     } catch (e) {
@@ -32,17 +32,17 @@ class ModelPlanRepo implements PlanRepo {
       rethrow;
     }
   }
-
   Future<String> getdata(String url) async {
     data = await fetchdata(url);
     var decoded = jsonDecode(data);
     output = decoded['output'];
     return output;
   }
+  int calculateDays(String startDate, String endDate) {
+    DateTime startDateTime = DateTime.parse(startDate);
+    DateTime endDateTime = DateTime.parse(endDate);
 
-  int daysBetween(DateTime from, DateTime to) {
-    from = DateTime(from.year, from.month, from.day);
-    to = DateTime(to.year, to.month, to.day);
-    return (to.difference(from).inHours / 24).round();
+    Duration difference = endDateTime.difference(startDateTime);
+    return difference.inDays;
   }
 }
