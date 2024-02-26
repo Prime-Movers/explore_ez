@@ -5,22 +5,19 @@ from distance_matrix import TSPModel
 
 app = Flask(__name__)
 
-@app.route('/api',methods = ['GET'])
+@app.route('/',methods = ['GET'])
 def returnascii():
     d={}
     inputstr = str(request.args['query'])
     lst=inputstr.split(',')
     a=lst[0]
     del lst[0]
-    for i in lst:
-        i+="Chennai"
     obj=TSPModel(lst)
-    # d["output1"]=obj.places
-    # obj+=a
     str1=a+"days"+","
     for i in obj.places:
         str1+=i
-    # d["output1"]=str1
+    # d["output1"]=inputstr
+    # return jsonify(d)
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -61,7 +58,8 @@ def returnascii():
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
-    model(str1)    
+    model(str1)
+    # model(inputstr)
     # return jsonify(d)
     return d 
 if __name__ == '__main__':
