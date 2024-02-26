@@ -47,8 +47,11 @@ def returnascii():
                                     generation_config=generation_config,
                                     safety_settings=safety_settings)
 
+        # prompt_parts = [
+        # "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in single line eg {\"day1\"={\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"day2\"=detials} .Maximum days="+s
+        # ]
         prompt_parts = [
-        "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in single line eg {\"day1\"={\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"day2\"=detials} .Maximum days="+s
+        "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {index={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days=5,National art gallery chennai,\nBesant Nagar Beach chennai,\nAmethyst cafe chennai.",
         ]
         response = model.generate_content(prompt_parts)
 
