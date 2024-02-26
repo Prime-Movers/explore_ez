@@ -20,7 +20,7 @@ class ModelPlanRepo implements PlanRepo {
       }
       value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
       url =
-          "https://d31e-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=" +
+          "https://9e5e-2405-201-e01b-1117-20ce-674e-fb3e-ba5.ngrok-free.app/?query=" +
               value;
       // url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
