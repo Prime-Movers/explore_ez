@@ -9,9 +9,13 @@ def returnascii():
     inputstr = str(request.args['query'])
     lst=inputstr.split(',')
     a=lst[0]
+    b=lst[1]
+    c=lst[2]
+    del lst[0]
+    del lst[0]
     del lst[0]
     obj=TSPModel(lst)
-    str1=a+"days"+","
+    str1=a+","+b+","+c+","
     for i in obj.places:
         str1+=i
 
@@ -51,12 +55,16 @@ def returnascii():
         # "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in single line eg {\"day1\"={\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"day2\"=detials} .Maximum days="+s
         # ]
         
+        # prompt_parts = [
+        # "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days="+s,
+        # ]
         prompt_parts = [
         "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days="+s,
         ]
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
+    # return str1    
     model(str1)
     return d
 if __name__ == '__main__':
