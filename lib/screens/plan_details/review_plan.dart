@@ -1,7 +1,7 @@
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
-import 'package:explore_ez/screens/trip_plan/plan_data.dart';
+import 'package:explore_ez/screens/trip_plan/generate_plan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +24,7 @@ class ReviewPlan extends StatelessWidget {
           BlocProvider.of<PlanDetailsBloc>(context).add(GetPlan());
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
-            return const PlanData();
+            return const GeneratePlan();
           }));
         },
       ),

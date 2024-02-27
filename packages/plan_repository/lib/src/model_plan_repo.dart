@@ -23,7 +23,7 @@ class ModelPlanRepo implements PlanRepo {
       url =
           "https://41ea-2405-201-e01b-1117-6577-935d-a1b8-4d5c.ngrok-free.app/?query=" +
               value;
-      // url = 'http://10.0.2.2:5000/?query=' + value;
+      //url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
 
       List<DayPlan> dayPlanData = getDayPlanData(ans);

@@ -1,4 +1,3 @@
-import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +8,6 @@ class PlanData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<TourPlanModelBloc>(context)
-        .add(GetTourPlan(plan: context.read<PlanDetailsBloc>().state.plan));
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       body: Padding(
