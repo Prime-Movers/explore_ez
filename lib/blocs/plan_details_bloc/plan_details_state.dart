@@ -1,5 +1,7 @@
 part of 'plan_details_bloc.dart';
 
+enum PlanStatus { changed, fixed, initial }
+
 // ignore: must_be_immutable
 class PlanDetailsState extends Equatable {
   String area;
@@ -9,9 +11,10 @@ class PlanDetailsState extends Equatable {
   String startTime;
   String endTime;
   List<Place> places;
+  PlanStatus status;
   MyPlan plan;
   PlanDetailsState(this.area, this.startDate, this.endDate, this.budget,
-      this.startTime, this.endTime, this.places, this.plan);
+      this.startTime, this.endTime, this.places, this.plan, this.status);
 
   MyPlan toPlan() {
     return MyPlan.withData(
@@ -22,6 +25,17 @@ class PlanDetailsState extends Equatable {
         startTime: startTime,
         endTime: endTime,
         places: places);
+  }
+
+  MyPlan copyWith(MyPlan plan) {
+    return MyPlan.withData(
+        area: plan.area,
+        startDate: plan.startDate,
+        endDate: plan.endDate,
+        budget: plan.budget,
+        startTime: plan.startTime,
+        endTime: plan.endTime,
+        places: plan.places);
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:explore_ez/components/strings.dart';
@@ -41,8 +43,15 @@ class GeneratePlan extends StatelessWidget {
                 elevation: 10,
               ),
               onPressed: () {
-                BlocProvider.of<TourPlanModelBloc>(context).add(GetTourPlan(
-                    plan: context.read<PlanDetailsBloc>().state.plan));
+                log(context.read<PlanDetailsBloc>().state.status.toString());
+                if (context.read<PlanDetailsBloc>().state.status ==
+                    PlanStatus.changed) {
+                  BlocProvider.of<TourPlanModelBloc>(context).add(GetTourPlan(
+                      plan: context.read<PlanDetailsBloc>().state.plan));
+                  context.read<PlanDetailsBloc>().state.status =
+                      PlanStatus.fixed;
+                }
+
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (BuildContext context) {
                     return const PlanData();

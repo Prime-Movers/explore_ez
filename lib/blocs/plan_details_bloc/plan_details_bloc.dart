@@ -7,7 +7,8 @@ part 'plan_details_state.dart';
 
 class PlanDetailsBloc extends Bloc<PlanDetailsEvent, PlanDetailsState> {
   PlanDetailsBloc()
-      : super(PlanDetailsState("", "", "", "", "", "", const [], MyPlan())) {
+      : super(PlanDetailsState(
+            "", "", "", "", "", "", const [], MyPlan(), PlanStatus.fixed)) {
     on<GetArea>(_getArea);
     on<GetDetails>(_getDetails);
     on<GetPlaces>(_getPlaces);
@@ -38,7 +39,13 @@ class PlanDetailsBloc extends Bloc<PlanDetailsEvent, PlanDetailsState> {
 
   void _getPlan(GetPlan event, Emitter<PlanDetailsState> emit) {
     PlanDetailsState details = state;
-    details.plan = state.toPlan();
+    MyPlan plan = state.toPlan();
+    if (details.plan.places == plan.places) {
+      details.status = PlanStatus.fixed;
+    } else {
+      details.plan = plan;
+      details.status = PlanStatus.changed;
+    }
     emit(details);
   }
 }
