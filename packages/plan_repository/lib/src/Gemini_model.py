@@ -14,10 +14,10 @@ def returnascii():
     del lst[0]
     del lst[0]
     del lst[0]
-    obj=TSPModel(lst)
-    str1=a+","+b+","+c+","
-    for i in obj.places:
-        str1+=i
+    # obj=TSPModel(lst)
+    # str1=a+","+b+","+c+","
+    # for i in obj.places:
+    #     str1+=i
 
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
@@ -65,7 +65,8 @@ def returnascii():
 
         d['output'] = response.text
     # return str1    
-    model(str1)
+    # model(str1)
+    model(inputstr)
     return d
 if __name__ == '__main__':
     app.run()
