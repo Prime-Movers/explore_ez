@@ -8,38 +8,42 @@ class PlanData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.onBackground,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<TourPlanModelBloc, TourPlanModelState>(
-          builder: (context, state) {
-            if (state is TourPlanModelLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TourPlanModelSuccess) {
-              return ListView(
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text(
-                      "Daily Plan",
-                      style: TextStyle(
-                        fontSize: 30.0,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  VerticalList(tourPlan: state.tourPlan),
-                ],
-              );
-            } else {
-              return const Center(
-                child: Text("An Error Occurred"),
-              );
-            }
-          },
-        ),
-      ),
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
+    return BlocBuilder<TourPlanModelBloc, TourPlanModelState>(
+      builder: (context, state) {
+        if (state is TourPlanModelLoading) {
+          return Scaffold(
+              backgroundColor: colorScheme.onBackground,
+              body: const Center(child: CircularProgressIndicator()));
+        } else if (state is TourPlanModelSuccess) {
+          return DefaultTabController(
+            length: state.tourPlan.length,
+            child: Scaffold(
+              backgroundColor: colorScheme.onBackground,
+              appBar: AppBar(
+                bottom: TabBar(
+                    tabs: state.tourPlan
+                        .map((e) => Tab(
+                              text: 'Day ${e.first.day}',
+                            ))
+                        .toList()),
+              ),
+              body: TabBarView(
+                children: state.tourPlan
+                    .map((e) => VerticalList(tourPlan: e))
+                    .toList(),
+              ),
+            ),
+          );
+        } else {
+          return Scaffold(
+            backgroundColor: colorScheme.onBackground,
+            body: const Center(
+              child: Text("An Error Occurred"),
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -50,6 +54,7 @@ class VerticalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String day = tourPlan.first.day;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
@@ -87,17 +92,6 @@ class VerticalPlaceItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              "Day $day",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 20.0,
-              ),
-              textAlign: TextAlign.left,
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
             Text(
               "Place : $placeName",
               style: const TextStyle(

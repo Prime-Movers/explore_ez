@@ -8,7 +8,7 @@ class ModelPlanRepo implements PlanRepo {
   String output = "";
 
   @override
-  Future<List<DayPlan>> getPlan(MyPlan plan) async {
+  Future<List<List<DayPlan>>> getPlan(MyPlan plan) async {
     String value = "";
     int days = 1;
     try {
@@ -28,7 +28,18 @@ class ModelPlanRepo implements PlanRepo {
       List<DayPlan> dayPlanData = getDayPlanData(ans);
       log(dayPlanData.toString());
 
-      return dayPlanData;
+      Map<String, List<DayPlan>> dayPlans = {};
+
+      for (DayPlan dayPlan in dayPlanData) {
+        final String day = dayPlan.day;
+        if (dayPlans.containsKey(day)) {
+          dayPlans[day]!.add(dayPlan);
+        } else {
+          dayPlans[day] = [dayPlan];
+        }
+      }
+
+      return dayPlans.values.toList();
     } catch (e) {
       log(e.toString());
       rethrow;
