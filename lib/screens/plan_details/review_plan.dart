@@ -1,6 +1,7 @@
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
+import 'package:explore_ez/screens/trip_plan/generate_plan.dart';
 import 'package:explore_ez/screens/trip_plan/plan_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,62 +12,55 @@ class ReviewPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFf5f5f5), // Light gray background
-      floatingActionButton: FloatingActionButton(
+      backgroundColor: Theme.of(context).colorScheme.onBackground,
+      appBar: AppBar(
+        title: const Text('Plan Review'),
+        automaticallyImplyLeading: false,
+      ),
+      floatingActionButton: VisibleButton(
+        colorScheme: Theme.of(context).colorScheme,
+        visible: true,
+        alignment: Alignment.bottomRight,
+        isPop: false,
+        isPush: false,
+        widget: const GeneratePlan(),
+        text: "Next",
         onPressed: () {
           BlocProvider.of<PlanDetailsBloc>(context).add(GetPlan());
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
-            return const PlanData();
+            return const GeneratePlan();
           }));
         },
-        child: Icon(Icons.arrow_forward),
       ),
       body: BlocBuilder<PlanDetailsBloc, PlanDetailsState>(
         builder: (context, state) {
-          var padding2 = Padding(
+          return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Use different styles for labels and values
-                buildRow("Area Name:", state.area),
-                buildRow("Begin Journey:", state.startDate),
-                buildRow("Budget:", state.budget),
-                buildRow(
-                  "Places Selected:",
-                  printPlaces(state.places),
+                _buildPlanInfoItem(Icons.location_on, 'Area Name:', state.area),
+                _buildPlanInfoItem(
+                    Icons.date_range, 'Start Date:', state.startDate),
+                _buildPlanInfoItem(
+                    Icons.date_range, 'End Date:', state.endDate),
+                _buildPlanInfoItem(Icons.attach_money, 'Budget:', state.budget),
+                _buildPlanInfoItem(
+                    Icons.access_time, 'Daily Start Time:', state.startTime),
+                _buildPlanInfoItem(
+                    Icons.access_time, 'Daily End Time:', state.endTime),
+                const SizedBox(height: 20),
+                const Text(
+                  'Selected Places:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 10),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  for (Place place in state.places)
+                    _buildPlaceItem(place.placeName),
+                ]),
               ],
-            ),
-          );
-          var list = [
-            SizedBox(height: 20),
-            // Title with a different color and increased font size
-            Text(
-              "Review Your Plan",
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xFF3f51b5), // Blue accent color
-              ),
-            ),
-            SizedBox(height: 20),
-            // Use a Card for better visual separation
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: padding2,
-            ),
-          ];
-          var children2 = list;
-          return Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: children2,
             ),
           );
         },
@@ -74,33 +68,50 @@ class ReviewPlan extends StatelessWidget {
     );
   }
 
-  Widget buildRow(String label, String value) {
-    var text = Text(
-      label,
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 18,
-      ),
+  Widget _buildPlanInfoItem(IconData icon, String title, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          size: 24,
+          color: Colors.blue,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Text(value, style: const TextStyle(fontSize: 14)),
+          ],
+        ),
+      ],
     );
-    var padding2 = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+  }
+
+  Widget _buildPlaceItem(String place) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          text,
-          SizedBox(width: 10),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 16,
+          const Icon(
+            Icons.place,
+            size: 20,
+            color: Colors.green,
+          ),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              place,
+              style: const TextStyle(fontSize: 14),
             ),
           ),
         ],
       ),
     );
-    return padding2;
-  }
-
-  String printPlaces(List<Place> places) {
-    return places.map((place) => place.placeName).join(', ');
   }
 }

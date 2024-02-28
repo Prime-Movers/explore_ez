@@ -2,6 +2,7 @@ import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart'
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plan_repository/plan_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PlanData extends StatelessWidget {
   const PlanData({super.key});
@@ -13,6 +14,7 @@ class PlanData extends StatelessWidget {
       builder: (context, state) {
         if (state is TourPlanModelLoading) {
           return Scaffold(
+              appBar: AppBar(automaticallyImplyLeading: false),
               backgroundColor: colorScheme.onBackground,
               body: const Center(child: CircularProgressIndicator()));
         } else if (state is TourPlanModelSuccess) {
@@ -21,6 +23,7 @@ class PlanData extends StatelessWidget {
             child: Scaffold(
               backgroundColor: colorScheme.onBackground,
               appBar: AppBar(
+                automaticallyImplyLeading: false,
                 bottom: TabBar(
                     tabs: state.tourPlan
                         .map((e) => Tab(
@@ -30,16 +33,19 @@ class PlanData extends StatelessWidget {
               ),
               body: TabBarView(
                 children: state.tourPlan
-                    .map((e) => VerticalList(tourPlan: e))
+                    .map((e) => Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: VerticalList(tourPlan: e)))
                     .toList(),
               ),
             ),
           );
         } else {
           return Scaffold(
+            appBar: AppBar(automaticallyImplyLeading: false),
             backgroundColor: colorScheme.onBackground,
             body: const Center(
-              child: Text("An Error Occurred"),
+              child: Text("Unable to Get the Plan"),
             ),
           );
         }
@@ -54,12 +60,10 @@ class VerticalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String day = tourPlan.first.day;
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         primary: false,
-        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: tourPlan.length,
         itemBuilder: (BuildContext context, int index) {
@@ -77,69 +81,122 @@ class VerticalList extends StatelessWidget {
 class VerticalPlaceItem extends StatelessWidget {
   final DayPlan dayPlan;
 
-  const VerticalPlaceItem({super.key, required this.dayPlan});
+  const VerticalPlaceItem({Key? key, required this.dayPlan}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    String placeName = dayPlan.placeName;
-    String distFromPrevLoc = dayPlan.distFromPrevLoc;
-    String entryFee = dayPlan.entryFee;
-    String day = dayPlan.day;
-    String timeSlot = dayPlan.timeSlot;
-    String travelTime = dayPlan.travelTime;
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(0, 2), // changes position of shadow
+          ),
+        ],
+      ),
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "Place : $placeName",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 20.0,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: [
+              const Icon(
+                Icons.location_on,
+                color: Color.fromARGB(255, 255, 112, 16),
+                size: 20,
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Time Slot :  $timeSlot",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 10.0,
+              const SizedBox(width: 8.0),
+              Text(
+                dayPlan.placeName,
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  color: Colors.black87,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Entry Free :  $entryFee",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 10.0,
+            ],
+          ),
+          const SizedBox(height: 12.0),
+          const Divider(color: Colors.grey),
+          const SizedBox(height: 12.0),
+          Row(
+            children: [
+              const Icon(
+                Icons.access_time,
+                color: Colors.grey,
+                size: 20,
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "Distance From previous place :  $distFromPrevLoc",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 10.0,
+              const SizedBox(width: 8.0),
+              Text(
+                "Time Slot: ${dayPlan.timeSlot}",
+                style: GoogleFonts.roboto(
+                  fontSize: 14.0,
+                  color: Colors.black87,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Text(
-              "travel time :  $travelTime",
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 10.0,
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            children: [
+              const Icon(
+                Icons.currency_rupee,
+                color: Colors.orange,
+                size: 20,
               ),
-            ),
-          ]),
+              const SizedBox(width: 8.0),
+              Text(
+                "Entry Fee: ${dayPlan.entryFee}",
+                style: GoogleFonts.roboto(
+                  fontSize: 14.0,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            children: [
+              const Icon(
+                Icons.directions,
+                color: Colors.red,
+                size: 20,
+              ),
+              const SizedBox(width: 8.0),
+              Text(
+                "Distance From Previous Place: ${dayPlan.distFromPrevLoc}",
+                style: GoogleFonts.roboto(
+                  fontSize: 14.0,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8.0),
+          Row(
+            children: [
+              const Icon(
+                Icons.directions_car,
+                color: Colors.purple,
+                size: 20,
+              ),
+              const SizedBox(width: 8.0),
+              Text(
+                "Travel Time: ${dayPlan.travelTime}",
+                style: GoogleFonts.roboto(
+                  fontSize: 14.0,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
