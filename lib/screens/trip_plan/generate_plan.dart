@@ -14,7 +14,9 @@ class GeneratePlan extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: ListView(
         children: <Widget>[
           const Padding(

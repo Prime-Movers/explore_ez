@@ -11,7 +11,8 @@ class TourPlanModelBloc extends Bloc<TourPlanModelEvent, TourPlanModelState> {
       if (event is GetTourPlan) {
         emit(TourPlanModelLoading());
         try {
-          final List<DayPlan> tourPlan = await _planRepo.getPlan(event.plan);
+          final List<List<DayPlan>> tourPlan =
+              await _planRepo.getPlan(event.plan);
           emit(TourPlanModelSuccess(tourPlan: tourPlan));
         } catch (e) {
           emit(TourPlanModelFailure());

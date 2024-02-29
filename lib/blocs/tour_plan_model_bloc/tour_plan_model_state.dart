@@ -12,7 +12,7 @@ final class TourPlanModelInitial extends TourPlanModelState {}
 class TourPlanModelLoading extends TourPlanModelState {}
 
 class TourPlanModelSuccess extends TourPlanModelState {
-  final List<DayPlan> tourPlan;
+  final List<List<DayPlan>> tourPlan;
   const TourPlanModelSuccess({required this.tourPlan});
 }
 

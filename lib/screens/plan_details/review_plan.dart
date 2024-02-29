@@ -2,23 +2,28 @@ import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/visible_button.dart';
 import 'package:explore_ez/screens/trip_plan/generate_plan.dart';
+import 'package:explore_ez/screens/trip_plan/plan_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReviewPlan extends StatelessWidget {
-  const ReviewPlan({super.key});
+  const ReviewPlan({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
+      appBar: AppBar(
+        title: const Text('Plan Review'),
+        automaticallyImplyLeading: false,
+      ),
       floatingActionButton: VisibleButton(
         colorScheme: Theme.of(context).colorScheme,
         visible: true,
         alignment: Alignment.bottomRight,
         isPop: false,
         isPush: false,
-        widget: Container(),
+        widget: const GeneratePlan(),
         text: "Next",
         onPressed: () {
           BlocProvider.of<PlanDetailsBloc>(context).add(GetPlan());
@@ -29,77 +34,84 @@ class ReviewPlan extends StatelessWidget {
         },
       ),
       body: BlocBuilder<PlanDetailsBloc, PlanDetailsState>(
-          builder: (context, state) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
+        builder: (context, state) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(" Area Name : "),
-                    Text(state.area),
-                  ],
+                _buildPlanInfoItem(Icons.location_on, 'Area Name:', state.area),
+                _buildPlanInfoItem(
+                    Icons.date_range, 'Start Date:', state.startDate),
+                _buildPlanInfoItem(
+                    Icons.date_range, 'End Date:', state.endDate),
+                _buildPlanInfoItem(Icons.attach_money, 'Budget:', state.budget),
+                _buildPlanInfoItem(
+                    Icons.access_time, 'Daily Start Time:', state.startTime),
+                _buildPlanInfoItem(
+                    Icons.access_time, 'Daily End Time:', state.endTime),
+                const SizedBox(height: 20),
+                const Text(
+                  'Selected Places:',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Row(
-                  children: [
-                    const Text(" Begin Journey : "),
-                    Text(state.startDate),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(" End Journey : "),
-                    Text(state.endDate),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(" Start Time : "),
-                    Text(state.startTime),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(" End Time: "),
-                    Text(state.endTime),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(" Budget : "),
-                    Text(state.budget),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        "Places Selected : ${printPlaces(state.places)}",
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
+                const SizedBox(height: 10),
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  for (Place place in state.places)
+                    _buildPlaceItem(place.placeName),
+                ]),
               ],
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 
-  String printPlaces(List<Place> places) {
-    String value = "";
-    for (int i = 0; i < places.length; i++) {
-      value += places[i].placeName;
-      if (i < places.length - 1) {
-        value += ",";
-      }
-    }
-    return value;
+  Widget _buildPlanInfoItem(IconData icon, String title, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          size: 24,
+          color: Colors.blue,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Text(value, style: const TextStyle(fontSize: 14)),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPlaceItem(String place) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            Icons.place,
+            size: 20,
+            color: Colors.green,
+          ),
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              place,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
