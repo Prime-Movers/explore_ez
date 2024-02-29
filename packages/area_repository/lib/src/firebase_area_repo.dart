@@ -41,15 +41,14 @@ class FirebaseAreaRepo implements AreaRepo {
       return await getAreaNames();
     }
     try {
-      return await areaCollection
-          .where(
-            'areaName',
-            isGreaterThanOrEqualTo: value,
-            isLessThanOrEqualTo: '${value}z', // Consider using endAt here
-          )
-          .get()
-          .then((value) =>
-              value.docs.map((e) => e['areaName'] as String).toList());
+      String searchValue =
+          value.toLowerCase(); // Convert search value to lowercase
+      QuerySnapshot querySnapshot = await areaCollection.get();
+      List<String> areaNames = querySnapshot.docs
+          .map((doc) => doc['areaName'] as String)
+          .where((areaName) => areaName.toLowerCase().contains(searchValue))
+          .toList();
+      return areaNames;
     } catch (e) {
       log(e.toString());
       rethrow;
