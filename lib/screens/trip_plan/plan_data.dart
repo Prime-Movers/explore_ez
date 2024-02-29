@@ -1,3 +1,4 @@
+import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,12 +43,61 @@ class PlanData extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            appBar: AppBar(automaticallyImplyLeading: false),
-            backgroundColor: colorScheme.onBackground,
-            body: const Center(
-              child: Text("Unable to Get the Plan"),
-            ),
-          );
+              appBar: AppBar(automaticallyImplyLeading: false),
+              backgroundColor: colorScheme.onBackground,
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Icon(
+                    Icons.error_outline,
+                    size: 50,
+                    color: Colors.red,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Unable to get the Plan",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        "Tap to Reload",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          BlocProvider.of<TourPlanModelBloc>(context).add(
+                              GetTourPlan(
+                                  plan: context
+                                      .read<PlanDetailsBloc>()
+                                      .state
+                                      .plan));
+                        },
+                        icon: const Icon(
+                          Icons.refresh,
+                          size: 30,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ));
         }
       },
     );
