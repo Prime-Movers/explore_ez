@@ -18,8 +18,8 @@ class DayPlanEntity {
         day: doc['day'].toString(),
         placeName: doc['place_name'],
         timeSlot: doc['time_slot'],
-        entryFee: doc['entry_fee'],
-        distFromPrevLoc: doc['distance_from_previous_location'],
-        travelTime: doc['travel_time']);
+        entryFee: doc['entry_fee'].toString(),
+        distFromPrevLoc: doc['distance_from_previous_location'].toString(),
+        travelTime: doc['travel_time'].toString());
   }
 }
