@@ -6,4 +6,4 @@ RegExp passwordRexExp = RegExp(
 RegExp specialCharRexExp =
     RegExp(r'^(?=.*?[!@#$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^])');
 
-String tour_plan_image = "assets/tour_plan_image.png";
+String tourPlanImage = "assets/tour_plan_image.png";
