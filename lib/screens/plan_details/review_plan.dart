@@ -6,14 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReviewPlan extends StatelessWidget {
-  const ReviewPlan({super.key});
+  const ReviewPlan({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
       appBar: AppBar(
-        title: const Text('Plan Review'),
+        title: const Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text(
+            'Plan Review',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
         automaticallyImplyLeading: false,
       ),
       floatingActionButton: VisibleButton(
@@ -39,26 +45,87 @@ class ReviewPlan extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildPlanInfoItem(Icons.location_on, 'Area Name:', state.area),
-                _buildPlanInfoItem(
-                    Icons.date_range, 'Start Date:', state.startDate),
-                _buildPlanInfoItem(
-                    Icons.date_range, 'End Date:', state.endDate),
-                _buildPlanInfoItem(Icons.attach_money, 'Budget:', state.budget),
-                _buildPlanInfoItem(
-                    Icons.access_time, 'Daily Start Time:', state.startTime),
-                _buildPlanInfoItem(
-                    Icons.access_time, 'Daily End Time:', state.endTime),
-                const SizedBox(height: 20),
-                const Text(
-                  'Selected Places:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildPlanInfoItem(Icons.location_on, 'Tour Area : ',
+                          state.area, const Color.fromARGB(255, 243, 170, 136)),
+                      _buildPlanInfoItem(
+                          Icons.date_range,
+                          'From : ',
+                          state.startDate,
+                          const Color.fromARGB(255, 129, 142, 255)),
+                      _buildPlanInfoItem(
+                          Icons.date_range,
+                          'To : ',
+                          state.endDate,
+                          const Color.fromARGB(255, 137, 74, 255)),
+                      _buildPlanInfoItem(
+                          Icons.wallet,
+                          'Budget : ',
+                          state.budget,
+                          const Color.fromARGB(255, 245, 131, 201)),
+                      _buildPlanInfoItem(
+                          Icons.access_time,
+                          'Start time : ',
+                          state.startTime,
+                          const Color.fromARGB(255, 161, 104, 175)),
+                      _buildPlanInfoItem(
+                          Icons.access_time,
+                          'End time : ',
+                          state.endTime,
+                          const Color.fromARGB(255, 125, 91, 128)),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  for (Place place in state.places)
-                    _buildPlaceItem(place.placeName),
-                ]),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Selected Places:',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (Place place in state.places)
+                            _buildPlaceItem(place.placeName),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           );
@@ -67,33 +134,45 @@ class ReviewPlan extends StatelessWidget {
     );
   }
 
-  Widget _buildPlanInfoItem(IconData icon, String title, String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: 24,
-          color: Colors.blue,
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  Widget _buildPlanInfoItem(
+      IconData icon, String title, String value, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(5),
             ),
-            Text(value, style: const TextStyle(fontSize: 14)),
-          ],
-        ),
-      ],
+            child: Icon(
+              icon,
+              size: 30,
+              color: color,
+            ),
+          ),
+          const SizedBox(width: 15),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.bold, color: color),
+              ),
+              Text(value, style: const TextStyle(fontSize: 18)),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildPlaceItem(String place) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -103,10 +182,10 @@ class ReviewPlan extends StatelessWidget {
             color: Colors.green,
           ),
           const SizedBox(width: 10),
-          Flexible(
+          Expanded(
             child: Text(
               place,
-              style: const TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ],

@@ -32,7 +32,7 @@ class GeneratePlan extends StatelessWidget {
             ),
           ),
           Image.asset(
-            tour_plan_image,
+            tourPlanImage,
             height: 500,
             width: 500,
           ),

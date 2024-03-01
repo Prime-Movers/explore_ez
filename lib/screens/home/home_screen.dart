@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:trip_repository/trip_repository.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
-import 'package:explore_ez/screens/home/details.dart';
+import 'package:explore_ez/screens/home/trip_details.dart';
 import 'package:explore_ez/screens/plan_details/search_area.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -95,17 +96,18 @@ class VerticalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: ListView.builder(
-        primary: false,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: trips.length,
-        itemBuilder: (BuildContext context, int index) {
-          Trip currentTrip = trips[index];
-          return VerticalPlaceItem(
-            currentTrip: currentTrip,
-          );
-        },
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: trips.map((currentTrip) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: VerticalPlaceItem(
+                currentTrip: currentTrip,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -122,87 +124,115 @@ class VerticalPlaceItem extends StatelessWidget {
     String budget = currentTrip.budget;
     String days = currentTrip.days.toString();
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: InkWell(
-        child: SizedBox(
-          height: 100.0,
-          child: Row(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  placeImage,
-                  height: 100.0,
-                  width: 100.0,
-                  fit: BoxFit.cover,
-                ),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return TripDetail(
+                currentTrip: currentTrip,
+              );
+            },
+          ),
+        );
+      },
+      child: Container(
+        height: 150.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 7,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                topRight: Radius.circular(4),
+                bottomRight: Radius.circular(4),
               ),
-              const SizedBox(width: 15.0),
-              SizedBox(
-                height: 100.0,
-                width: MediaQuery.of(context).size.width - 155,
-                child: ListView(
-                  primary: false,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
+              child: Image.network(
+                placeImage,
+                width: 150.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        tripName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20.0,
-                        ),
-                        maxLines: 2,
-                        textAlign: TextAlign.left,
+                    Text(
+                      tripName,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        color: Colors.black,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 10.0),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Budget: $budget",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.0,
-                          color: Colors.blueGrey[300],
+                    Row(
+                      children: <Widget>[
+                        const Icon(Icons.wallet,
+                            size: 16, color: Color.fromARGB(255, 82, 121, 228)),
+                        const SizedBox(width: 5),
+                        Text(
+                          "Budget: ",
+                          style: GoogleFonts.aBeeZee(
+                            fontSize: 16.0,
+                            color: const Color.fromARGB(255, 82, 121, 228),
+                          ),
                         ),
-                        maxLines: 1,
-                        textAlign: TextAlign.left,
-                      ),
+                        Text(
+                          budget,
+                          style: GoogleFonts.aBeeZee(
+                            fontSize: 16.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 10.0),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Day of Trip: $days",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.0,
+                    Row(
+                      children: <Widget>[
+                        const Icon(Icons.calendar_today,
+                            size: 16,
+                            color: Color.fromARGB(255, 218, 186, 255)),
+                        const SizedBox(width: 5),
+                        Text(
+                          "Days: ",
+                          style: GoogleFonts.poppins(
+                            fontSize: 16.0,
+                            color: const Color.fromARGB(255, 110, 96, 160),
+                          ),
                         ),
-                        maxLines: 1,
-                        textAlign: TextAlign.left,
-                      ),
+                        Text(
+                          days,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return TripDetail(
-                  currentTrip: currentTrip,
-                );
-              },
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
