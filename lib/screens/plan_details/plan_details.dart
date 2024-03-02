@@ -1,3 +1,4 @@
+import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/screens/plan_details/place_selection.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +100,10 @@ class _PlanDetailsState extends State<PlanDetails> {
           startTime: startTimeInputController.text,
           endTime: endTimeInputController.text,
           budget: budgetInputController.text));
+      if (context.read<FetchPlacesBloc>().state is! FetchPlacesSuccess) {
+        BlocProvider.of<FetchPlacesBloc>(context).add(
+            FetchPlaces(areaName: context.read<PlanDetailsBloc>().state.area));
+      }
 
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
