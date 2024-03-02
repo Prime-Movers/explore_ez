@@ -6,14 +6,14 @@ part 'select_place_event.dart';
 part 'select_place_state.dart';
 
 class SelectPlaceBloc extends Bloc<SelectPlaceEvent, SelectPlaceState> {
-  SelectPlaceBloc() : super(const SelectPlaceState([])) {
+  SelectPlaceBloc() : super(SelectPlaceState([], Status.uninitialized)) {
     on<InitializeSelection>(_onInitializeSelection);
     on<PlaceSelected>(_onPlaceSelected);
   }
 
   void _onInitializeSelection(
       InitializeSelection event, Emitter<SelectPlaceState> emit) {
-    emit(const SelectPlaceState([]));
+    emit(SelectPlaceState(const [], Status.initialized));
   }
 
   void _onPlaceSelected(PlaceSelected event, Emitter<SelectPlaceState> emit) {
@@ -23,6 +23,6 @@ class SelectPlaceBloc extends Bloc<SelectPlaceEvent, SelectPlaceState> {
     } else {
       updatedSelectedPlaces.add(event.selectPlace);
     }
-    emit(SelectPlaceState(updatedSelectedPlaces));
+    emit(SelectPlaceState(updatedSelectedPlaces, Status.initialized));
   }
 }

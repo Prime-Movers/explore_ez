@@ -12,9 +12,10 @@ class PlaceSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<FetchPlacesBloc>(context)
-        .add(FetchPlaces(areaName: context.read<PlanDetailsBloc>().state.area));
-    BlocProvider.of<SelectPlaceBloc>(context).add(InitializeSelection());
+    if (context.read<SelectPlaceBloc>().state.status == Status.uninitialized) {
+      BlocProvider.of<SelectPlaceBloc>(context).add(InitializeSelection());
+    }
+
     return Scaffold(
       appBar: AppBar(),
       backgroundColor: Theme.of(context).colorScheme.onBackground,
