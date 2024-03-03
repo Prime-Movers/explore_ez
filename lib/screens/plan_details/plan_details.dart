@@ -48,7 +48,7 @@ class _PlanDetailsState extends State<PlanDetails> {
                     TextDetailsWidget(
                         labelText: "Start Date : ",
                         prefixIcon: Icons.calendar_today,
-                        onTap: () => _selectDate(),
+                        onTap: () => _selectDate(startdateInputController),
                         controller: startdateInputController,
                         validation: "Please select a date. "),
                     const SizedBox(
@@ -57,7 +57,7 @@ class _PlanDetailsState extends State<PlanDetails> {
                     TextDetailsWidget(
                         labelText: "End Date : ",
                         prefixIcon: Icons.calendar_today,
-                        onTap: () => _selectDate(),
+                        onTap: () => _selectDate(enddateInputController),
                         controller: enddateInputController,
                         validation: "Please select a date. "),
                     const SizedBox(
@@ -71,8 +71,8 @@ class _PlanDetailsState extends State<PlanDetails> {
                         labelText: "Start Time : ",
                         prefixIcon: Icons.access_time,
                         onTap: () => _selectTime(
-                              const TimeOfDay(hour: 8, minute: 00),
-                            ),
+                            const TimeOfDay(hour: 8, minute: 00),
+                            startTimeInputController),
                         controller: startTimeInputController,
                         validation: "Please select a Time. "),
                     const SizedBox(
@@ -82,8 +82,8 @@ class _PlanDetailsState extends State<PlanDetails> {
                         labelText: "End Time : ",
                         prefixIcon: Icons.access_time,
                         onTap: () => _selectTime(
-                              const TimeOfDay(hour: 18, minute: 00),
-                            ),
+                            const TimeOfDay(hour: 18, minute: 00),
+                            endTimeInputController),
                         controller: endTimeInputController,
                         validation: "Please select a Time. "),
                     const SizedBox(height: 20.0),
@@ -113,7 +113,7 @@ class _PlanDetailsState extends State<PlanDetails> {
     );
   }
 
-  void _selectDate() async {
+  void _selectDate(TextEditingController inputController) async {
     DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -121,17 +121,18 @@ class _PlanDetailsState extends State<PlanDetails> {
       lastDate: DateTime(2025),
     );
     if (newDate != null) {
-      startdateInputController.text = myFormat.format(newDate);
+      inputController.text = myFormat.format(newDate);
     }
   }
 
-  void _selectTime(TimeOfDay initialTime) async {
+  void _selectTime(
+      TimeOfDay initialTime, TextEditingController inputController) async {
     TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: initialTime,
     );
     if (newTime != null) {
-      startTimeInputController.text =
+      inputController.text =
           // ignore: use_build_context_synchronously
           newTime.format(context);
     }
@@ -178,7 +179,8 @@ class _PlanDetailsState extends State<PlanDetails> {
           endDate: enddateInputController.text,
           startTime: startTimeInputController.text,
           endTime: endTimeInputController.text,
-          budget: budgetInputController.text));
+          budget: budgetInputController.text,
+          hotel: (context).read<SelectHotelBloc>().state.selectedHotel));
       if (context.read<FetchPlacesBloc>().state is! FetchPlacesSuccess) {
         BlocProvider.of<FetchPlacesBloc>(context).add(
             FetchPlaces(areaName: context.read<PlanDetailsBloc>().state.area));
@@ -322,8 +324,6 @@ class VerticalPlaceItem extends StatelessWidget {
         onTap: () {
           BlocProvider.of<SelectHotelBloc>(context)
               .add(SelectHotel(hotel: currentPlace));
-          BlocProvider.of<PlanDetailsBloc>(context)
-              .add(GetHotel(hotel: currentPlace));
           inputController.text = currentPlace.placeName;
         },
       ),

@@ -62,33 +62,32 @@ class ReviewPlan extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildPlanInfoItem(Icons.location_on, 'Tour Area : ',
+                      _buildPlanInfoItem(Icons.location_on, 'Tour Area ',
                           state.area, const Color.fromARGB(255, 243, 170, 136)),
                       _buildPlanInfoItem(
                           Icons.date_range,
-                          'From : ',
+                          'From ',
                           state.startDate,
                           const Color.fromARGB(255, 129, 142, 255)),
-                      _buildPlanInfoItem(
-                          Icons.date_range,
-                          'To : ',
-                          state.endDate,
+                      _buildPlanInfoItem(Icons.date_range, 'To ', state.endDate,
                           const Color.fromARGB(255, 137, 74, 255)),
-                      _buildPlanInfoItem(
-                          Icons.wallet,
-                          'Budget : ',
-                          state.budget,
+                      _buildPlanInfoItem(Icons.wallet, 'Budget ', state.budget,
                           const Color.fromARGB(255, 245, 131, 201)),
                       _buildPlanInfoItem(
                           Icons.access_time,
-                          'Start time : ',
+                          'Start time ',
                           state.startTime,
                           const Color.fromARGB(255, 161, 104, 175)),
                       _buildPlanInfoItem(
                           Icons.access_time,
-                          'End time : ',
+                          'End time ',
                           state.endTime,
                           const Color.fromARGB(255, 125, 91, 128)),
+                      _buildPlanInfoItem(
+                          Icons.hotel_rounded,
+                          'Accomodation ',
+                          state.hotel.placeName,
+                          const Color.fromARGB(255, 124, 104, 236)),
                     ],
                   ),
                 ),
@@ -138,31 +137,44 @@ class ReviewPlan extends StatelessWidget {
       IconData icon, String title, String value, Color color) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Icon(
-              icon,
-              size: 30,
-              color: color,
-            ),
-          ),
-          const SizedBox(width: 15),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Icon(
+                  icon,
+                  size: 30,
+                  color: color,
+                ),
+              ),
+              const SizedBox(width: 15),
               Text(
                 title,
                 style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold, color: color),
               ),
-              Text(value, style: const TextStyle(fontSize: 18)),
+            ],
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 50,
+              ),
+              Flexible(
+                child: Text(
+                  value,
+                  style: const TextStyle(fontSize: 18),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
             ],
           ),
         ],
