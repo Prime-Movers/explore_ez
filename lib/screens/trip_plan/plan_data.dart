@@ -123,6 +123,21 @@ class VerticalList extends StatelessWidget {
                 text: "View on Maps",
                 icon: Icons.map,
                 onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => MapViewScreen(
+                              plan: tourPlan,
+                            )),
+                    (Route<dynamic> route) => false,
+                  );
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(builder: (BuildContext context) {
+                  //     return MapViewScreen(
+                  //       plan: tourPlan,
+                  //     );
+                  //   }),
+                  // );
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (BuildContext context) {
                       return MapViewScreen(
