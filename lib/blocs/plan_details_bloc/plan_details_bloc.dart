@@ -11,37 +11,27 @@ class PlanDetailsBloc extends Bloc<PlanDetailsEvent, PlanDetailsState> {
             PlanStatus.fixed, Place(placeName: "", placeImage: ""))) {
     on<GetArea>(_getArea);
     on<GetDetails>(_getDetails);
-    on<GetHotel>(_getHotel);
     on<GetPlaces>(_getPlaces);
     on<GetPlan>(_getPlan);
   }
 
   void _getArea(GetArea event, Emitter<PlanDetailsState> emit) {
-    PlanDetailsState details = state;
-    details.area = event.area;
-    emit(details);
+    emit(state.stateCopyWith(area: event.area));
   }
 
   void _getDetails(GetDetails event, Emitter<PlanDetailsState> emit) {
-    PlanDetailsState details = state;
-    details.startDate = event.startDate;
-    details.endDate = event.endDate;
-    details.startTime = event.startTime;
-    details.endTime = event.endTime;
-    details.budget = event.budget;
-    emit(details);
-  }
-
-  void _getHotel(GetHotel event, Emitter<PlanDetailsState> emit) {
-    PlanDetailsState details = state;
-    details.hotel = event.hotel;
-    emit(details);
+    emit(state.stateCopyWith(
+      startDate: event.startDate,
+      endDate: event.endDate,
+      startTime: event.startTime,
+      endTime: event.endTime,
+      budget: event.budget,
+      hotel: event.hotel,
+    ));
   }
 
   void _getPlaces(GetPlaces event, Emitter<PlanDetailsState> emit) {
-    PlanDetailsState details = state;
-    details.places = event.places;
-    emit(details);
+    emit(state.stateCopyWith(places: event.places));
   }
 
   void _getPlan(GetPlan event, Emitter<PlanDetailsState> emit) {

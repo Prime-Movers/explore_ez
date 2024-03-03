@@ -34,18 +34,34 @@ class PlanDetailsState extends Equatable {
         budget: budget,
         startTime: startTime,
         endTime: endTime,
-        places: places);
+        places: places,
+        accomodation: hotel);
   }
 
-  MyPlan copyWith(MyPlan plan) {
-    return MyPlan.withData(
-        area: plan.area,
-        startDate: plan.startDate,
-        endDate: plan.endDate,
-        budget: plan.budget,
-        startTime: plan.startTime,
-        endTime: plan.endTime,
-        places: plan.places);
+  PlanDetailsState stateCopyWith({
+    String? area,
+    String? startDate,
+    String? endDate,
+    String? budget,
+    String? startTime,
+    String? endTime,
+    List<Place>? places,
+    MyPlan? plan,
+    PlanStatus? status,
+    Place? hotel,
+  }) {
+    return PlanDetailsState(
+      area ?? this.area,
+      startDate ?? this.startDate,
+      endDate ?? this.endDate,
+      budget ?? this.budget,
+      startTime ?? this.startTime,
+      endTime ?? this.endTime,
+      places ?? this.places,
+      plan ?? this.plan,
+      status ?? this.status,
+      hotel ?? this.hotel,
+    );
   }
 
   @override
@@ -57,5 +73,6 @@ class PlanDetailsState extends Equatable {
         startTime,
         endTime,
         places,
+        hotel,
       ];
 }
