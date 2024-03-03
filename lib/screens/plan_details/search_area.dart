@@ -2,6 +2,7 @@ import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
 
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
+import 'package:explore_ez/blocs/select_hotel_bloc/select_hotel_bloc.dart';
 
 import 'plan_details.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,8 @@ class SearchAreaScreen extends StatelessWidget {
                 context
                     .read<PlanDetailsBloc>()
                     .add(GetArea(area: state.selectArea));
+                BlocProvider.of<SelectHotelBloc>(context)
+                    .add(FetchHotel(areaName: state.selectArea));
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (BuildContext context) {

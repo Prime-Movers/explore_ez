@@ -4,6 +4,7 @@ import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
 import 'package:explore_ez/blocs/get_trip_bloc/get_trip_bloc.dart';
 import 'package:explore_ez/blocs/search_area_bloc/search_area_bloc.dart';
+import 'package:explore_ez/blocs/select_hotel_bloc/select_hotel_bloc.dart';
 import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,8 @@ class MyAppView extends StatelessWidget {
               ),
               BlocProvider(create: (context) => PlanDetailsBloc()),
               BlocProvider(create: (context) => SelectAreaBloc()),
+              BlocProvider(
+                  create: (context) => SelectHotelBloc(FirebaseAreaRepo())),
               BlocProvider(create: (context) => SelectPlaceBloc()),
               BlocProvider(
                 create: (context) => TourPlanModelBloc(ModelPlanRepo()),

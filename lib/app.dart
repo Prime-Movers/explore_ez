@@ -2,6 +2,7 @@ import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/select_area_bloc/select_area_bloc.dart';
+import 'package:explore_ez/blocs/select_hotel_bloc/select_hotel_bloc.dart';
 import 'package:explore_ez/blocs/select_place_bloc/select_place_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:plan_repository/plan_repository.dart';
@@ -32,6 +33,7 @@ class MainApp extends StatelessWidget {
       RepositoryProvider<FetchPlacesBloc>(
           create: (_) => FetchPlacesBloc(FirebaseAreaRepo())),
       RepositoryProvider(create: (_) => SelectAreaBloc()),
+      RepositoryProvider(create: (_) => SelectHotelBloc(FirebaseAreaRepo())),
       RepositoryProvider(create: (_) => SelectPlaceBloc()),
       RepositoryProvider(create: (_) => TourPlanModelBloc(ModelPlanRepo())),
     ], child: const MyAppView());
