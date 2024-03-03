@@ -37,4 +37,9 @@ class GetPlaces extends PlanDetailsEvent {
   List<Object> get props => [places];
 }
 
+class GetHotel extends PlanDetailsEvent {
+  final Place hotel;
+  const GetHotel({required this.hotel});
+}
+
 class GetPlan extends PlanDetailsEvent {}

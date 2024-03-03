@@ -11,10 +11,20 @@ class PlanDetailsState extends Equatable {
   String startTime;
   String endTime;
   List<Place> places;
+  Place hotel;
   PlanStatus status;
   MyPlan plan;
-  PlanDetailsState(this.area, this.startDate, this.endDate, this.budget,
-      this.startTime, this.endTime, this.places, this.plan, this.status);
+  PlanDetailsState(
+      this.area,
+      this.startDate,
+      this.endDate,
+      this.budget,
+      this.startTime,
+      this.endTime,
+      this.places,
+      this.plan,
+      this.status,
+      this.hotel);
 
   MyPlan toPlan() {
     return MyPlan.withData(
