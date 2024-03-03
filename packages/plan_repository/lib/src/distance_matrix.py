@@ -44,7 +44,7 @@ class TSPModel:
     route = ""
     for i in permutation:
       route+=places[i]
-      route+=", "
+      route+=","
     self.places=route
 # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
 # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach"]
