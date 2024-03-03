@@ -7,14 +7,7 @@ import 'package:plan_repository/src/current_location.dart';
 import 'package:plan_repository/src/maps/consts.dart';
 import 'package:plan_repository/src/maps/place.dart';
 
-class MapPage extends StatefulWidget {
-  const MapPage({super.key});
-
-  @override
-  State<MapPage> createState() => _MapPageState();
-}
-
-class _MapPageState extends State<MapPage> {
+class MapPage {
   Location _locationController = new Location();
 
   final Completer<GoogleMapController> _mapController =
@@ -32,7 +25,7 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-    if (CurrentLocation != null) {
+    if (current_location != null) {
       getPolylinePoints(_currentP!, places[0].location).then((coordinates) => {
             generatePolyLineFromPoints(coordinates, "Your location"),
           });
@@ -44,50 +37,49 @@ class _MapPageState extends State<MapPage> {
                 });
       }
     }
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _currentP == null
-          ? const Center(
-              child: Text("Loading..."),
-            )
-          : GoogleMap(
-              onMapCreated: ((GoogleMapController controller) =>
-                  _mapController.complete(controller)),
-              initialCameraPosition: CameraPosition(
-                target: _chennai,
-                zoom: 13,
-              ),
-              markers: {
-                Marker(
-                  markerId: MarkerId("_currentLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: _currentP!,
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        body: _currentP == null
+            ? const Center(
+                child: Text("Loading..."),
+              )
+            : GoogleMap(
+                onMapCreated: ((GoogleMapController controller) =>
+                    _mapController.complete(controller)),
+                initialCameraPosition: CameraPosition(
+                  target: _chennai,
+                  zoom: 13,
                 ),
-                for (Place place in places)
+                markers: {
                   Marker(
-                    markerId: MarkerId(place.name),
-                    position: place.location,
+                    markerId: MarkerId("_currentLocation"),
+                    icon: BitmapDescriptor.defaultMarker,
+                    position: _currentP!,
                   ),
-              },
-              polylines: Set<Polyline>.of(polylines.values),
-            ),
-    );
-  }
+                  for (Place place in places)
+                    Marker(
+                      markerId: MarkerId(place.name),
+                      position: place.location,
+                    ),
+                },
+                polylines: Set<Polyline>.of(polylines.values),
+              ),
+      );
+    }
 
-  // ... other methods (unchanged)
-
-  Future<void> _cameraToPosition(LatLng pos) async {
-    final GoogleMapController controller = await _mapController.future;
-    CameraPosition _newCameraPosition = CameraPosition(
-      target: pos,
-      zoom: 13,
-    );
-    await controller.animateCamera(
-      CameraUpdate.newCameraPosition(_newCameraPosition),
-    );
+    // ... other methods (unchanged)
+    // Future<void> _cameraToPosition(LatLng pos) async {
+    //   final GoogleMapController controller = await _mapController.future;
+    //   CameraPosition _newCameraPosition = CameraPosition(
+    //     target: pos,
+    //     zoom: 13,
+    //   );
+    //   await controller.animateCamera(
+    //     CameraUpdate.newCameraPosition(_newCameraPosition),
+    //   );
+    // }
   }
 
   Future<List<LatLng>> getPolylinePoints(LatLng a, LatLng b) async {
@@ -117,8 +109,6 @@ class _MapPageState extends State<MapPage> {
         color: Color.fromARGB(255, 5, 5, 240),
         points: polylineCoordinates,
         width: 3);
-    setState(() {
-      polylines[id] = polyline;
-    });
+    polylines[id] = polyline;
   }
 }
