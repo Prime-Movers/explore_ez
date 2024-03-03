@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:location/location.dart';
-import 'package:plan_repository/src/Currentlocation.dart';
+import 'package:plan_repository/src/current_location.dart';
 import 'package:plan_repository/src/maps/consts.dart';
 import 'package:plan_repository/src/maps/place.dart';
 
@@ -32,7 +32,7 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-    if (current_location != null) {
+    if (CurrentLocation != null) {
       getPolylinePoints(_currentP!, places[0].location).then((coordinates) => {
             generatePolyLineFromPoints(coordinates, "Your location"),
           });
