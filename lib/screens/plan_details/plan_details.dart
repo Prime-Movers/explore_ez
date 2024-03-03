@@ -250,24 +250,63 @@ class VerticalList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return BlocBuilder<SelectHotelBloc, SelectHotelState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ListView.builder(
-            primary: false,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: places.length,
-            itemBuilder: (BuildContext context, int index) {
-              Place currentPlace = places[index];
-              final isSelected = state.selectedHotel == currentPlace;
-              return VerticalPlaceItem(
-                currentPlace: currentPlace,
-                isSelected: isSelected,
-                inputController: inputController,
-              );
-            },
+          child: Column(
+            children: [
+              ListTile(
+                title: const Text(
+                  "Use Current location ",
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                ),
+                tileColor: colorScheme.secondary.withOpacity(0.1),
+                onTap: () {
+                  BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
+                      hotel: Place.withLatLong(
+                          placeName: "Current Location",
+                          placeImage: "",
+                          latitude: "",
+                          longitude: "")));
+                  inputController.text = "Current Location";
+                },
+                leading: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                      state.selectedHotel.placeName == "Current Location"
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: colorScheme.primary,
+                      size: 24),
+                ),
+              ),
+              ListView.builder(
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: places.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Place currentPlace = places[index];
+                  final isSelected = state.selectedHotel == currentPlace;
+                  return VerticalPlaceItem(
+                    currentPlace: currentPlace,
+                    isSelected: isSelected,
+                    inputController: inputController,
+                  );
+                },
+              ),
+            ],
           ),
         );
       },
