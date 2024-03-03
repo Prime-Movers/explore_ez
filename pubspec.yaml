@@ -29,6 +29,7 @@ dependencies:
   get: ^4.6.6
   http: ^1.2.0
   google_fonts: ^6.1.0
+  google_maps_flutter: ^2.5.3
   
 
 dev_dependencies:

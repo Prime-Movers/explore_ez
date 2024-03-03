@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
+import 'package:area_repository/area_repository.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plan_repository/plan_repository.dart';
 
 class ModelPlanRepo implements PlanRepo {
   String url = "";
-  var data;
-  String output = "";
 
   @override
   Future<List<List<DayPlan>>> getPlan(MyPlan plan) async {
@@ -20,52 +19,43 @@ class ModelPlanRepo implements PlanRepo {
         value += plan.places[i].placeName + " " + "chennai" + "," + " ";
       }
       value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
-      url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
-      //url = 'http://10.0.2.2:5000/?query=' + value;
+      //url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
+      url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
 
       List<DayPlan> dayPlanData = getDayPlanData(ans);
       log(dayPlanData.toString());
 
-      Map<String, List<DayPlan>> dayPlans = {};
-
-      for (DayPlan dayPlan in dayPlanData) {
-        final String day = dayPlan.day;
-        if (dayPlans.containsKey(day)) {
-          dayPlans[day]!.add(dayPlan);
-        } else {
-          dayPlans[day] = [dayPlan];
-        }
-      }
-
-      return dayPlans.values.toList();
+      return getDayPlans(dayPlanData);
     } catch (e) {
       log(e.toString());
       rethrow;
     }
   }
 
-  Future<String> getdata(String url) async {
-    data = await fetchdata(url);
-    var decoded = jsonDecode(data);
-    output = decoded['output'];
-    return output;
+  @override
+  List<MarkPoint> getPoints(
+      List<DayPlan> dayPlan, List<Place> selectedPlaces, String areaName) {
+    List<MarkPoint> points = [];
+    List<String> places = planPlaces(dayPlan, areaName);
+    log(selectedPlaces.first.placeName);
+    for (int i = 0; i < places.length; i++) {
+      log(places[i]);
+      Place? found = selectedPlaces.firstWhere((element) =>
+          element.placeName.toLowerCase() == places[i].toLowerCase());
+      points.add(MarkPoint(
+          name: places[i],
+          coordinates: LatLng(double.parse(found.latitude ?? ""),
+              double.parse(found.longitude ?? ""))));
+    }
+    return points;
   }
 
-  int calculateDays(String startDate, String endDate) {
-    DateTime startDateTime = DateTime.parse(startDate);
-    DateTime endDateTime = DateTime.parse(endDate);
-
-    Duration difference = endDateTime.difference(startDateTime);
-    return difference.inDays;
-  }
-
-  List<DayPlan> getDayPlanData(String val) {
-    Map<String, dynamic> jsonData = json.decode(val);
-    List<DayPlan> dayPlanData = [];
-    jsonData.forEach((key, value) {
-      dayPlanData.add(DayPlan.fromEntity(DayPlanEntity.fromDocument(value)));
-    });
-    return dayPlanData;
+  @override
+  MarkPoint getCurrentPoint(Place place) {
+    return MarkPoint(
+        name: place.placeName,
+        coordinates: LatLng(double.parse(place.latitude ?? ""),
+            double.parse(place.longitude ?? "")));
   }
 }

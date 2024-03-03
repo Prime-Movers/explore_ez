@@ -1,5 +1,9 @@
+import 'dart:collection';
+
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
+import 'package:explore_ez/components/elevated_button.dart';
+import 'package:explore_ez/screens/trip_plan/map_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:plan_repository/plan_repository.dart';
@@ -112,26 +116,44 @@ class VerticalList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
-      child: ListView.builder(
-        primary: false,
-        shrinkWrap: true,
-        itemCount: tourPlan.length,
-        itemBuilder: (BuildContext context, int index) {
-          DayPlan dayPlan = tourPlan[index];
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ActionButton(
+                text: "View on Maps",
+                icon: Icons.map,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return MapViewScreen(
+                        plan: tourPlan,
+                      );
+                    }),
+                  );
+                }),
+            ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: tourPlan.length,
+              itemBuilder: (BuildContext context, int index) {
+                DayPlan dayPlan = tourPlan[index];
 
-          return VerticalPlaceItem(
-            dayPlan: dayPlan,
-          );
-        },
+                return PlanItem(
+                  dayPlan: dayPlan,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class VerticalPlaceItem extends StatelessWidget {
+class PlanItem extends StatelessWidget {
   final DayPlan dayPlan;
 
-  const VerticalPlaceItem({Key? key, required this.dayPlan}) : super(key: key);
+  const PlanItem({Key? key, required this.dayPlan}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -161,12 +183,14 @@ class VerticalPlaceItem extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                dayPlan.placeName,
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0,
-                  color: Colors.black87,
+              Flexible(
+                child: Text(
+                  dayPlan.placeName,
+                  style: GoogleFonts.roboto(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
             ],

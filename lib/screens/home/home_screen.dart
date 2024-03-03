@@ -1,3 +1,4 @@
+import 'package:explore_ez/components/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,12 +30,9 @@ class HomeScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.background,
-                  foregroundColor: Theme.of(context).colorScheme.onBackground,
-                  elevation: 10,
-                ),
+              child: ActionButton(
+                text: "Create you Plan",
+                icon: Icons.create,
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (BuildContext context) {
@@ -42,28 +40,6 @@ class HomeScreen extends StatelessWidget {
                     }),
                   );
                 },
-                child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 5),
-                        child: Icon(Icons.create),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Create your Plan",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
             BlocBuilder<GetTripBloc, GetTripState>(builder: (context, state) {
