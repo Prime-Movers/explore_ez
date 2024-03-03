@@ -20,7 +20,7 @@ class _MapPageState extends State<MapPage> {
       Completer<GoogleMapController>();
 
   static const LatLng _chennai = LatLng(13.0827, 80.2707);
-  LatLng? _currentP = null;
+  LatLng? _currentP;
   List<Place> places = [
     Place("Place 1", LatLng(13.0337397, 80.2670382)),
     Place("Place 3", LatLng(13.0437221, 80.2632539)),
