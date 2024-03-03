@@ -271,15 +271,15 @@ class VerticalList extends StatelessWidget {
                   ),
                 ),
                 tileColor: colorScheme.secondary.withOpacity(0.1),
-                onTap: () {
-                  // CurrentLocation obj = new CurrentLocation();
-                  LatLng current = CurrentLocation().getLocation() as LatLng;
+                onTap: () async {
+                  LatLng? current = await CurrentLocation().getLocation();
                   BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
                       hotel: Place.withLatLong(
-                          placeName: "Current Location",
-                          placeImage: "",
-                          latitude: "current.latitude",
-                          longitude: "current.longitude")));
+                    placeName: "Current Location",
+                    placeImage: "",
+                    latitude: current?.latitude.toString(),
+                    longitude: current?.longitude.toString(),
+                  )));
                   inputController.text = "Current Location";
                 },
                 leading: Container(
