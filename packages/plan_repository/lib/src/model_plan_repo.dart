@@ -14,13 +14,14 @@ class ModelPlanRepo implements PlanRepo {
       days = calculateDays(plan.startDate, plan.endDate);
       value += "$days" + ",";
       value += plan.startTime + "-" + plan.endTime + "time fram per day" + ",";
-      value += plan.budget + "total budget for trip";
+      value += plan.budget + "total budget for trip" + ",";
+      value += plan.accomodation.placeName + plan.area + ",";
       for (int i = 0; i < plan.places.length - 1; i++) {
         value += plan.places[i].placeName + " " + "chennai" + "," + " ";
       }
       value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
-      //url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
-      url = 'http://10.0.2.2:5000/?query=' + value;
+      url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
+      // url = 'http://10.0.2.2:5000/?query=' + value;
       final String ans = await getdata(url);
 
       List<DayPlan> dayPlanData = getDayPlanData(ans);
