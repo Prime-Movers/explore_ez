@@ -270,7 +270,7 @@ packages:
     source: hosted
     version: "2.0.17"
   flutter_polyline_points:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_polyline_points
       sha256: "0e07862139cb65a88789cd6efbe284c0b6f1fcb5ed5ec87781759c48190d84b9"
@@ -416,7 +416,7 @@ packages:
     source: hosted
     version: "2.1.1"
   location:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: location
       sha256: "06be54f682c9073cbfec3899eb9bc8ed90faa0e17735c9d9fa7fe426f5be1dd1"

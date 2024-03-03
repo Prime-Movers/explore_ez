@@ -30,6 +30,8 @@ dependencies:
   http: ^1.2.0
   google_fonts: ^6.1.0
   google_maps_flutter: ^2.5.3
+  location: ^5.0.3
+  flutter_polyline_points: ^2.0.0
   
 
 dev_dependencies:
