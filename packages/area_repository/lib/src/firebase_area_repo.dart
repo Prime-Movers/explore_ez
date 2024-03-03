@@ -36,6 +36,24 @@ class FirebaseAreaRepo implements AreaRepo {
   }
 
   @override
+  Future<List<Place>> getHotels(String areaName) async {
+    try {
+      return await areaCollection
+          .where('areaName', isEqualTo: areaName)
+          .get()
+          .then((value) => value.docs
+              .map(
+                  (e) => MyArea.fromEntity(MyAreaEntity.fromDocument(e.data())))
+              .first
+              .hotels
+              .toList());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<String>> searchAreaNames(String value) async {
     if (value.isEmpty) {
       return await getAreaNames();
