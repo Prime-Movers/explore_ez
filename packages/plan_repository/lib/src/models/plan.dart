@@ -8,6 +8,7 @@ class MyPlan {
   String startTime = "";
   String endTime = "";
   List<Place> places = [];
+  Place accomodation = Place(placeName: "", placeImage: "");
 
   MyPlan();
   MyPlan.withData(
@@ -17,5 +18,6 @@ class MyPlan {
       required this.budget,
       required this.startTime,
       required this.endTime,
-      required this.places});
+      required this.places,
+      required this.accomodation});
 }
