@@ -15,7 +15,10 @@ class ModelPlanRepo implements PlanRepo {
       value += "$days" + ",";
       value += plan.startTime + "-" + plan.endTime + "time fram per day" + ",";
       value += plan.budget + "total budget for trip" + ",";
-      value += plan.accomodation.placeName + plan.area + ",";
+      value += plan.accomodation.latitude! +
+          "," +
+          plan.accomodation.longitude! +
+          ",";
       for (int i = 0; i < plan.places.length - 1; i++) {
         value += plan.places[i].placeName + " " + "chennai" + "," + " ";
       }
