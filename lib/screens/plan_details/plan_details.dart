@@ -13,7 +13,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:explore_ez/components/visible_button.dart';
 import "dart:async";
-import "package:google_maps_flutter/google_maps_flutter.dart";
 import "package:location/location.dart";
 
 class PlanDetails extends StatefulWidget {

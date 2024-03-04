@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/strings.dart';
-import 'package:explore_ez/components/visible_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -46,18 +45,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
-      floatingActionButton: VisibleButton(
-        alignment: Alignment.bottomRight,
-        colorScheme: Theme.of(context).colorScheme,
-        visible: true,
-        isPop: true,
-        isPush: false,
-        widget: Container(),
-        text: 'Back',
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
+
       // ignore: unnecessary_null_comparison
       body: GoogleMap(
         onMapCreated: ((GoogleMapController controller) =>

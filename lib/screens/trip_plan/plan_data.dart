@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/blocs/tour_plan_model_bloc/tour_plan_model_bloc.dart';
 import 'package:explore_ez/components/elevated_button.dart';
