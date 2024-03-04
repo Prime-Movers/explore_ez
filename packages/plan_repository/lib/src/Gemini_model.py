@@ -7,6 +7,7 @@ app = Flask(__name__)
 def returnascii():
     d={}
     inputstr = str(request.args['query'])
+    # print(inputstr)
     lst=inputstr.split(',')
     a=lst[0]
     b=lst[1]
@@ -14,13 +15,18 @@ def returnascii():
     del lst[0]
     del lst[0]
     del lst[0]
-    #obj=TSPModel(lst)
-    #str1=a+","+b+","+c+","
+    current =lst[0],lst[1]
+    del lst[0]
+    del lst[0]
+    lst.insert(0, current)
+    print(lst)
+    obj=TSPModel(lst)
+    str1=a+","+b+","+c+","
     # for i in obj.places:
-    #lst1=obj.places.split(',')
-    #for i in range(1,len(lst1)):
-        #str1+=lst1[i]
-    # return str1
+    lst1=obj.places.split(',')
+    for i in range(len(lst1)):
+        str1+=lst1[i]
+    print(str1)    
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -60,15 +66,18 @@ def returnascii():
         # prompt_parts = [
         # "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days="+s,
         # ]
+        # prompt_parts = [
+        # "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days="+s,
+        # ]
         prompt_parts = [
-        "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":,\"time_slot\":,\"entry_fee\":,\"distance_from_previous_location\":,\"travel_time\":},\"index\"=detials} .Maximum days="+s,
+        "\"Make a tour plan for these places in Chennai, the plan must  contains  place name, exact time slot, the entry fee, distance from previous loaction and travel time. Give results in minimum no days and  in python dict formate in (single line) eg start with {\"index\"={\"day\":trip_day,\"place_name\":\" \",\"time_slot\":\" \",\"entry_fee\":\" \",\"distance_from_previous_location\":\" \",\"travel_time\":\" \"},\"index\"=detials} .Maximum days="+s,
         ]
         response = model.generate_content(prompt_parts)
 
         d['output'] = response.text
     # return str1    
-    #model(str1)
-    model(inputstr)
+    model(str1)
+    # model(inputstr)
     return d
 if __name__ == '__main__':
     app.run()
