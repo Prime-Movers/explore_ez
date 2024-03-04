@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
 import 'package:explore_ez/components/strings.dart';
+import 'package:explore_ez/components/visible_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:plan_repository/plan_repository.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
@@ -19,73 +19,61 @@ class MapViewScreen extends StatefulWidget {
 
 class _MapViewScreenState extends State<MapViewScreen> {
   Map<PolylineId, Polyline> polylines = {};
-  LatLng? _currentP;
+  late MarkPoint _currentP;
   List<MarkPoint> places = [];
-  final Location _locationController = new Location();
 
   final Completer<GoogleMapController> _mapController =
       Completer<GoogleMapController>();
 
-  // // fucntions for the necessities
-  // String displayPoints(List<MarkPoint> points) {
-  //   String str = "";
-  //   for (int i = 0; i < points.length; i++) {
-  //     str +=
-  //         "Name : ${points[i].name}, Latitude : ${points[i].coordinates.latitude},  Longitude : ${points[i].coordinates.longitude}\n";
-  //   }
-  //   return str;
-  // }
-
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement
-    //variables used in the map file
+  void initState() {
+    super.initState();
     PlanRepo planRepo = ModelPlanRepo();
     String area = context.read<PlanDetailsBloc>().state.area;
     List<Place> place = context.read<PlanDetailsBloc>().state.places;
     List<MarkPoint> points = planRepo.getPoints(widget.plan, place, area);
     MarkPoint accomodation =
         planRepo.getCurrentPoint(context.read<PlanDetailsBloc>().state.hotel);
-    //variable used
     setState(() {
-      _currentP = accomodation.coordinates;
+      _currentP = accomodation;
       places = points;
     });
-    // @override
-    void functions() {
-      // super.initState();
-      getPolylinePoints(accomodation.coordinates, points[0].coordinates)
-          .then((coordinates) => {
-                generatePolyLineFromPoints(coordinates, accomodation.name),
-              });
 
-      for (int i = 0; i < points.length - 1; i++) {
-        getPolylinePoints(points[i].coordinates, points[i + 1].coordinates)
-            .then((coordinates) => {
-                  generatePolyLineFromPoints(coordinates, points[i].name),
-                });
-      }
-    }
+    functions(points, accomodation);
+  }
 
-    functions();
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onBackground,
+      floatingActionButton: VisibleButton(
+        alignment: Alignment.bottomRight,
+        colorScheme: Theme.of(context).colorScheme,
+        visible: true,
+        isPop: true,
+        isPush: false,
+        widget: Container(),
+        text: 'Back',
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
       // ignore: unnecessary_null_comparison
       body: GoogleMap(
         onMapCreated: ((GoogleMapController controller) =>
             _mapController.complete(controller)),
         initialCameraPosition: CameraPosition(
-          target: accomodation.coordinates,
+          target: _currentP.coordinates,
           zoom: 13,
         ),
         markers: {
           Marker(
-            markerId: MarkerId(accomodation.name),
+            markerId: MarkerId(_currentP.name),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-            position: _currentP!,
+            position: _currentP.coordinates,
           ),
-          for (MarkPoint place in points)
+          for (MarkPoint place in places)
             Marker(
               markerId: MarkerId(place.name),
               position: place.coordinates,
@@ -94,6 +82,23 @@ class _MapViewScreenState extends State<MapViewScreen> {
         polylines: Set<Polyline>.of(polylines.values),
       ),
     );
+  }
+
+  void functions(List<MarkPoint> points, MarkPoint accomodation) {
+    getPolylinePoints(accomodation.coordinates, points[0].coordinates)
+        .then((coordinates) {
+      generatePolyLineFromPoints(coordinates, accomodation.name);
+      // Update the state after generating the polyline
+      setState(() {});
+    });
+    for (int i = 0; i < points.length - 1; i++) {
+      getPolylinePoints(points[i].coordinates, points[i + 1].coordinates)
+          .then((coordinates) {
+        generatePolyLineFromPoints(coordinates, points[i].name);
+        // Update the state after generating the polyline
+        setState(() {});
+      });
+    }
   }
 
   Future<List<LatLng>> getPolylinePoints(LatLng a, LatLng b) async {

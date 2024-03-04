@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
@@ -273,14 +275,19 @@ class VerticalList extends StatelessWidget {
                 tileColor: colorScheme.secondary.withOpacity(0.1),
                 onTap: () async {
                   LatLng? current = await CurrentLocation().getLocation();
-                  BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
-                      hotel: Place.withLatLong(
-                    placeName: "Current Location",
-                    placeImage: "",
-                    latitude: current?.latitude.toString(),
-                    longitude: current?.longitude.toString(),
-                  )));
-                  inputController.text = "Current Location";
+                  log(current!.longitude.toString());
+                  if (current != null) {
+                    BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
+                        hotel: Place.withLatLong(
+                      placeName: "Current Location",
+                      placeImage: "",
+                      latitude: current.latitude.toString(),
+                      longitude: current.longitude.toString(),
+                    )));
+                    inputController.text = "Current Location";
+                  } else {
+                    log("Failed to get the location");
+                  }
                 },
                 leading: Container(
                   width: 40,
@@ -325,7 +332,9 @@ class CurrentLocation {
   final Location _locationController = Location();
 
   Future<LatLng?> getLocation() async {
-    currentlocation = (await _locationController.getLocation()) as LatLng?;
+    LocationData? locationData = await _locationController.getLocation();
+    currentlocation = LatLng(locationData.latitude!, locationData.longitude!);
+    log(currentlocation!.latitude.toString());
     return currentlocation;
   }
 
