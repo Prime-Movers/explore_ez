@@ -172,11 +172,13 @@ class VerticalPlaceItem extends StatelessWidget {
                             color: const Color.fromARGB(255, 82, 121, 228),
                           ),
                         ),
-                        Text(
-                          budget,
-                          style: GoogleFonts.aBeeZee(
-                            fontSize: 16.0,
-                            color: Colors.black,
+                        Flexible(
+                          child: Text(
+                            budget,
+                            style: GoogleFonts.aBeeZee(
+                              fontSize: 10,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ],
