@@ -20,13 +20,13 @@ def returnascii():
     del lst[0]
     lst.insert(0, current)
     print(lst)
-    obj=TSPModel(lst)
-    str1=a+","+b+","+c+","
+    #obj=TSPModel(lst)
+    #str1=a+","+b+","+c+","
     # for i in obj.places:
-    lst1=obj.places.split(',')
-    for i in range(len(lst1)):
-        str1+=lst1[i]
-    print(str1)    
+    #lst1=obj.places.split(',')
+    #for i in range(len(lst1)):
+        #str1+=lst1[i]
+    #print(str1)    
     def model(s):
         genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
         generation_config = {
@@ -76,8 +76,8 @@ def returnascii():
 
         d['output'] = response.text
     # return str1    
-    model(str1)
-    # model(inputstr)
+    #model(str1)
+    model(inputstr)
     return d
 if __name__ == '__main__':
     app.run()
