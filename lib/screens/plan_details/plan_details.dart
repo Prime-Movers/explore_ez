@@ -8,6 +8,9 @@ import 'package:explore_ez/screens/plan_details/place_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/components/textfield.dart';
+import 'package:geocoding/geocoding.dart' as geo;
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
@@ -273,15 +276,21 @@ class VerticalList extends StatelessWidget {
                 ),
                 tileColor: colorScheme.secondary.withOpacity(0.1),
                 onTap: () async {
-                  LatLng? current = await CurrentLocation().getLocation();
-                  log(current!.longitude.toString());
-                  if (current != null) {
+                  CurrentLocation()._requestLocationPermission();
+                  // CurrentLocation()._getCurrentLocation();
+                  Position position = await Geolocator.getCurrentPosition();
+                  Future<String> location_name = CurrentLocation()
+                      ._getAddressFromLatLng(
+                          position.latitude, position.longitude);
+                  // LatLng? current = await CurrentLocation().getLocation();
+                  log(position.longitude.toString());
+                  if (position != null) {
                     BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
                         hotel: Place.withLatLong(
-                      placeName: "Current Location",
+                      placeName: location_name.toString(),
                       placeImage: "",
-                      latitude: current.latitude.toString(),
-                      longitude: current.longitude.toString(),
+                      latitude: position.latitude.toString(),
+                      longitude: position.longitude.toString(),
                     )));
                     inputController.text = "Current Location";
                   } else {
@@ -327,44 +336,77 @@ class VerticalList extends StatelessWidget {
 }
 
 class CurrentLocation {
-  LatLng? currentlocation;
-  final Location _locationController = Location();
-
-  Future<LatLng?> getLocation() async {
-    LocationData? locationData = await _locationController.getLocation();
-    currentlocation = LatLng(locationData.latitude!, locationData.longitude!);
-    log(currentlocation!.latitude.toString());
-    return currentlocation;
+  Future<bool> _requestLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    return permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse;
   }
 
-  Future<void> getLocationUpdates() async {
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
+  // Future<Position?> _getCurrentLocation() async {
+  //   bool isPermissionGranted = await _requestLocationPermission();
+  //   if (isPermissionGranted) {
+  //     return await Geolocator.getCurrentPosition();
+  //   } else {
+  //     // Handle permission denied case
+  //     return null;
+  //   }
+  // }
 
-    serviceEnabled = await _locationController.serviceEnabled();
-    if (serviceEnabled) {
-      serviceEnabled = await _locationController.requestService();
+  Future<String> _getAddressFromLatLng(
+      double latitude, double longitude) async {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latitude, longitude);
+    if (placemarks.isNotEmpty) {
+      Placemark place = placemarks[0];
+      // Extract specific address components (e.g., locality, administrativeArea)
+      // String address = "${place.locality}, ${place.administrativeArea}";
+      String address = "${place.locality!},${place.administrativeArea}";
+      return address;
     } else {
-      return;
+      return "No address found";
     }
-
-    permissionGranted = await _locationController.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await _locationController.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationController.onLocationChanged
-        .listen((LocationData currentLocation) {
-      if (currentLocation.latitude != null &&
-          currentLocation.longitude != null) {
-        currentlocation =
-            LatLng(currentLocation.latitude!, currentLocation.longitude!);
-      }
-    });
   }
+  // LatLng? currentlocation;
+  // final Location _locationController = Location();
+
+  // Future<LatLng?> getLocation() async {
+  //   LocationData? locationData = await _locationController.getLocation();
+  //   currentlocation = LatLng(locationData.latitude!, locationData.longitude!);
+  //   log(currentlocation!.latitude.toString());
+  //   return currentlocation;
+  // }
+
+  // Future<void> getLocationUpdates() async {
+  //   bool serviceEnabled;
+  //   PermissionStatus permissionGranted;
+
+  //   serviceEnabled = await _locationController.serviceEnabled();
+  //   if (serviceEnabled) {
+  //     serviceEnabled = await _locationController.requestService();
+  //   } else {
+  //     return;
+  //   }
+
+  //   permissionGranted = await _locationController.hasPermission();
+  //   if (permissionGranted == PermissionStatus.denied) {
+  //     permissionGranted = await _locationController.requestPermission();
+  //     if (permissionGranted != PermissionStatus.granted) {
+  //       return;
+  //     }
+  //   }
+
+  //   _locationController.onLocationChanged
+  //       .listen((LocationData currentLocation) {
+  //     if (currentLocation.latitude != null &&
+  //         currentLocation.longitude != null) {
+  //       currentlocation =
+  //           LatLng(currentLocation.latitude!, currentLocation.longitude!);
+  //     }
+  //   });
+  // }
 }
 
 class VerticalPlaceItem extends StatelessWidget {
