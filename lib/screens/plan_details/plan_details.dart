@@ -8,7 +8,6 @@ import 'package:explore_ez/screens/plan_details/place_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:explore_ez/components/textfield.dart';
-import 'package:geocoding/geocoding.dart' as geo;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,7 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:explore_ez/components/visible_button.dart';
 import "dart:async";
-import "package:location/location.dart";
+// import "package:location/location.dart";
 
 class PlanDetails extends StatefulWidget {
   const PlanDetails({super.key});
@@ -278,21 +277,24 @@ class VerticalList extends StatelessWidget {
                 onTap: () async {
                   CurrentLocation()._requestLocationPermission();
                   // CurrentLocation()._getCurrentLocation();
-                  Position position = await Geolocator.getCurrentPosition();
-                  Future<String> location_name = CurrentLocation()
-                      ._getAddressFromLatLng(
-                          position.latitude, position.longitude);
+                  Position position = await Geolocator.getCurrentPosition(
+                      desiredAccuracy: LocationAccuracy.best);
+                  // String location_name = await CurrentLocation()
+                  //     ._getAddressFromLatLng(
+                  //         position.latitude, position.longitude);
                   // LatLng? current = await CurrentLocation().getLocation();
-                  log(position.longitude.toString());
+                  // log(position.longitude.toString());
+                  // log(location_name.toString());
                   if (position != null) {
                     BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
                         hotel: Place.withLatLong(
-                      placeName: location_name.toString(),
+                      placeName: "Current Location",
                       placeImage: "",
                       latitude: position.latitude.toString(),
                       longitude: position.longitude.toString(),
                     )));
                     inputController.text = "Current Location";
+                    Navigator.of(context).pop();
                   } else {
                     log("Failed to get the location");
                   }
@@ -355,20 +357,20 @@ class CurrentLocation {
   //   }
   // }
 
-  Future<String> _getAddressFromLatLng(
-      double latitude, double longitude) async {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(latitude, longitude);
-    if (placemarks.isNotEmpty) {
-      Placemark place = placemarks[0];
-      // Extract specific address components (e.g., locality, administrativeArea)
-      // String address = "${place.locality}, ${place.administrativeArea}";
-      String address = "${place.locality!},${place.administrativeArea}";
-      return address;
-    } else {
-      return "No address found";
-    }
-  }
+  // Future<String> _getAddressFromLatLng(
+  //     double latitude, double longitude) async {
+  //   List<Placemark> placemarks =
+  //       await placemarkFromCoordinates(latitude, longitude);
+  //   if (placemarks.isNotEmpty) {
+  //     Placemark place = placemarks[0];
+  //     // Extract specific address components (e.g., locality, administrativeArea)
+  //     // String address = "${place.locality}, ${place.administrativeArea}";
+  //     String address = "${place.subLocality} ${place.subAdministrativeArea}";
+  //     return address;
+  //   } else {
+  //     return "No address found";
+  //   }
+  // }
   // LatLng? currentlocation;
   // final Location _locationController = Location();
 
