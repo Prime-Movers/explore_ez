@@ -40,10 +40,10 @@ class TSPModel:
     permutation,distance = solve_tsp_simulated_annealing(distance_matrix)
     # permutation,distance = solve_tsp_dynamic_programming(distance_matrix)
     # permutation
-
+    print(permutation)
     route = ""
-    for i in permutation:
-      route+=places[i]
+    for i in range(1,len(permutation)):
+      route+=places[permutation[i]]
       route+=","
     self.places=route
 # place=["Snow Kingdom","Kapaleeshwarar Temple","Besant Nagar Beach","Marina Beach","San Thome Church"]
