@@ -1,7 +1,7 @@
 import json
 from flask import Flask,request,jsonify
 import google.generativeai as genai
-from distance_matrix import TSPModel
+from backend.api.distance_matrix import TSPModel
 app = Flask(__name__)
 @app.route('/',methods = ['GET'])
 def returnascii():
