@@ -12,20 +12,18 @@ class ModelPlanRepo implements PlanRepo {
     int days = 1;
     try {
       days = calculateDays(plan.startDate, plan.endDate);
-      value += "$days" + ",";
-      value += plan.startTime + "-" + plan.endTime + "time fram per day" + ",";
-      value += plan.budget + "total budget for trip" + ",";
-      value += plan.accomodation.latitude! +
-          "," +
-          plan.accomodation.longitude! +
-          ",";
+      value += "$days" ",";
+      value += "${plan.startTime}-${plan.endTime}time fram per day,";
+      value += "${plan.budget}total budget for trip,";
+      value +=
+          "${plan.accomodation.latitude!},${plan.accomodation.longitude!},";
       for (int i = 0; i < plan.places.length - 1; i++) {
-        value += plan.places[i].placeName + " " + "chennai" + "," + " ";
+        value += "${plan.places[i].placeName} chennai, ";
       }
-      value += plan.places[plan.places.length - 1].placeName + " " + "chennai";
+      value += "${plan.places[plan.places.length - 1].placeName} chennai";
       //url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
       //url = 'http://10.0.2.2:5000/?query=' + value;
-      url = 'https://planz.vercel.app/?query=' + value;
+      url = 'https://planz.vercel.app/?query=$value';
       //url ="https://presumably-welcomed-giraffe.ngrok-free.app/?query=" + value;
       //url = "https://endlessly-wise-chigger.ngrok-free.app/?query=" + value;
 

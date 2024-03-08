@@ -93,7 +93,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      GOOGLE_MAPS_API_KEY,
+      gmapsApiKey,
       PointLatLng(a.latitude, a.longitude),
       PointLatLng(b.latitude, b.longitude),
       // travelMode: TravelMode.walking,
@@ -114,7 +114,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
     PolylineId id = PolylineId(name);
     Polyline polyline = Polyline(
         polylineId: id,
-        color: Color.fromARGB(255, 5, 5, 240),
+        color: const Color.fromARGB(255, 5, 5, 240),
         points: polylineCoordinates,
         width: 3);
     polylines[id] = polyline;

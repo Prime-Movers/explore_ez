@@ -166,7 +166,7 @@ class VerticalList extends StatelessWidget {
 class PlanItem extends StatelessWidget {
   final DayPlan dayPlan;
 
-  const PlanItem({Key? key, required this.dayPlan}) : super(key: key);
+  const PlanItem({super.key, required this.dayPlan});
 
   @override
   Widget build(BuildContext context) {

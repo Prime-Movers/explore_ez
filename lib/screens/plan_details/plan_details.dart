@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/fetch_places_bloc/fetch_places_bloc.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
@@ -283,7 +281,7 @@ class VerticalList extends StatelessWidget {
                   // LatLng? current = await CurrentLocation().getLocation();
                   // log(position.longitude.toString());
                   // log(location_name.toString());
-                  if (position != null) {
+                  if (context.mounted) {
                     BlocProvider.of<SelectHotelBloc>(context).add(SelectHotel(
                         hotel: Place.withLatLong(
                       placeName: "Current Location",
@@ -293,8 +291,6 @@ class VerticalList extends StatelessWidget {
                     )));
                     inputController.text = "Current Location";
                     Navigator.of(context).pop();
-                  } else {
-                    log("Failed to get the location");
                   }
                 },
                 leading: Container(

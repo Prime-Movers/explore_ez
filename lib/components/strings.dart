@@ -8,4 +8,4 @@ RegExp specialCharRexExp =
 
 String tourPlanImage = "assets/tour_plan_image.png";
 
-const String GOOGLE_MAPS_API_KEY = "AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE";
+const String gmapsApiKey = "AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE";

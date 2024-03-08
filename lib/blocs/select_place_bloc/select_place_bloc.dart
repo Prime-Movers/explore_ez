@@ -6,7 +6,7 @@ part 'select_place_event.dart';
 part 'select_place_state.dart';
 
 class SelectPlaceBloc extends Bloc<SelectPlaceEvent, SelectPlaceState> {
-  SelectPlaceBloc() : super(SelectPlaceState([], Status.uninitialized)) {
+  SelectPlaceBloc() : super(SelectPlaceState(const [], Status.uninitialized)) {
     on<InitializeSelection>(_onInitializeSelection);
     on<PlaceSelected>(_onPlaceSelected);
   }
