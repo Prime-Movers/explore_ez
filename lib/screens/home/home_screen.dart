@@ -127,19 +127,17 @@ class VerticalPlaceItem extends StatelessWidget {
           ],
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-                topRight: Radius.circular(4),
-                bottomRight: Radius.circular(4),
-              ),
-              child: Image.network(
-                placeImage,
-                width: 150.0,
-                fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  placeImage,
+                  width: 120.0,
+                  height: 120.0,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Expanded(
@@ -166,19 +164,10 @@ class VerticalPlaceItem extends StatelessWidget {
                             size: 16, color: Color.fromARGB(255, 82, 121, 228)),
                         const SizedBox(width: 5),
                         Text(
-                          "Budget: ",
+                          budget,
                           style: GoogleFonts.aBeeZee(
-                            fontSize: 16.0,
+                            fontSize: 16,
                             color: const Color.fromARGB(255, 82, 121, 228),
-                          ),
-                        ),
-                        Flexible(
-                          child: Text(
-                            budget,
-                            style: GoogleFonts.aBeeZee(
-                              fontSize: 10,
-                              color: Colors.black,
-                            ),
                           ),
                         ),
                       ],
