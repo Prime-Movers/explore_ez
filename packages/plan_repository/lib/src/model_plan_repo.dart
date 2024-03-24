@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:plan_repository/plan_repository.dart';
 
 class ModelPlanRepo implements PlanRepo {
-  String url = "";
+  String url = "http://10.0.2.2:5000/";
 
   @override
   Future<List<List<DayPlan>>> getPlan(MyPlan plan) async {
@@ -22,7 +22,7 @@ class ModelPlanRepo implements PlanRepo {
       }
       value += "${plan.places[plan.places.length - 1].placeName} chennai";
       //url = "https://musical-easily-yak.ngrok-free.app/?query=" + value;
-      url = 'http://10.0.2.2:5000/?query=' + value;
+      url += '?query=$value';
       //url = 'https://planz.vercel.app/?query=$value';
       //url ="https://presumably-welcomed-giraffe.ngrok-free.app/?query=" + value;
       //url = "https://endlessly-wise-chigger.ngrok-free.app/?query=" + value;
