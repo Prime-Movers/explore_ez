@@ -2,6 +2,7 @@ import json
 from flask import Flask,request,jsonify
 import google.generativeai as genai
 from distance_matrix import TSPModel
+from model.apikeys import geminiApi
 app = Flask(__name__)
 @app.route('/',methods = ['GET'])
 def returnascii():
@@ -26,7 +27,7 @@ def returnascii():
     #for i in range(len(lst1)):
         #str1+=lst1[i]  
     def model(s):
-        genai.configure(api_key="AIzaSyBZpD-Mg2DDUwRCGG_XKW_1VtgnVcGoThw")
+        genai.configure(api_key=geminiApi)
         generation_config = {
         "temperature": 0,
         "top_p": 1,

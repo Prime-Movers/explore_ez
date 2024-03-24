@@ -19,7 +19,6 @@ Plan your perfect trip with our app! It's made using Flutter, Firebase, and Goog
 2. **Install npm** : Download and install nodejs from the [official site](https://nodejs.org/en/download)
 3. **Install flutterfire**: Refer this docs to get into initializing the firebase project [docs](https://firebase.google.com/docs/flutter/setup)
 
-
 ### Clone the repository
 
 Clone the repository to your local machine:

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:area_repository/area_repository.dart';
 import 'package:explore_ez/blocs/plan_details_bloc/plan_details_bloc.dart';
-import 'package:explore_ez/components/strings.dart';
+import 'package:explore_ez/components/apikey.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

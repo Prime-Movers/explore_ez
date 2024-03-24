@@ -7,5 +7,3 @@ RegExp specialCharRexExp =
     RegExp(r'^(?=.*?[!@#$&*~`)\%\-(_+=;:,.<>/?"[{\]}\|^])');
 
 String tourPlanImage = "assets/tour_plan_image.png";
-
-const String gmapsApiKey = "AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE";

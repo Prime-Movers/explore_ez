@@ -6,12 +6,12 @@ import itertools
 from python_tsp.exact import solve_tsp_dynamic_programming
 from python_tsp.heuristics import solve_tsp_simulated_annealing
 
-
+from api import gmapsApi
 
 class TSPModel:
   
   def __init__(self,places):
-    gmaps_client=googlemaps.Client(key="AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE")
+    gmaps_client=googlemaps.Client(key=gmapsApi)
     distance_dict={}
     for place1 in places:
       for place2 in places:
