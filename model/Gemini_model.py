@@ -26,7 +26,7 @@ def returnascii():
     #for i in range(len(lst1)):
         #str1+=lst1[i]  
     def model(s):
-        genai.configure(api_key="AIzaSyB1OICYjUzxVZIrkO7texsBGw-ZeK-4K_s")
+        genai.configure(api_key="AIzaSyBZpD-Mg2DDUwRCGG_XKW_1VtgnVcGoThw")
         generation_config = {
         "temperature": 0,
         "top_p": 1,
