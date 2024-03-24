@@ -38,19 +38,19 @@ $ flutter pub get
 ```
 ## Screenshots
 
-| 1 | 2|
+| Sign In | Sign Up|
 |------|-------|
 |<img src="ss/Sign_in.png" width="400">|<img src="ss/sign_up.png" width="400">|
 
-| 3 | 4|
+| Home Screen | Area Selection |
 |------|-------|
 |<img src="ss/home.png" width="400">|<img src="ss/area_selection.png" width="400">|
 
-| 5 | 6|
+| Select hotels | Select Places|
 |------|-------|
 |<img src="ss/accomodation_selection.png" width="400">|<img src="ss/place_selection.png" width="400">|
 
-| 7 | 8|
+| Review Plan | Generated Plan|
 |------|-------|
 |<img src="ss/review_plan.png" width="400">|<img src="ss/plan_data.png" width="400">|
 
