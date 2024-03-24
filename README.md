@@ -58,7 +58,7 @@ $ flutter pub get
 ## Api Integration
 Please replace the following placeholders with your respective API keys:
 
-- For Google Maps API, update the `gmapsApi` variable in `model/apikeys.py` and `lib/components/apikey.dart`.
+- For Google Maps API, update the `gmapsApi` variable in `model/apikeys.py` and `lib/components/apikey.dart` and update `android:value="Your Api Key"` in `android/app/src/main/AndroidManifest.xml`
 - For Gemini API, update the `geminiApi` variable in `model/apikeys.py`.
 
 ## Running the Application
