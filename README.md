@@ -40,7 +40,7 @@ $ flutter pub get
 
 | 1 | 2|
 |------|-------|
-|<img src="ss/Sign_in.png" width="400">|<img src="ss/sing_up.png" width="400">|
+|<img src="ss/sign_in.png" width="400">|<img src="ss/sign_up.png" width="400">|
 
 | 3 | 4|
 |------|-------|
