@@ -1,1 +1,1 @@
-const String gmapsApiKey = "AIzaSyAgLFO4XZ0S8ywCdBsOdNh1tDtv3dlPMOE";
+const String gmapsApiKey = "Your Gmaps Api Key";

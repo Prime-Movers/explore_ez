@@ -6,7 +6,7 @@ import itertools
 from python_tsp.exact import solve_tsp_dynamic_programming
 from python_tsp.heuristics import solve_tsp_simulated_annealing
 
-from api import gmapsApi
+from model.apikeys import gmapsApi
 
 class TSPModel:
   
