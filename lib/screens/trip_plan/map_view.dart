@@ -93,7 +93,7 @@ class _MapViewScreenState extends State<MapViewScreen> {
     List<LatLng> polylineCoordinates = [];
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      gmapsApiKey,
+      gmapsApi,
       PointLatLng(a.latitude, a.longitude),
       PointLatLng(b.latitude, b.longitude),
       // travelMode: TravelMode.walking,

@@ -55,6 +55,9 @@ $ flutter pub get
 
 <img src="ss/mapview.png" width="400">
 
+## Api Integration
+Replace the gmapsApi in <span style="color:blue;">model/apikeys.py</span> and <span style="color:blue;">lib/components/apikey.dart</span> with your gmaps api key.
+Replace the geminiApi in <span style="color:blue;">model/apikeys.py</span> with your gemini api key.
 
 ## Running the Application
 
