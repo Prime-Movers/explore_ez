@@ -69,7 +69,7 @@ $ cd model
 $ python Gemini_model.py
 ```
 Then run main.dart
-> ⚠️ **Please note:** Only the android emulators will work with flask local server,if you need to debug on your mobile device try to use ngrok and change the url in packages\plan_repository\lib\src\model_plan_repo.dart with the ngrok edge url
+> ⚠️ **Please note:** Only the android emulators will work with flask local server,if you need to debug on your mobile device try to use ngrok and change the url in `packages\plan_repository\lib\src\model_plan_repo.dart` with the ngrok edge url
 
 ## Build Releases
 You can get the build apk versions from [releases](https://github.com/Prime-Movers/explore_ez/releases)
