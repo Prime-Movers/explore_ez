@@ -36,15 +36,40 @@ Run pub get to get all the dependencies of the flutter application
 ```bash
 $ flutter pub get
 ```
+## Screenshots
+
+| 1 | 2|
+|------|-------|
+|<img src="ss/Sign_in.png" width="400">|<img src="ss/sing_up.png" width="400">|
+
+| 3 | 4|
+|------|-------|
+|<img src="ss/home.png" width="400">|<img src="ss/area_selection.png" width="400">|
+
+| 5 | 6|
+|------|-------|
+|<img src="ss/accomodation_selection.png" width="400">|<img src="ss/place_selection.png" width="400">|
+
+| 7 | 8|
+|------|-------|
+|<img src="ss/review_plan.png" width="400">|<img src="ss/plan_data.png" width="400">|
+
+<img src="ss/mapview.png" width="400">
+
+
 ## Running the Application
 
-Run the model\Gemini_model.py which will start a local flask server
+Run Gemini_model which will start a local flask server
+```bash
+$ cd model
+$ python Gemini_model.py
+```
 Then run main.dart
-
-*Please note:* Only the android emulators will work with flask local server, if you need to debug on your mobile device try to use ngrok and change the url in packages\plan_repository\lib\src\model_plan_repo.dart with the ngrok edge url
+> ⚠️ **Please note:** Only the android emulators will work with flask local server,if you need to debug on your mobile device try to use ngrok and change the url in packages\plan_repository\lib\src\model_plan_repo.dart with the ngrok edge url
 
 ## Build Releases
 You can get the build apk versions from here
+
 
 
 
