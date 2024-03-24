@@ -1,6 +1,6 @@
 # explore_ez - A Transformative Tour Planning Application
 
-Plan your perfect trip with our app! It's made using Flutter, Firebase, and Google Maps. You'll get a custom route based on your preferences, shown on a map with an efficien route to all the places.
+Plan your perfect trip with our app! It's made using Flutter, Firebase, and Google Maps. You'll get a custom route based on your preferences, shown on a map with an efficient route to all the places.
 
 # Installation
 
