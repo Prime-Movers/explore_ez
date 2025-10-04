@@ -219,11 +219,15 @@ class PlanItem extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                "Time Slot: ${dayPlan.timeSlot}",
-                style: GoogleFonts.roboto(
-                  fontSize: 14.0,
-                  color: Colors.black87,
+              Flexible(
+                child: Text(
+                  "Time Slot: ${dayPlan.timeSlot}",
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.0,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                 ),
               ),
             ],
@@ -237,11 +241,15 @@ class PlanItem extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                "Entry Fee: ${dayPlan.entryFee}",
-                style: GoogleFonts.roboto(
-                  fontSize: 14.0,
-                  color: Colors.black87,
+              Flexible(
+                child: Text(
+                  "Entry Fee: ${dayPlan.entryFee}",
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.0,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                 ),
               ),
             ],
@@ -255,11 +263,15 @@ class PlanItem extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                "Distance From Previous Place: ${dayPlan.distFromPrevLoc}",
-                style: GoogleFonts.roboto(
-                  fontSize: 14.0,
-                  color: Colors.black87,
+              Flexible(
+                child: Text(
+                  "Distance From Previous Place: ${dayPlan.distFromPrevLoc}",
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.0,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                 ),
               ),
             ],
@@ -273,11 +285,15 @@ class PlanItem extends StatelessWidget {
                 size: 20,
               ),
               const SizedBox(width: 8.0),
-              Text(
-                "Travel Time: ${dayPlan.travelTime}",
-                style: GoogleFonts.roboto(
-                  fontSize: 14.0,
-                  color: Colors.black87,
+              Flexible(
+                child: Text(
+                  "Travel Time: ${dayPlan.travelTime}",
+                  style: GoogleFonts.roboto(
+                    fontSize: 14.0,
+                    color: Colors.black87,
+                  ),
+                  overflow: TextOverflow.visible,
+                  softWrap: true,
                 ),
               ),
             ],

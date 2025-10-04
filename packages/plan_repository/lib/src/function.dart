@@ -25,6 +25,15 @@ int calculateDays(String startDate, String endDate) {
 }
 
 List<DayPlan> getDayPlanData(String val) {
+  val = val.trim();
+  if (val.trim().startsWith('```json')) {
+    val = val.trim().substring(7).trim(); // Remove '```json'
+  }
+  // Remove trailing ``` if present
+  if (val.endsWith('```')) {
+    val = val.substring(0, val.length - 3).trim();
+  }
+  print(val);
   Map<String, dynamic> jsonData = json.decode(val);
   List<DayPlan> dayPlanData = [];
   jsonData.forEach((key, value) {

@@ -117,11 +117,13 @@ class _PlanDetailsState extends State<PlanDetails> {
   }
 
   void _selectDate(TextEditingController inputController) async {
+    DateTime initialDate = DateTime.now();
+    DateTime lastDate = initialDate.add(const Duration(days: 365));
     DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2025),
+      firstDate: initialDate,
+      lastDate: lastDate,
     );
     if (newDate != null) {
       inputController.text = myFormat.format(newDate);
